@@ -36,7 +36,7 @@ const { projects } = Astro.props;
         <div class="flex flex-col items-center">
           <div class="flex flex-wrap justify-center gap-3">
             {projects.featured.tags.map((tag) => (
-              <span class="eyebrow rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_16%,white)] bg-[rgba(245,236,57,0.18)] px-4 py-2 text-[0.65rem] font-semibold text-[color:var(--color-muted-deep)]">
+              <span class="eyebrow rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_16%,white)] bg-[rgba(245,236,57,0.18)] px-4 py-2 text-[0.65rem] font-semibold text-[color:var(--color-ink)]">
                 {tag}
               </span>
             ))}
@@ -51,7 +51,7 @@ const { projects } = Astro.props;
               target="_blank"
               rel="noreferrer"
               aria-label={`Open ${projects.featured.title} in a new tab`}
-              class="inline-flex size-12 shrink-0 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_22%,transparent)] bg-white/74 text-[color:var(--color-ink)] transition-colors hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
+              class="inline-flex size-12 shrink-0 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_22%,transparent)] bg-[color:var(--color-surface-strong)] text-[color:var(--color-ink)] transition-colors hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
             >
               <Icon name="arrow-up-right" size={18} />
             </a>

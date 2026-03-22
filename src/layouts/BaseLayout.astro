@@ -17,6 +17,26 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#FFFFFF" />
+    <script is:inline>
+      (() => {
+        const LIGHT_THEME_COLOR = "#FFFFFF";
+        const DARK_THEME_COLOR = "#0B1115";
+
+        try {
+          const storedTheme = localStorage.getItem("theme");
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const isDark = storedTheme ? storedTheme === "dark" : prefersDark;
+          const root = document.documentElement;
+          const themeColor = document.querySelector('meta[name="theme-color"]');
+
+          root.classList.toggle("dark", isDark);
+          root.style.colorScheme = isDark ? "dark" : "light";
+          themeColor?.setAttribute("content", isDark ? DARK_THEME_COLOR : LIGHT_THEME_COLOR);
+        } catch {
+          document.documentElement.style.colorScheme = "light";
+        }
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

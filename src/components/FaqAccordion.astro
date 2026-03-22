@@ -9,7 +9,7 @@ const { items } = Astro.props;
 <div class="space-y-4">
   {items.map((item, index) => (
     <details
-      class="group rounded-[1.5rem] border border-[color:color-mix(in_oklab,var(--color-muted)_20%,transparent)] bg-white/78 px-6"
+      class="group rounded-[1.5rem] border border-[color:color-mix(in_oklab,var(--color-muted)_20%,transparent)] bg-[color:var(--color-surface)] px-6"
       open={index === 0}
     >
       <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-base font-semibold text-[color:var(--color-ink)] [&::-webkit-details-marker]:hidden">

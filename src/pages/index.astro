@@ -17,7 +17,10 @@ const { site, contact, navItems, hero, services, tools, projects, about, faq, ct
 
 <BaseLayout title={site.title} description={site.description}>
   <div class="relative isolate">
-    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-white">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[color:var(--color-paper)]"
+    >
       <div
         data-app-particles-root
         class="absolute inset-0 opacity-80 [mask-image:radial-gradient(circle_at_center,black_58%,transparent_100%)]"
@@ -55,46 +58,71 @@ const { site, contact, navItems, hero, services, tools, projects, about, faq, ct
       particlesRoot.dataset.mounted = "true";
 
       const reactRoot = createRoot(particlesRoot);
-      reactRoot.render(
-        React.createElement(
-          React.Fragment,
-          null,
-          React.createElement(Particles, {
-            className: "absolute inset-0 size-full",
-            quantity: window.innerWidth < 768 ? 24 : 48,
-            staticity: 42,
-            ease: 86,
-            size: 1,
-            color: "#223036",
-            vx: 0.06,
-            vy: -0.01,
-          }),
-          React.createElement(Particles, {
-            className: "absolute inset-0 size-full opacity-50",
-            quantity: window.innerWidth < 768 ? 8 : 16,
-            staticity: 68,
-            ease: 120,
-            size: 1.1,
-            color: "#8f223d",
-            vx: 0.015,
-            vy: -0.008,
-          }),
-          React.createElement(Particles, {
-            className: "absolute inset-0 size-full opacity-35",
-            quantity: window.innerWidth < 768 ? 6 : 10,
-            staticity: 92,
-            ease: 140,
-            size: 1.4,
-            color: "#7a6500",
-            vx: 0.01,
-            vy: -0.004,
-          })
-        )
-      );
+      const getParticlePalette = () => {
+        const styles = getComputedStyle(document.documentElement);
+
+        return {
+          base: styles.getPropertyValue("--color-particle-base").trim() || "#223036",
+          accent: styles.getPropertyValue("--color-particle-accent").trim() || "#8f223d",
+          signal: styles.getPropertyValue("--color-particle-signal").trim() || "#7a6500",
+        };
+      };
+
+      const renderParticles = () => {
+        const palette = getParticlePalette();
+
+        reactRoot.render(
+          React.createElement(
+            React.Fragment,
+            null,
+            React.createElement(Particles, {
+              className: "absolute inset-0 size-full",
+              quantity: window.innerWidth < 768 ? 24 : 48,
+              staticity: 42,
+              ease: 86,
+              size: 1,
+              color: palette.base,
+              vx: 0.06,
+              vy: -0.01,
+            }),
+            React.createElement(Particles, {
+              className: "absolute inset-0 size-full opacity-50",
+              quantity: window.innerWidth < 768 ? 8 : 16,
+              staticity: 68,
+              ease: 120,
+              size: 1.1,
+              color: palette.accent,
+              vx: 0.015,
+              vy: -0.008,
+            }),
+            React.createElement(Particles, {
+              className: "absolute inset-0 size-full opacity-35",
+              quantity: window.innerWidth < 768 ? 6 : 10,
+              staticity: 92,
+              ease: 140,
+              size: 1.4,
+              color: palette.signal,
+              vx: 0.01,
+              vy: -0.004,
+            })
+          )
+        );
+      };
+
+      const themeObserver = new MutationObserver(() => {
+        renderParticles();
+      });
+
+      renderParticles();
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      });
 
       window.addEventListener(
         "pagehide",
         () => {
+          themeObserver.disconnect();
           reactRoot.unmount();
           delete particlesRoot.dataset.mounted;
         },
