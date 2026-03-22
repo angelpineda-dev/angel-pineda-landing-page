@@ -34,8 +34,10 @@ export type FaqItem = {
   answer: string;
 };
 
+const whatsappBusinessNumber = "+523317960306";
+const whatsappBusinessLabel = "+52 33 1796 0306";
 const whatsappHref =
-  "https://wa.me/523317960306?text=Hi%2C%20I%20want%20to%20build%20a%20website.%20Can%20you%20help%20me%3F";
+  `https://wa.me/${whatsappBusinessNumber.replace(/\D/g, "")}?text=Hi%2C%20I%20want%20to%20build%20a%20website.%20Can%20you%20help%20me%3F`;
 
 export const landingPage = {
   site: {
@@ -45,8 +47,8 @@ export const landingPage = {
   },
   contact: {
     email: "angelpdev@gmail.com",
-    phoneLabel: "+52 55 1234 12345",
-    phoneHref: "tel:+5255123412345",
+    phoneLabel: whatsappBusinessLabel,
+    phoneHref: `tel:${whatsappBusinessNumber}`,
     location: "Guadalajara, Jalisco",
     remoteLabel: "We can work remote",
     whatsappHref,
