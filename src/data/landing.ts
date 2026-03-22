@@ -20,6 +20,18 @@ export type Project = {
   description: string;
   tags: string[];
   href: string;
+  preview?: {
+    browserLabel: string;
+    status: string;
+    note: string;
+    currentLabel: string;
+    currentDescription: string;
+    futureLabel: string;
+    futureDescription: string;
+    fallbackTitle: string;
+    fallbackDescription: string;
+    openLabel: string;
+  };
 };
 
 export type FaqItem = {
@@ -119,13 +131,29 @@ export const landingPage = {
     eyebrow: "Recent projects",
     title: "Selected work with a product lens.",
     description:
-      "A first featured case study, plus a deliberate archive state that leaves room for the next releases.",
+      "A live featured build you can inspect today, plus room for the next documented case study.",
     featured: {
       title: "Nutriologa Monserrat",
       description:
         "A wellness-focused experience for a nutrition specialist who helps people improve their digestive and metabolic health through tailored guidance.",
       tags: ["Wellness", "Entrepreneur"],
-      href: "https://example.com",
+      href: "https://nutriologa-monserrat.vercel.app/",
+      preview: {
+        browserLabel: "nutriologa-monserrat.vercel.app",
+        status: "Live preview",
+        note:
+          "Interactive viewport of the current live build. Scroll inside the frame, or open the project directly for the full experience.",
+        currentLabel: "Current progress",
+        currentDescription:
+          "The live build already shows the brand voice, trust-building structure, consultation flow, and service framing in a usable state.",
+        futureLabel: "Future result",
+        futureDescription:
+          "This direction points toward a stronger case-study-ready experience with more polish, richer proof, and clearer conversion detail as the project matures.",
+        fallbackTitle: "Open the live build directly",
+        fallbackDescription:
+          "If the preview cannot be framed in this browser, the project is still available in a new tab with the latest progress intact.",
+        openLabel: "Open live project",
+      },
     } satisfies Project,
     archiveTitle: "Archive in progress",
     archiveDescription:
