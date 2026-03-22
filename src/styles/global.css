@@ -21,6 +21,13 @@
   --color-particle-base: #223036;
   --color-particle-accent: #8f223d;
   --color-particle-signal: #7a6500;
+  --tools-orbit-gradient:
+    radial-gradient(
+      circle at center,
+      rgba(245, 236, 57, 0.22) 0%,
+      rgba(255, 255, 255, 0.82) 56%,
+      rgba(86, 108, 117, 0.08) 100%
+    );
   --font-display: "Fraunces", serif;
   --font-body: "Instrument Sans", sans-serif;
   --radius-card: 2rem;
@@ -286,6 +293,13 @@ button {
   --color-particle-base: #dce8ee;
   --color-particle-accent: #ff91ad;
   --color-particle-signal: #dcc566;
+  --tools-orbit-gradient:
+    radial-gradient(
+      circle at center,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(255, 255, 255, 0.1) 58%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
   --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.34);
   --shadow-strong: 0 28px 80px rgba(0, 0, 0, 0.4);
   --background: oklch(0.145 0 0);
