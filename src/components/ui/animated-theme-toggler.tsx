@@ -8,8 +8,8 @@ interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"butt
   duration?: number
 }
 
-const LIGHT_THEME_COLOR = "#FFFFFF"
-const DARK_THEME_COLOR = "#0B1115"
+const LIGHT_THEME_COLOR = "#F7F8FB"
+const DARK_THEME_COLOR = "#131313"
 
 function applyDocumentTheme(isDark: boolean) {
   document.documentElement.classList.toggle("dark", isDark)

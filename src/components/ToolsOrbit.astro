@@ -42,13 +42,13 @@ const serializedCloudItems = JSON.stringify(items.map((item) => ({ name: item.na
 
   const paletteMap: Record<string, { fill: string; text: string }> = {
     React: { fill: "#61dafb", text: "#10202a" },
-    Astro: { fill: "#f5385b", text: "#fff8f2" },
-    "Node.js": { fill: "#7bb661", text: "#142316" },
-    "Express.js": { fill: "#566c75", text: "#fffef3" },
-    PHP: { fill: "#8892bf", text: "#13182b" },
-    Laravel: { fill: "#ff5b41", text: "#fff7f2" },
+    Astro: { fill: "#ff5d01", text: "#fff8f2" },
+    "Node.js": { fill: "#5fa04e", text: "#142316" },
+    "Express.js": { fill: "#000000", text: "#f8fbff" },
+    PHP: { fill: "#777bb4", text: "#13182b" },
+    Laravel: { fill: "#ff2d20", text: "#fff7f2" },
     Figma: { fill: "#1abcfe", text: "#0d1f29" },
-    "Artificial Intelligence": { fill: "#f5ec39", text: "#5b5100" },
+    "Artificial Intelligence": { fill: "#023f73", text: "#f8fbff" },
   };
 
   function escapeXml(value: string) {
@@ -62,14 +62,14 @@ const serializedCloudItems = JSON.stringify(items.map((item) => ({ name: item.na
 
   function fallbackPalette(tone: ToolBadgeItem["tone"]) {
     if (tone === "signal") {
-      return { fill: "#f5ec39", text: "#5b5100" };
+      return { fill: "#023f73", text: "#f8fbff" };
     }
 
     if (tone === "accent") {
-      return { fill: "#f5385b", text: "#fff8f2" };
+      return { fill: "#bf0a26", text: "#fff8f2" };
     }
 
-    return { fill: "#566c75", text: "#fffef3" };
+    return { fill: "#262626", text: "#f8fbff" };
   }
 
   function getLabelLayout(name: string) {
