@@ -20,17 +20,12 @@ export type Project = {
   description: string;
   tags: string[];
   href: string;
-  preview?: {
-    browserLabel: string;
-    status: string;
-    note: string;
+  highlights?: {
     currentLabel: string;
     currentDescription: string;
     futureLabel: string;
     futureDescription: string;
-    stalledTitle: string;
-    stalledDescription: string;
-    openLabel: string;
+    ctaLabel: string;
   };
 };
 
@@ -131,33 +126,26 @@ export const landingPage = {
     eyebrow: "Recent projects",
     title: "Selected work with a product lens.",
     description:
-      "A live featured build you can inspect today, plus room for the next documented case study.",
+      "A featured project with clear progress notes today, plus room for the next documented case study.",
     featured: {
       title: "Nutriologa Monserrat",
       description:
         "A wellness-focused experience for a nutrition specialist who helps people improve their digestive and metabolic health through tailored guidance.",
       tags: ["Wellness", "Entrepreneur"],
       href: "https://nutriologa-monserrat.vercel.app/",
-      preview: {
-        browserLabel: "nutriologa-monserrat.vercel.app",
-        status: "Live preview",
-        note:
-          "Live viewport of the current build. On smaller screens the preview shifts into a phone-sized frame, while the direct link always opens the latest version in full.",
-        currentLabel: "Current progress",
+      highlights: {
+        currentLabel: "Now",
         currentDescription:
           "The live build already shows the brand voice, trust-building structure, consultation flow, and service framing in a usable state.",
-        futureLabel: "Future result",
+        futureLabel: "Next",
         futureDescription:
           "This direction points toward a stronger case-study-ready experience with more polish, richer proof, and clearer conversion detail as the project matures.",
-        stalledTitle: "Open the full build while it finishes loading",
-        stalledDescription:
-          "Some mobile browsers delay third-party embeds. You can close this message and keep waiting, or open the live project instantly in a new tab.",
-        openLabel: "Open full project",
+        ctaLabel: "Open project site",
       },
     } satisfies Project,
-    archiveTitle: "Archive in progress",
+    archiveTitle: "More on the way",
     archiveDescription:
-      "More case studies are being documented. Current work spans fintech, logistics, and operational tooling.",
+      "More case studies are being documented, including current work across fintech, logistics, and operational tooling.",
   },
   about: {
     eyebrow: "About me",
