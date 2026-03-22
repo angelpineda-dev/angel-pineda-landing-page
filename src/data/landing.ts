@@ -28,8 +28,8 @@ export type Project = {
     currentDescription: string;
     futureLabel: string;
     futureDescription: string;
-    fallbackTitle: string;
-    fallbackDescription: string;
+    stalledTitle: string;
+    stalledDescription: string;
     openLabel: string;
   };
 };
@@ -142,17 +142,17 @@ export const landingPage = {
         browserLabel: "nutriologa-monserrat.vercel.app",
         status: "Live preview",
         note:
-          "Interactive viewport of the current live build. Scroll inside the frame, or open the project directly for the full experience.",
+          "Live viewport of the current build. On smaller screens the preview shifts into a phone-sized frame, while the direct link always opens the latest version in full.",
         currentLabel: "Current progress",
         currentDescription:
           "The live build already shows the brand voice, trust-building structure, consultation flow, and service framing in a usable state.",
         futureLabel: "Future result",
         futureDescription:
           "This direction points toward a stronger case-study-ready experience with more polish, richer proof, and clearer conversion detail as the project matures.",
-        fallbackTitle: "Open the live build directly",
-        fallbackDescription:
-          "If the preview cannot be framed in this browser, the project is still available in a new tab with the latest progress intact.",
-        openLabel: "Open live project",
+        stalledTitle: "Open the full build while it finishes loading",
+        stalledDescription:
+          "Some mobile browsers delay third-party embeds. You can close this message and keep waiting, or open the live project instantly in a new tab.",
+        openLabel: "Open full project",
       },
     } satisfies Project,
     archiveTitle: "Archive in progress",

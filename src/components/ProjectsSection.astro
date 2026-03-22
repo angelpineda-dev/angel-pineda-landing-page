@@ -22,8 +22,8 @@ type Props = {
         currentDescription: string;
         futureLabel: string;
         futureDescription: string;
-        fallbackTitle: string;
-        fallbackDescription: string;
+        stalledTitle: string;
+        stalledDescription: string;
         openLabel: string;
       };
     };
@@ -46,8 +46,18 @@ const { projects } = Astro.props;
 
     <div class="mx-auto mt-12 max-w-7xl">
       <article class="surface-card noise-mask overflow-hidden rounded-[2.4rem] p-6 sm:p-8 lg:p-10">
-        <div class="grid gap-8 lg:grid-cols-[0.94fr_1.06fr] lg:items-center">
-          <div class="flex flex-col">
+        <div class="grid gap-8 lg:grid-cols-[1.06fr_0.94fr] lg:items-center">
+          {projects.featured.preview && (
+            <div class="order-1 lg:order-2">
+              <ProjectLivePreview
+                title={projects.featured.title}
+                href={projects.featured.href}
+                preview={projects.featured.preview}
+              />
+            </div>
+          )}
+
+          <div class="order-2 flex flex-col lg:order-1">
             <div class="flex flex-wrap gap-3">
               <span class="eyebrow rounded-full border border-[color:color-mix(in_oklab,var(--color-signal)_20%,transparent)] bg-[color:color-mix(in_oklab,var(--color-signal)_10%,transparent)] px-4 py-2 text-[0.65rem] font-semibold text-[color:var(--color-signal-ink)]">
                 Featured preview
@@ -105,18 +115,10 @@ const { projects } = Astro.props;
               </a>
 
               <p class="text-sm leading-7 text-[color:var(--color-copy)]">
-                Live preview loads on the right when framing is available.
+                Tap through the preview above on mobile, or open the full project in a new tab for the complete browsing context.
               </p>
             </div>
           </div>
-
-          {projects.featured.preview && (
-            <ProjectLivePreview
-              title={projects.featured.title}
-              href={projects.featured.href}
-              preview={projects.featured.preview}
-            />
-          )}
         </div>
       </article>
     </div>
