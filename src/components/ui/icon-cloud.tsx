@@ -20,6 +20,29 @@ interface IconCloudProps {
   radiusScale?: number
 }
 
+interface CanvasMetrics {
+  width: number
+  height: number
+  pixelRatio: number
+}
+
+interface Point {
+  x: number
+  y: number
+}
+
+interface TargetRotation {
+  x: number
+  y: number
+  startX: number
+  startY: number
+  distance: number
+  startTime: number
+  duration: number
+}
+
+const MAX_PIXEL_RATIO = 3
+
 function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3)
 }
@@ -34,27 +57,35 @@ export function IconCloud({
   const wrapperRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [iconPositions, setIconPositions] = useState<Icon[]>([])
-  const [canvasSize, setCanvasSize] = useState({ width: 520, height: 520 })
-  const [isDragging, setIsDragging] = useState(false)
-  const [lastMousePos, setLastMousePos] = useState({ x: 0, y: 0 })
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  const [targetRotation, setTargetRotation] = useState<{
-    x: number
-    y: number
-    startX: number
-    startY: number
-    distance: number
-    startTime: number
-    duration: number
-  } | null>(null)
+  const [canvasSize, setCanvasSize] = useState<CanvasMetrics>({
+    width: 520,
+    height: 520,
+    pixelRatio: 1,
+  })
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const animationFrameRef = useRef<number>(0)
   const rotationRef = useRef({ x: 0, y: 0 })
+  const isDraggingRef = useRef(false)
+  const lastPointerPosRef = useRef<Point>({ x: 0, y: 0 })
+  const pointerPosRef = useRef<Point>({ x: 0, y: 0 })
+  const targetRotationRef = useRef<TargetRotation | null>(null)
   const iconCanvasesRef = useRef<HTMLCanvasElement[]>([])
   const imagesLoadedRef = useRef<boolean[]>([])
   const diameter = Math.min(canvasSize.width, canvasSize.height)
   const sphereRadius = Math.max(120, diameter * radiusScale)
   const iconDrawSize = Math.max(72, diameter * iconScale)
-  const iconResolution = Math.max(96, Math.round(iconDrawSize * 1.35))
+  const iconResolution = Math.min(
+    640,
+    Math.max(128, Math.round(iconDrawSize * canvasSize.pixelRatio * 1.6))
+  )
+  const pixelWidth = Math.max(
+    1,
+    Math.round(canvasSize.width * canvasSize.pixelRatio)
+  )
+  const pixelHeight = Math.max(
+    1,
+    Math.round(canvasSize.height * canvasSize.pixelRatio)
+  )
 
   useEffect(() => {
     const wrapper = wrapperRef.current
@@ -64,10 +95,17 @@ export function IconCloud({
       const bounds = wrapper.getBoundingClientRect()
       const width = Math.max(1, Math.round(bounds.width))
       const height = Math.max(1, Math.round(bounds.height))
+      const pixelRatio = Math.min(
+        MAX_PIXEL_RATIO,
+        Math.max(1, window.devicePixelRatio || 1)
+      )
+
       setCanvasSize((current) =>
-        current.width === width && current.height === height
+        current.width === width &&
+        current.height === height &&
+        current.pixelRatio === pixelRatio
           ? current
-          : { width, height }
+          : { width, height, pixelRatio }
       )
     }
 
@@ -78,11 +116,56 @@ export function IconCloud({
     })
 
     observer.observe(wrapper)
+    window.addEventListener("resize", updateSize)
 
     return () => {
       observer.disconnect()
+      window.removeEventListener("resize", updateSize)
     }
   }, [])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const legacyMediaQuery = mediaQuery as MediaQueryList & {
+      addListener?: (listener: (event: MediaQueryListEvent) => void) => void
+      removeListener?: (listener: (event: MediaQueryListEvent) => void) => void
+    }
+
+    const syncMotionPreference = () => {
+      const reduceMotion = mediaQuery.matches
+      setPrefersReducedMotion(reduceMotion)
+
+      if (reduceMotion) {
+        targetRotationRef.current = null
+      }
+    }
+
+    syncMotionPreference()
+
+    if ("addEventListener" in mediaQuery) {
+      mediaQuery.addEventListener("change", syncMotionPreference)
+    } else if (legacyMediaQuery.addListener) {
+      legacyMediaQuery.addListener(syncMotionPreference)
+    }
+
+    return () => {
+      if ("removeEventListener" in mediaQuery) {
+        mediaQuery.removeEventListener("change", syncMotionPreference)
+      } else if (legacyMediaQuery.removeListener) {
+        legacyMediaQuery.removeListener(syncMotionPreference)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const centeredPointer = {
+      x: canvasSize.width / 2,
+      y: canvasSize.height / 2,
+    }
+
+    pointerPosRef.current = centeredPointer
+    lastPointerPosRef.current = centeredPointer
+  }, [canvasSize.width, canvasSize.height])
 
   // Create icon canvases once when icons/images change
   useEffect(() => {
@@ -99,6 +182,9 @@ export function IconCloud({
       const center = iconResolution / 2
 
       if (offCtx) {
+        offCtx.imageSmoothingEnabled = true
+        offCtx.imageSmoothingQuality = "high"
+
         if (images) {
           // Handle image URLs directly
           const img = new Image()
@@ -114,6 +200,8 @@ export function IconCloud({
             offCtx.clip()
 
             // Draw the image
+            offCtx.imageSmoothingEnabled = true
+            offCtx.imageSmoothingQuality = "high"
             offCtx.drawImage(img, 0, 0, iconResolution, iconResolution)
 
             imagesLoadedRef.current[index] = true
@@ -167,18 +255,17 @@ export function IconCloud({
     setIconPositions(newIcons)
   }, [icons, images, sphereRadius])
 
-  // Handle mouse events
-  const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const getTargetRotationAtPoint = (
+    clientX: number,
+    clientY: number
+  ): TargetRotation | null => {
     const rect = canvasRef.current?.getBoundingClientRect()
-    if (!rect || !canvasRef.current) return
+    if (!rect) return null
 
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
+    const x = clientX - rect.left
+    const y = clientY - rect.top
 
-    const ctx = canvasRef.current.getContext("2d")
-    if (!ctx) return
-
-    iconPositions.forEach((icon) => {
+    for (const icon of iconPositions) {
       const cosX = Math.cos(rotationRef.current.x)
       const sinX = Math.sin(rotationRef.current.x)
       const cosY = Math.cos(rotationRef.current.y)
@@ -188,8 +275,8 @@ export function IconCloud({
       const rotatedZ = icon.x * sinY + icon.z * cosY
       const rotatedY = icon.y * cosX + rotatedZ * sinX
 
-      const screenX = canvasRef.current!.width / 2 + rotatedX
-      const screenY = canvasRef.current!.height / 2 + rotatedY
+      const screenX = canvasSize.width / 2 + rotatedX
+      const screenY = canvasSize.height / 2 + rotatedY
 
       const scale = (rotatedZ + sphereRadius * 2) / (sphereRadius * 3)
       const radius = (iconDrawSize / 2) * scale
@@ -211,7 +298,7 @@ export function IconCloud({
 
         const duration = Math.min(2000, Math.max(800, distance * 1000))
 
-        setTargetRotation({
+        return {
           x: targetX,
           y: targetY,
           startX: currentX,
@@ -219,57 +306,93 @@ export function IconCloud({
           distance,
           startTime: performance.now(),
           duration,
-        })
-        return
+        }
       }
-    })
+    }
 
-    setIsDragging(true)
-    setLastMousePos({ x: e.clientX, y: e.clientY })
+    return null
   }
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    const targetRotation = getTargetRotationAtPoint(e.clientX, e.clientY)
+
+    if (targetRotation) {
+      if (prefersReducedMotion) {
+        rotationRef.current = {
+          x: targetRotation.x,
+          y: targetRotation.y,
+        }
+        targetRotationRef.current = null
+      } else {
+        targetRotationRef.current = targetRotation
+      }
+
+      isDraggingRef.current = false
+      return
+    }
+
+    isDraggingRef.current = true
+    lastPointerPosRef.current = { x: e.clientX, y: e.clientY }
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const rect = canvasRef.current?.getBoundingClientRect()
+
     if (rect) {
       const x = e.clientX - rect.left
       const y = e.clientY - rect.top
-      setMousePos({ x, y })
+      pointerPosRef.current = { x, y }
     }
 
-    if (isDragging) {
-      const deltaX = e.clientX - lastMousePos.x
-      const deltaY = e.clientY - lastMousePos.y
+    if (isDraggingRef.current) {
+      const deltaX = e.clientX - lastPointerPosRef.current.x
+      const deltaY = e.clientY - lastPointerPosRef.current.y
 
       rotationRef.current = {
         x: rotationRef.current.x + deltaY * 0.002,
         y: rotationRef.current.y + deltaX * 0.002,
       }
 
-      setLastMousePos({ x: e.clientX, y: e.clientY })
+      lastPointerPosRef.current = { x: e.clientX, y: e.clientY }
     }
   }
 
-  const handleMouseUp = () => {
-    setIsDragging(false)
+  const handlePointerEnd = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    isDraggingRef.current = false
+
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    }
   }
 
   // Animation and rendering
   useEffect(() => {
     const canvas = canvasRef.current
     const ctx = canvas?.getContext("2d")
+
     if (canvas && ctx) {
       const animate = () => {
+        ctx.setTransform(1, 0, 0, 1, 0, 0)
         ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.setTransform(canvasSize.pixelRatio, 0, 0, canvasSize.pixelRatio, 0, 0)
+        ctx.imageSmoothingEnabled = true
+        ctx.imageSmoothingQuality = "high"
 
-        const centerX = canvas.width / 2
-        const centerY = canvas.height / 2
-        const maxDistance = Math.sqrt(centerX * centerX + centerY * centerY)
-        const dx = mousePos.x - centerX
-        const dy = mousePos.y - centerY
+        const centerX = canvasSize.width / 2
+        const centerY = canvasSize.height / 2
+        const maxDistance = Math.max(
+          1,
+          Math.sqrt(centerX * centerX + centerY * centerY)
+        )
+        const dx = pointerPosRef.current.x - centerX
+        const dy = pointerPosRef.current.y - centerY
         const distance = Math.sqrt(dx * dx + dy * dy)
         const speed = 0.003 + (distance / maxDistance) * 0.01
+        const ambientDrift = 0.0014
+        const targetRotation = targetRotationRef.current
 
-        if (targetRotation) {
+        if (targetRotation && !prefersReducedMotion) {
           const elapsed = performance.now() - targetRotation.startTime
           const progress = Math.min(1, elapsed / targetRotation.duration)
           const easedProgress = easeOutCubic(progress)
@@ -284,12 +407,18 @@ export function IconCloud({
           }
 
           if (progress >= 1) {
-            setTargetRotation(null)
+            targetRotationRef.current = null
           }
-        } else if (!isDragging) {
+        } else if (!isDraggingRef.current && !prefersReducedMotion) {
           rotationRef.current = {
-            x: rotationRef.current.x + (dy / canvas.height) * speed,
-            y: rotationRef.current.y + (dx / canvas.width) * speed,
+            x:
+              rotationRef.current.x +
+              ambientDrift * 0.45 +
+              (dy / canvasSize.height) * speed * 0.45,
+            y:
+              rotationRef.current.y +
+              ambientDrift +
+              (dx / canvasSize.width) * speed,
           }
         }
 
@@ -310,10 +439,7 @@ export function IconCloud({
           )
 
           ctx.save()
-          ctx.translate(
-            canvas.width / 2 + rotatedX,
-            canvas.height / 2 + rotatedY
-          )
+          ctx.translate(centerX + rotatedX, centerY + rotatedY)
           ctx.scale(scale, scale)
           ctx.globalAlpha = opacity
 
@@ -361,25 +487,24 @@ export function IconCloud({
     icons,
     images,
     iconPositions,
-    isDragging,
-    mousePos,
-    targetRotation,
     iconDrawSize,
     sphereRadius,
     canvasSize,
+    prefersReducedMotion,
   ])
 
   return (
     <div ref={wrapperRef} className={cn("size-full", className)}>
       <canvas
         ref={canvasRef}
-        width={canvasSize.width}
-        height={canvasSize.height}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        className="size-full"
+        width={pixelWidth}
+        height={pixelHeight}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerEnd}
+        onPointerCancel={handlePointerEnd}
+        onPointerLeave={handlePointerEnd}
+        className="size-full touch-none"
         aria-label="Interactive 3D Icon Cloud"
         role="img"
       />
