@@ -19,19 +19,74 @@ const { title, description } = Astro.props;
     <meta name="theme-color" content="#FFFFFF" />
     <script is:inline>
       (() => {
+        const STORAGE_KEY = "theme";
         const LIGHT_THEME_COLOR = "#FFFFFF";
         const DARK_THEME_COLOR = "#0B1115";
+        const MEDIA_QUERY = "(prefers-color-scheme: dark)";
 
         try {
-          const storedTheme = localStorage.getItem("theme");
-          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          const isDark = storedTheme ? storedTheme === "dark" : prefersDark;
           const root = document.documentElement;
           const themeColor = document.querySelector('meta[name="theme-color"]');
+          const mediaQuery = window.matchMedia(MEDIA_QUERY);
 
-          root.classList.toggle("dark", isDark);
-          root.style.colorScheme = isDark ? "dark" : "light";
-          themeColor?.setAttribute("content", isDark ? DARK_THEME_COLOR : LIGHT_THEME_COLOR);
+          const normalizePreference = (value) => {
+            if (value === "light" || value === "dark" || value === "system") {
+              return value;
+            }
+
+            return "system";
+          };
+
+          const resolveTheme = (preference) => {
+            if (preference === "dark") {
+              return true;
+            }
+
+            if (preference === "light") {
+              return false;
+            }
+
+            return mediaQuery.matches;
+          };
+
+          const getPreference = () => {
+            return normalizePreference(localStorage.getItem(STORAGE_KEY));
+          };
+
+          const applyPreference = (preference, persist = true) => {
+            const normalizedPreference = normalizePreference(preference);
+            const isDark = resolveTheme(normalizedPreference);
+
+            root.dataset.themePreference = normalizedPreference;
+            root.classList.toggle("dark", isDark);
+            root.style.colorScheme = isDark ? "dark" : "light";
+            themeColor?.setAttribute("content", isDark ? DARK_THEME_COLOR : LIGHT_THEME_COLOR);
+
+            if (persist) {
+              if (normalizedPreference === "system") {
+                localStorage.removeItem(STORAGE_KEY);
+              } else {
+                localStorage.setItem(STORAGE_KEY, normalizedPreference);
+              }
+            }
+
+            return { preference: normalizedPreference, isDark };
+          };
+
+          const syncSystemTheme = () => {
+            if ((root.dataset.themePreference || getPreference()) === "system") {
+              applyPreference("system", false);
+            }
+          };
+
+          applyPreference(getPreference(), false);
+
+          window.__siteTheme = {
+            applyPreference,
+            getPreference: () => root.dataset.themePreference || getPreference(),
+          };
+
+          mediaQuery.addEventListener("change", syncSystemTheme);
         } catch {
           document.documentElement.style.colorScheme = "light";
         }
