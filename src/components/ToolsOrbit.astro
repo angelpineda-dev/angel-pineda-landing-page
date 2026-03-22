@@ -9,68 +9,144 @@ type Props = {
 };
 
 const { items } = Astro.props;
-const outer = items.slice(0, 5);
-const inner = items.slice(5);
-
-function chipTone(tone: Tool["tone"]) {
-  switch (tone) {
-    case "signal":
-      return "border-[rgba(245,236,57,0.4)] bg-[rgba(245,236,57,0.22)] text-[color:var(--color-muted-deep)]";
-    case "accent":
-      return "border-[rgba(245,56,91,0.26)] bg-[rgba(245,56,91,0.12)] text-[color:var(--color-muted-deep)]";
-    default:
-      return "border-[rgba(86,108,117,0.24)] bg-[rgba(255,255,255,0.7)] text-[color:var(--color-copy)]";
-  }
-}
+const serializedCloudItems = JSON.stringify(items.map((item) => ({ name: item.name, tone: item.tone })));
 ---
 
-<div class="surface-card relative mx-auto flex aspect-square w-full max-w-[34rem] items-center justify-center overflow-hidden rounded-[2.5rem] p-6">
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.8),rgba(255,255,255,0.12)_56%,transparent_70%)]"></div>
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(245,236,57,0.22),transparent_46%),radial-gradient(circle_at_62%_38%,rgba(245,56,91,0.08),transparent_28%)]"></div>
-
-  <div class="relative flex size-full items-center justify-center">
-    {outer.map((tool, index) => {
-      const angle = (360 / outer.length) * index;
-
-      return (
-        <div
-          style={`--angle:${angle}deg;--radius:150px;--duration:28;`}
-          class="absolute left-1/2 top-1/2 animate-orbit"
-        >
-          <div class:list={[
-            "flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border px-3 text-center text-[0.72rem] font-semibold leading-4 shadow-[0_12px_30px_rgba(18,23,34,0.08)] backdrop-blur-md",
-            chipTone(tool.tone),
-          ]}>
-            {tool.name}
-          </div>
-        </div>
-      );
-    })}
-
-    {inner.map((tool, index) => {
-      const angle = (360 / inner.length) * index;
-
-      return (
-        <div
-          style={`--angle:${angle}deg;--radius:94px;--duration:22;animation-direction:reverse;`}
-          class="absolute left-1/2 top-1/2 animate-orbit"
-        >
-          <div class:list={[
-            "flex h-[4.4rem] w-[4.4rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border px-2 text-center text-[0.68rem] font-semibold leading-4 shadow-[0_10px_24px_rgba(18,23,34,0.08)] backdrop-blur-md",
-            chipTone(tool.tone),
-          ]}>
-            {tool.name}
-          </div>
-        </div>
-      );
-    })}
-
-    <div class="relative z-20 flex size-36 flex-col items-center justify-center rounded-full border border-[rgba(86,108,117,0.1)] bg-[color:var(--color-paper-strong)] text-center shadow-[0_20px_70px_rgba(86,108,117,0.14)]">
-      <span class="eyebrow text-[0.6rem] font-semibold text-[color:var(--color-signal-ink)]">
-        Core stack
-      </span>
-      <span class="mt-2 font-display text-3xl text-[color:var(--color-ink)]">Astro</span>
-      <span class="mt-1 text-xs text-[color:var(--color-copy)]">Product-first</span>
-    </div>
+<div class="relative mx-auto aspect-square w-full max-w-[32rem]">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 overflow-hidden rounded-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.15)_0%,rgba(255,255,255,0.1)_58%,rgba(255,255,255,0.05)_100%)]"
+  >
+  
   </div>
+
+  <div
+    data-tools-cloud-root
+    data-cloud-items={serializedCloudItems}
+    class="absolute inset-[-3%] z-10"
+  ></div>
 </div>
+
+<script>
+  import React from "react";
+  import { createRoot } from "react-dom/client";
+  import { IconCloud } from "@/components/ui/icon-cloud";
+
+  type ToolBadgeItem = {
+    name: string;
+    tone: "signal" | "accent" | "muted";
+  };
+
+  const toolsCloudRoot = document.querySelector("[data-tools-cloud-root]");
+
+  const paletteMap: Record<string, { fill: string; text: string }> = {
+    React: { fill: "#61dafb", text: "#10202a" },
+    Astro: { fill: "#f5385b", text: "#fff8f2" },
+    "Node.js": { fill: "#7bb661", text: "#142316" },
+    "Express.js": { fill: "#566c75", text: "#fffef3" },
+    PHP: { fill: "#8892bf", text: "#13182b" },
+    Laravel: { fill: "#ff5b41", text: "#fff7f2" },
+    Figma: { fill: "#1abcfe", text: "#0d1f29" },
+    "Artificial Intelligence": { fill: "#f5ec39", text: "#5b5100" },
+  };
+
+  function escapeXml(value: string) {
+    return value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&apos;");
+  }
+
+  function fallbackPalette(tone: ToolBadgeItem["tone"]) {
+    if (tone === "signal") {
+      return { fill: "#f5ec39", text: "#5b5100" };
+    }
+
+    if (tone === "accent") {
+      return { fill: "#f5385b", text: "#fff8f2" };
+    }
+
+    return { fill: "#566c75", text: "#fffef3" };
+  }
+
+  function getLabelLayout(name: string) {
+    const words = name.split(/\s+/).filter(Boolean);
+
+    if (words.length === 1) {
+      return {
+        lines: [name],
+        fontSize: name.length >= 10 ? 8 : name.length >= 8 ? 9 : 11,
+      };
+    }
+
+    if (words.length === 2) {
+      return {
+        lines: words,
+        fontSize: words.some((word) => word.length >= 10) ? 6.6 : 7.4,
+      };
+    }
+
+    return {
+      lines: [words.slice(0, 2).join(" "), words.slice(2).join(" ")],
+      fontSize: 6.2,
+    };
+  }
+
+  function buildBadgeImage(item: ToolBadgeItem) {
+    const palette = paletteMap[item.name] ?? fallbackPalette(item.tone);
+    const { lines, fontSize } = getLabelLayout(item.name);
+    const lineHeight = fontSize * 1.1;
+    const startY = 32 - (lineHeight * (lines.length - 1)) / 2;
+    const labelMarkup = lines
+      .map(
+        (line, index) =>
+          `<tspan x="32" y="${(startY + index * lineHeight).toFixed(1)}">${escapeXml(line)}</tspan>`
+      )
+      .join("");
+
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="31" fill="${palette.fill}" />
+        <circle cx="32" cy="32" r="30.5" stroke="rgba(255,255,255,0.38)" />
+        <text
+          text-anchor="middle"
+          fill="${palette.text}"
+          font-family="'Instrument Sans', Arial, sans-serif"
+          font-size="${fontSize}"
+          font-weight="700"
+          letter-spacing="-0.03em"
+        >${labelMarkup}</text>
+      </svg>
+    `;
+
+    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+  }
+
+  if (toolsCloudRoot instanceof HTMLDivElement && toolsCloudRoot.dataset.mounted !== "true") {
+    toolsCloudRoot.dataset.mounted = "true";
+
+    const reactRoot = createRoot(toolsCloudRoot);
+    const cloudItems = JSON.parse(toolsCloudRoot.dataset.cloudItems ?? "[]") as ToolBadgeItem[];
+    const images = cloudItems.map(buildBadgeImage);
+
+    reactRoot.render(
+      React.createElement(IconCloud, {
+        images,
+        className: "cursor-grab active:cursor-grabbing",
+        iconScale: 0.24,
+        radiusScale: 0.35,
+      })
+    );
+
+    window.addEventListener(
+      "pagehide",
+      () => {
+        reactRoot.unmount();
+        delete toolsCloudRoot.dataset.mounted;
+      },
+      { once: true }
+    );
+  }
+</script>

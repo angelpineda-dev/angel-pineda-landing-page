@@ -143,22 +143,6 @@ button {
   }
 }
 
-@keyframes orbit {
-  from {
-    transform: translate(-50%, -50%) rotate(var(--angle))
-      translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1));
-  }
-
-  to {
-    transform: translate(-50%, -50%) rotate(calc(var(--angle) + 360deg))
-      translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) + 360deg) * -1));
-  }
-}
-
-.animate-orbit {
-  animation: orbit calc(var(--duration) * 1s) linear infinite;
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
