@@ -1,4 +1,5 @@
 ---
+import Icon from "@/components/Icon.astro";
 import { buttonVariants } from "@/components/ui/button";
 import MobileNav from "@/components/MobileNav.astro";
 
@@ -11,7 +12,7 @@ const { items, whatsappHref } = Astro.props;
 ---
 
 <header class="sticky top-0 z-40 px-4 pt-4 sm:px-6">
-  <div class="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_20%,white)] bg-[rgba(255,254,243,0.84)] px-4 py-3 shadow-[0_18px_50px_rgba(86,108,117,0.14)] backdrop-blur-xl sm:px-6">
+  <div class="mx-auto grid max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-4 rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_20%,white)] bg-[color:var(--color-surface-strong)] px-4 py-3 shadow-[var(--shadow-soft)] backdrop-blur-xl sm:px-6">
     <a href="#" class="flex flex-col leading-none">
       <span class="font-display text-lg text-[color:var(--color-ink)] sm:text-xl">
         Angel Pineda
@@ -21,30 +22,136 @@ const { items, whatsappHref } = Astro.props;
       </span>
     </a>
 
-    <nav class="hidden items-center gap-7 lg:flex">
+    <nav class="hidden items-center justify-center gap-7 lg:flex">
       {items.map((item) => (
         <a
           href={item.href}
-          class="text-sm font-medium text-[color:var(--color-muted-deep)] transition-colors hover:text-[color:var(--color-accent)]"
+          class="text-sm font-medium text-[color:var(--color-copy)] transition-colors hover:text-[color:var(--color-accent)]"
         >
           {item.label}
         </a>
       ))}
     </nav>
 
-    <div class="hidden lg:block">
-      <a
-        href={whatsappHref}
-        target="_blank"
-        rel="noreferrer"
-        class={buttonVariants({ variant: "default", size: "default" })}
+    <div class="ml-auto flex items-center gap-2 sm:gap-3">
+      <button
+        type="button"
+        aria-label="Toggle theme"
+        title="Toggle theme"
+        data-theme-toggle
+        class="inline-flex size-11 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_28%,white)] bg-[color:var(--color-surface)] text-[color:var(--color-ink)] shadow-[var(--shadow-soft)] transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
       >
-        WhatsApp business
-      </a>
-    </div>
+        <span class="inline-flex dark:hidden">
+          <Icon name="moon" size={17} />
+        </span>
+        <span class="hidden dark:inline-flex">
+          <Icon name="sun" size={17} />
+        </span>
+        <span class="sr-only">Toggle theme</span>
+      </button>
 
-    <div class="lg:hidden">
-      <MobileNav items={items} whatsappHref={whatsappHref} />
+      <div class="hidden lg:block">
+        <a
+          href={whatsappHref}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Open WhatsApp chat in a new tab"
+          class:list={[
+            buttonVariants({ variant: "default", size: "default" }),
+            "min-w-[9.75rem] justify-center",
+          ]}
+        >
+          <Icon name="whatsapp" size={20} />
+          WhatsApp
+        </a>
+      </div>
+
+      <div class="lg:hidden">
+        <MobileNav items={items} whatsappHref={whatsappHref} />
+      </div>
     </div>
   </div>
 </header>
+
+<script>
+  const themeWindow = window as typeof window & {
+    __siteTheme?: {
+      applyPreference?: (preference: "light" | "dark" | "system") => void;
+      getPreference?: () => "light" | "dark" | "system";
+    };
+  };
+
+  const getThemeApi = () => {
+    return themeWindow.__siteTheme;
+  };
+
+  const themeToggleButtons = document.querySelectorAll("[data-theme-toggle]");
+
+  for (const button of themeToggleButtons) {
+    if (!(button instanceof HTMLButtonElement) || button.dataset.bound === "true") {
+      continue;
+    }
+
+    button.dataset.bound = "true";
+    const syncButtonCopy = () => {
+      const themeApi = getThemeApi();
+      const preference = themeApi?.getPreference?.() ?? "system";
+      const resolvedTheme = document.documentElement.classList.contains("dark") ? "dark" : "light";
+
+      if (preference === "system") {
+        button.title = `Following device theme (${resolvedTheme})`;
+      } else {
+        button.title = `Using ${preference} override`;
+      }
+    };
+
+    const themeObserver = new MutationObserver(syncButtonCopy);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "data-theme-preference"],
+    });
+
+    syncButtonCopy();
+
+    button.addEventListener("click", () => {
+      const themeApi = getThemeApi();
+      const preference = themeApi?.getPreference?.() ?? "system";
+      const isDark = document.documentElement.classList.contains("dark");
+      const nextTheme = preference === "system" ? (isDark ? "light" : "dark") : "system";
+      const { top, left, width, height } = button.getBoundingClientRect();
+      const x = left + width / 2;
+      const y = top + height / 2;
+      const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+      const maxRadius = Math.hypot(
+        Math.max(x, viewportWidth - x),
+        Math.max(y, viewportHeight - y)
+      );
+
+      if (typeof document.startViewTransition !== "function") {
+        themeApi?.applyPreference?.(nextTheme);
+        return;
+      }
+
+      const transition = document.startViewTransition(() => {
+        themeApi?.applyPreference?.(nextTheme);
+      });
+
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${maxRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 400,
+            easing: "ease-in-out",
+            pseudoElement: "::view-transition-new(root)",
+          }
+        );
+      });
+    });
+  }
+</script>

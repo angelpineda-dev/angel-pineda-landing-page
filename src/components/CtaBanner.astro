@@ -1,20 +1,22 @@
 ---
+import Icon from "@/components/Icon.astro";
 import { buttonVariants } from "@/components/ui/button";
 
 type Props = {
   title: string;
   description: string;
   label: string;
+  note: string;
   whatsappHref: string;
 };
 
-const { title, description, label, whatsappHref } = Astro.props;
+const { title, description, label, note, whatsappHref } = Astro.props;
 ---
 
 <section class="px-4 py-20 sm:px-6 sm:py-24">
   <div class="mx-auto max-w-7xl">
     <div class="surface-card noise-mask relative overflow-hidden rounded-[2.4rem] px-6 py-8 sm:px-10 sm:py-12">
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,236,57,0.32),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(245,56,91,0.14),transparent_30%)]"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,71,128,0.26),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(191,10,38,0.16),transparent_30%)]"></div>
       <div class="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <div class="max-w-2xl">
           <p class="eyebrow text-[0.62rem] font-semibold text-[color:var(--color-signal-ink)]">
@@ -28,14 +30,24 @@ const { title, description, label, whatsappHref } = Astro.props;
           </p>
         </div>
 
-        <a
-          href={whatsappHref}
-          target="_blank"
-          rel="noreferrer"
-          class={buttonVariants({ variant: "accent", size: "lg" })}
-        >
-          {label}
-        </a>
+        <div class="flex flex-col items-start gap-3 lg:items-end">
+          <p class="text-sm font-medium text-[color:var(--color-copy)] lg:max-w-[15rem] lg:text-right">
+            {note}
+          </p>
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Chat on WhatsApp"
+            class:list={[
+              buttonVariants({ variant: "accent", size: "lg" }),
+              "justify-center",
+            ]}
+          >
+            <Icon name="whatsapp" size={20} />
+            {label}
+          </a>
+        </div>
       </div>
     </div>
   </div>

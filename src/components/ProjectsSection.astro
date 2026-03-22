@@ -13,6 +13,13 @@ type Props = {
       description: string;
       tags: readonly string[];
       href: string;
+      highlights?: {
+        currentLabel: string;
+        currentDescription: string;
+        futureLabel: string;
+        futureDescription: string;
+        ctaLabel: string;
+      };
     };
     archiveTitle: string;
     archiveDescription: string;
@@ -31,64 +38,68 @@ const { projects } = Astro.props;
       align="center"
     />
 
-    <div class="mx-auto mt-12 max-w-4xl">
-      <article class="surface-card flex flex-col justify-between rounded-[2rem] p-6 text-center sm:p-8">
-        <div class="flex flex-col items-center">
-          <div class="flex flex-wrap justify-center gap-3">
-            {projects.featured.tags.map((tag) => (
-              <span class="eyebrow rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_16%,white)] bg-[rgba(245,236,57,0.18)] px-4 py-2 text-[0.65rem] font-semibold text-[color:var(--color-muted-deep)]">
-                {tag}
-              </span>
-            ))}
-          </div>
+    <article class="surface-card mt-12 overflow-hidden rounded-[2.35rem] px-6 py-7 sm:px-8 sm:py-8 lg:px-10 lg:py-10">
+      <div class="mx-auto max-w-4xl">
+        <div class="flex flex-wrap gap-2.5">
+          {projects.featured.tags.map((tag) => (
+            <span class="rounded-full border border-[color:color-mix(in_oklab,var(--color-frame)_78%,transparent)] bg-[color:color-mix(in_oklab,var(--color-paper-soft)_88%,white)] px-3.5 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-copy)]">
+              {tag}
+            </span>
+          ))}
+        </div>
 
-          <div class="mt-8 flex flex-col items-center gap-4">
-            <h3 class="font-display text-4xl leading-none text-[color:var(--color-ink)] sm:text-5xl">
-              {projects.featured.title}
-            </h3>
-            <a
-              href={projects.featured.href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`Open ${projects.featured.title} in a new tab`}
-              class="inline-flex size-12 shrink-0 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_22%,transparent)] bg-white/74 text-[color:var(--color-ink)] transition-colors hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
-            >
-              <Icon name="arrow-up-right" size={18} />
-            </a>
-          </div>
-
-          <p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-[color:var(--color-copy)]">
+        <div class="mt-6 max-w-3xl">
+          <h3 class="font-display text-[2.55rem] leading-[0.96] text-[color:var(--color-ink)] sm:text-[3.5rem]">
+            {projects.featured.title}
+          </h3>
+          <p class="mt-5 max-w-2xl text-base leading-8 text-[color:var(--color-copy)] sm:text-[1.05rem]">
             {projects.featured.description}
           </p>
         </div>
 
-        <div class="mt-8 flex justify-center">
+        {projects.featured.highlights && (
+          <dl class="mt-8 grid gap-5 border-t border-[color:color-mix(in_oklab,var(--color-frame)_72%,transparent)] pt-6 text-sm leading-7 text-[color:var(--color-copy)] sm:grid-cols-2">
+            <div class="space-y-2">
+              <dt class="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-signal-ink)]">
+                {projects.featured.highlights.currentLabel}
+              </dt>
+              <dd>{projects.featured.highlights.currentDescription}</dd>
+            </div>
+
+            <div class="space-y-2">
+              <dt class="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
+                {projects.featured.highlights.futureLabel}
+              </dt>
+              <dd>{projects.featured.highlights.futureDescription}</dd>
+            </div>
+          </dl>
+        )}
+
+        <div class="mt-8 flex flex-col gap-4 border-t border-[color:color-mix(in_oklab,var(--color-frame)_72%,transparent)] pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p class="max-w-2xl text-sm leading-7 text-[color:var(--color-copy)]">
+            Open the project in its own tab to review the current experience without an embedded frame.
+          </p>
+
           <a
             href={projects.featured.href}
             target="_blank"
             rel="noreferrer"
-            class={buttonVariants({ variant: "outline", size: "default" })}
+            class={buttonVariants({ variant: "default", size: "default" })}
           >
-            View project
+            {projects.featured.highlights?.ctaLabel ?? "Open project site"}
+            <Icon name="arrow-up-right" size={18} />
           </a>
         </div>
-      </article>
-    </div>
+      </div>
+    </article>
 
-    <div class="surface-card mx-auto mt-8 max-w-6xl rounded-[2rem] p-6 text-center sm:p-8">
-      <p class="eyebrow text-[0.62rem] font-semibold text-[color:var(--color-signal-ink)]">
+    <div class="mx-auto mt-8 max-w-4xl border-t border-[color:color-mix(in_oklab,var(--color-frame)_72%,transparent)] pt-6 text-center">
+      <p class="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-signal-ink)]">
         {projects.archiveTitle}
       </p>
-
-      <div class="mt-5 flex flex-col items-center gap-4">
-        <p class="max-w-2xl text-base leading-7 text-[color:var(--color-copy)]">
-          {projects.archiveDescription}
-        </p>
-
-        <div class="rounded-[1.25rem] border border-dashed border-[color:color-mix(in_oklab,var(--color-muted)_36%,transparent)] px-5 py-4 text-sm text-[color:var(--color-copy)]">
-          Empty state ready for the next case study.
-        </div>
-      </div>
+      <p class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-[color:var(--color-copy)] sm:text-base">
+        {projects.archiveDescription}
+      </p>
     </div>
   </div>
 </section>

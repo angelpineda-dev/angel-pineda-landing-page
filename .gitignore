@@ -3,6 +3,7 @@ node_modules/
 
 # Astro build and cache output
 .astro/
+.codex/
 dist/
 
 # Environment files

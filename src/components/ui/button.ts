@@ -1,23 +1,23 @@
 import { cva } from "class-variance-authority";
 
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)] disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-[color:var(--color-signal)] px-6 text-[color:var(--color-muted-deep)] shadow-[0_16px_40px_rgba(245,236,57,0.24)] hover:-translate-y-0.5 hover:bg-[color:color-mix(in_oklab,var(--color-signal)_86%,white)]",
+          "bg-[color:var(--color-signal)] px-6 text-[color:var(--color-paper-strong)] shadow-[var(--shadow-button-signal)] hover:-translate-y-0.5 hover:bg-[color:color-mix(in_oklab,var(--color-signal)_92%,white)]",
         outline:
           "border border-[color:color-mix(in_oklab,var(--color-muted)_68%,transparent)] bg-transparent px-6 text-[color:var(--color-ink)] hover:border-[color:var(--color-accent)] hover:bg-[color:color-mix(in_oklab,var(--color-accent)_10%,transparent)]",
         ghost:
           "bg-transparent px-4 text-[color:var(--color-ink)] hover:bg-[color:color-mix(in_oklab,var(--color-muted)_10%,transparent)]",
         accent:
-          "bg-[color:var(--color-accent)] px-6 text-[color:var(--color-paper-strong)] shadow-[0_18px_45px_rgba(245,56,91,0.2)] hover:-translate-y-0.5 hover:bg-[color:color-mix(in_oklab,var(--color-accent)_88%,white)]",
+          "bg-[color:var(--color-accent)] px-6 text-[color:var(--color-paper-strong)] shadow-[var(--shadow-button-accent)] hover:-translate-y-0.5 hover:bg-[color:color-mix(in_oklab,var(--color-accent)_88%,white)]",
       },
       size: {
         sm: "h-10 px-4 text-sm",
         default: "h-11 px-5 text-sm",
-        lg: "h-14 px-7 text-sm tracking-[0.18em] uppercase",
+        lg: "h-14 min-w-[13rem] px-7 text-[0.95rem] sm:px-8",
       },
     },
     defaultVariants: {

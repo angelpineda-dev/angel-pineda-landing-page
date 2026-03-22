@@ -1,4 +1,5 @@
 ---
+import Icon from "@/components/Icon.astro";
 import { buttonVariants } from "@/components/ui/button";
 
 type Props = {
@@ -15,8 +16,8 @@ type Props = {
 const { contact } = Astro.props;
 ---
 
-<footer class="border-t border-white/45 px-4 pb-12 pt-12 sm:px-6">
-  <div class="mx-auto grid max-w-7xl gap-10 rounded-[2rem] border border-[rgba(245,236,57,0.18)] bg-[linear-gradient(180deg,rgba(86,108,117,0.98),rgba(50,65,72,0.98))] px-6 py-8 text-white/82 shadow-[0_28px_80px_rgba(86,108,117,0.22)] sm:px-8 lg:grid-cols-[1.15fr_0.85fr_auto] lg:items-start">
+<footer class="border-t border-[color:color-mix(in_oklab,var(--color-muted)_24%,transparent)] px-4 pb-12 pt-12 sm:px-6">
+  <div class="mx-auto grid max-w-7xl gap-10 rounded-[2rem] border border-[rgba(205,12,43,0.22)] bg-[linear-gradient(180deg,#002b53,#131313)] px-6 py-8 text-white/82 shadow-[var(--shadow-strong)] sm:px-8 lg:grid-cols-[1.15fr_0.85fr_auto] lg:items-start">
     <div>
       <p class="font-display text-4xl text-white">Angel Pineda</p>
       <p class="mt-4 max-w-sm text-sm leading-7 text-white/68">
@@ -25,10 +26,10 @@ const { contact } = Astro.props;
     </div>
 
     <div class="grid gap-3 text-sm">
-      <a href={`mailto:${contact.email}`} class="transition-colors hover:text-[color:var(--color-signal)]">
+      <a href={`mailto:${contact.email}`} class="transition-colors hover:text-[color:var(--color-accent-strong)]">
         {contact.email}
       </a>
-      <a href={contact.phoneHref} class="transition-colors hover:text-[color:var(--color-signal)]">
+      <a href={contact.phoneHref} class="transition-colors hover:text-[color:var(--color-accent-strong)]">
         {contact.phoneLabel}
       </a>
       <p>{contact.location}</p>
@@ -41,9 +42,14 @@ const { contact } = Astro.props;
       href={contact.whatsappHref}
       target="_blank"
       rel="noreferrer"
-      class={buttonVariants({ variant: "accent", size: "default" })}
+      aria-label="Open WhatsApp chat in a new tab"
+      class:list={[
+        buttonVariants({ variant: "accent", size: "default" }),
+        "min-w-[9.75rem] justify-center",
+      ]}
     >
-      WhatsApp business
+      <Icon name="whatsapp" size={20} />
+      WhatsApp
     </a>
   </div>
 </footer>
