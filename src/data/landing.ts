@@ -55,12 +55,21 @@ export const landingPage = {
   ] satisfies NavItem[],
   hero: {
     eyebrow: "Software Engineer",
-    title: "Build, launch, and scale your web product without the chaos.",
+    contextTag: "End-to-end delivery",
+    title: "Build, launch, and scale your web product",
+    titleAccent: "without the chaos.",
     description:
-      "From idea to production, I handle discovery, strategy, design, development, and deployment so you can stay focused on growing the business behind the product.",
+      "From idea to production, I handle discovery, strategy, design, development, and deployment so your product keeps moving while you stay focused on the business behind it.",
     ctaLabel: "Start your project",
+    secondaryCtaLabel: "See services",
+    secondaryCtaHref: "#services",
     supportingLine:
-      "I design systems that solve real problems, scale with your growth, and stay understandable at every step.",
+      "Start with a focused conversation about goals, constraints, and the fastest useful version to ship.",
+    proofPoints: [
+      "Clear scope before code",
+      "Strategy, design, and development in one flow",
+      "Launch support built into the process",
+    ],
   },
   services: {
     eyebrow: "Services",

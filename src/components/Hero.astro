@@ -4,10 +4,15 @@ import { buttonVariants } from "@/components/ui/button";
 type Props = {
   hero: {
     eyebrow: string;
+    contextTag: string;
     title: string;
+    titleAccent: string;
     description: string;
     ctaLabel: string;
+    secondaryCtaLabel: string;
+    secondaryCtaHref: string;
     supportingLine: string;
+    proofPoints: readonly string[];
   };
   whatsappHref: string;
 };
@@ -17,23 +22,41 @@ const { hero, whatsappHref } = Astro.props;
 
 <section class="px-4 pb-20 pt-8 sm:px-6 sm:pb-24 lg:pb-28">
   <div class="mx-auto max-w-7xl">
-    <div class="relative overflow-hidden rounded-[2.5rem] border border-[color:color-mix(in_oklab,var(--color-muted)_18%,white)] bg-[linear-gradient(180deg,rgba(255,255,255,0.86),rgba(245,236,57,0.14))] px-6 py-8 shadow-[0_22px_80px_rgba(86,108,117,0.12)] backdrop-blur-xl sm:px-10 sm:py-12 lg:px-12">
+    <div class="relative overflow-hidden rounded-[2.5rem] border border-[color:color-mix(in_oklab,var(--color-muted)_18%,white)] bg-[linear-gradient(180deg,rgba(255,255,255,0.88),rgba(245,236,57,0.16))] px-6 py-8 shadow-[0_22px_80px_rgba(86,108,117,0.12)] backdrop-blur-xl sm:px-10 sm:py-12 lg:px-14 lg:py-14">
       <div class="absolute inset-0 opacity-70 [mask-image:radial-gradient(circle_at_center,black_48%,transparent_100%)]">
         <div class="absolute inset-0 bg-[linear-gradient(rgba(86,108,117,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(86,108,117,0.08)_1px,transparent_1px)] bg-[size:2.75rem_2.75rem]"></div>
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(245,236,57,0.3),transparent_24%),radial-gradient(circle_at_78%_18%,rgba(245,56,91,0.12),transparent_26%)]"></div>
       </div>
-      <div class="relative z-10">
-        <p class="eyebrow mb-5 text-xs font-semibold text-[color:var(--color-signal-ink)] sm:text-sm">
-          {hero.eyebrow}
-        </p>
-        <h1 class="font-display text-[2.9rem] leading-[0.9] text-[color:var(--color-ink)] sm:text-[4.5rem] lg:text-[5.8rem]">
-          {hero.title}
+      <div class="relative z-10 max-w-5xl">
+        <div class="flex flex-wrap items-center gap-3">
+          <p class="eyebrow text-xs font-semibold text-[color:var(--color-signal-ink)] sm:text-sm">
+            {hero.eyebrow}
+          </p>
+          <span class="rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_20%,white)] bg-[rgba(255,255,255,0.68)] px-3 py-1.5 text-xs font-medium text-[color:var(--color-muted-deep)]">
+            {hero.contextTag}
+          </span>
+        </div>
+
+        <h1 class="mt-6 max-w-4xl font-display text-[2.9rem] leading-[0.92] text-[color:var(--color-ink)] sm:text-[4.5rem] lg:text-[5.7rem]">
+          <span>{hero.title}</span>
+          <span class="mt-2 block text-[color:var(--color-accent)]">
+            {hero.titleAccent}
+          </span>
         </h1>
         <p class="mt-6 max-w-2xl text-base leading-7 text-[color:var(--color-copy)] sm:text-lg">
           {hero.description}
         </p>
 
-        <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <ul class="mt-8 grid max-w-3xl gap-3 text-sm text-[color:var(--color-muted-deep)] sm:grid-cols-3">
+          {hero.proofPoints.map((item) => (
+            <li class="flex items-start gap-3 rounded-[1.35rem] border border-[color:color-mix(in_oklab,var(--color-muted)_16%,white)] bg-[rgba(255,255,255,0.62)] px-4 py-3 leading-6">
+              <span class="mt-2 size-2.5 shrink-0 rounded-full bg-[color:var(--color-accent)]"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
           <a
             href={whatsappHref}
             target="_blank"
@@ -42,10 +65,14 @@ const { hero, whatsappHref } = Astro.props;
           >
             {hero.ctaLabel}
           </a>
-          <p class="max-w-xs border-l-2 border-[color:var(--color-accent)] pl-4 text-sm leading-6 text-[color:var(--color-copy)]">
-            {hero.supportingLine}
-          </p>
+          <a href={hero.secondaryCtaHref} class={buttonVariants({ variant: "outline", size: "default" })}>
+            {hero.secondaryCtaLabel}
+          </a>
         </div>
+
+        <p class="mt-5 max-w-2xl text-sm leading-6 text-[color:var(--color-copy)] sm:text-base">
+          {hero.supportingLine}
+        </p>
       </div>
     </div>
   </div>
