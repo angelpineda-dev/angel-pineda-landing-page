@@ -1,14 +1,16 @@
 ---
+import Icon from "@/components/Icon.astro";
 import { buttonVariants } from "@/components/ui/button";
 
 type Props = {
   title: string;
   description: string;
   label: string;
+  note: string;
   whatsappHref: string;
 };
 
-const { title, description, label, whatsappHref } = Astro.props;
+const { title, description, label, note, whatsappHref } = Astro.props;
 ---
 
 <section class="px-4 py-20 sm:px-6 sm:py-24">
@@ -28,14 +30,24 @@ const { title, description, label, whatsappHref } = Astro.props;
           </p>
         </div>
 
-        <a
-          href={whatsappHref}
-          target="_blank"
-          rel="noreferrer"
-          class={buttonVariants({ variant: "accent", size: "lg" })}
-        >
-          {label}
-        </a>
+        <div class="flex flex-col items-start gap-3 lg:items-end">
+          <p class="text-sm font-medium text-[color:var(--color-copy)] lg:max-w-[15rem] lg:text-right">
+            {note}
+          </p>
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Chat on WhatsApp"
+            class:list={[
+              buttonVariants({ variant: "accent", size: "lg" }),
+              "justify-center",
+            ]}
+          >
+            <Icon name="whatsapp" size={20} />
+            {label}
+          </a>
+        </div>
       </div>
     </div>
   </div>

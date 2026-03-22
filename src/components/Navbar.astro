@@ -55,9 +55,14 @@ const { items, whatsappHref } = Astro.props;
           href={whatsappHref}
           target="_blank"
           rel="noreferrer"
-          class={buttonVariants({ variant: "default", size: "default" })}
+          aria-label="Open WhatsApp chat in a new tab"
+          class:list={[
+            buttonVariants({ variant: "default", size: "default" }),
+            "min-w-[9.75rem] justify-center",
+          ]}
         >
-          WhatsApp business
+          <Icon name="whatsapp" size={20} />
+          WhatsApp
         </a>
       </div>
 

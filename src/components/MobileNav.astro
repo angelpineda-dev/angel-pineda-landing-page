@@ -65,13 +65,15 @@ const dialogId = "mobile-site-nav";
           href={whatsappHref}
           target="_blank"
           rel="noreferrer"
+          aria-label="Open WhatsApp chat in a new tab"
           data-mobile-nav-link
           class:list={[
             buttonVariants({ variant: "default", size: "lg" }),
-            "mt-8 w-full",
+            "mt-8 w-full justify-center",
           ]}
         >
-          WhatsApp business
+          <Icon name="whatsapp" size={20} />
+          WhatsApp
         </a>
       </div>
     </div>

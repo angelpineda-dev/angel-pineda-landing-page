@@ -27,10 +27,8 @@ export type FaqItem = {
   answer: string;
 };
 
-const whatsappNumber = "5255123412345";
-const whatsappLabel = encodeURIComponent(
-  "Hello Angel, I'd like to talk about building a web product."
-);
+const whatsappHref =
+  "https://wa.me/523317960306?text=Hi%2C%20I%20want%20to%20build%20a%20website.%20Can%20you%20help%20me%3F";
 
 export const landingPage = {
   site: {
@@ -44,7 +42,7 @@ export const landingPage = {
     phoneHref: "tel:+5255123412345",
     location: "Guadalajara, Jalisco",
     remoteLabel: "We can work remote",
-    whatsappHref: `https://wa.me/${whatsappNumber}?text=${whatsappLabel}`,
+    whatsappHref,
   },
   navItems: [
     { href: "#services", label: "Services" },
@@ -59,7 +57,7 @@ export const landingPage = {
     titleAccent: "without the chaos.",
     description:
       "From idea to production, I handle discovery, strategy, design, development, and deployment so your product keeps moving while you stay focused on the business behind it.",
-    ctaLabel: "Start your project",
+    ctaLabel: "Start on WhatsApp",
     secondaryCtaLabel: "See services",
     secondaryCtaHref: "#services",
     supportingLine:
@@ -169,6 +167,7 @@ export const landingPage = {
     title: "Ready to begin?",
     description:
       "Let’s have an initial conversation about your ideas without any obligation.",
-    label: "WhatsApp business",
+    label: "Chat on WhatsApp",
+    note: "Direct message, no form required.",
   },
 } as const;
