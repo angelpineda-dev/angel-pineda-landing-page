@@ -16,22 +16,93 @@ const { site, contact, navItems, hero, services, tools, projects, about, faq, ct
 ---
 
 <BaseLayout title={site.title} description={site.description}>
-  <Navbar items={navItems} whatsappHref={contact.whatsappHref} />
+  <div class="relative isolate">
+    <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,254,243,0.96)_0%,rgba(255,249,207,0.84)_44%,rgba(245,239,177,0.8)_100%)]"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(245,236,57,0.22),transparent_30%),radial-gradient(circle_at_85%_18%,rgba(245,56,91,0.14),transparent_24%),radial-gradient(circle_at_50%_100%,rgba(86,108,117,0.08),transparent_30%)]"></div>
+      <div
+        data-app-particles-root
+        class="absolute inset-0 opacity-55 [mask-image:radial-gradient(circle_at_center,black_52%,transparent_100%)]"
+      ></div>
+      <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,254,243,0.14)_0%,rgba(255,254,243,0.38)_100%)]"></div>
+    </div>
 
-  <main>
-    <Hero hero={hero} whatsappHref={contact.whatsappHref} />
-    <ServicesSection services={services} />
-    <ToolsSection tools={tools} />
-    <ProjectsSection projects={projects} />
-    <AboutSection about={about} />
-    <FAQSection faq={faq} />
-    <CtaBanner
-      title={cta.title}
-      description={cta.description}
-      label={cta.label}
-      whatsappHref={contact.whatsappHref}
-    />
-  </main>
+    <Navbar items={navItems} whatsappHref={contact.whatsappHref} />
 
-  <Footer contact={contact} />
+    <main>
+      <Hero hero={hero} whatsappHref={contact.whatsappHref} />
+      <ServicesSection services={services} />
+      <ToolsSection tools={tools} />
+      <ProjectsSection projects={projects} />
+      <AboutSection about={about} />
+      <FAQSection faq={faq} />
+      <CtaBanner
+        title={cta.title}
+        description={cta.description}
+        label={cta.label}
+        whatsappHref={contact.whatsappHref}
+      />
+    </main>
+
+    <Footer contact={contact} />
+  </div>
+
+  <script>
+    import React from "react";
+    import { createRoot } from "react-dom/client";
+    import { Particles } from "@/components/ui/particles";
+
+    const particlesRoot = document.querySelector("[data-app-particles-root]");
+
+    if (particlesRoot instanceof HTMLDivElement && particlesRoot.dataset.mounted !== "true") {
+      particlesRoot.dataset.mounted = "true";
+
+      const reactRoot = createRoot(particlesRoot);
+      reactRoot.render(
+        React.createElement(
+          React.Fragment,
+          null,
+          React.createElement(Particles, {
+            className: "absolute inset-0 size-full",
+            quantity: window.innerWidth < 768 ? 44 : 82,
+            staticity: 42,
+            ease: 86,
+            size: 0.9,
+            color: "#566c75",
+            vx: 0.06,
+            vy: -0.01,
+          }),
+          React.createElement(Particles, {
+            className: "absolute inset-0 size-full opacity-55",
+            quantity: window.innerWidth < 768 ? 16 : 28,
+            staticity: 68,
+            ease: 120,
+            size: 1.1,
+            color: "#f5385b",
+            vx: 0.015,
+            vy: -0.008,
+          }),
+          React.createElement(Particles, {
+            className: "absolute inset-0 size-full opacity-40",
+            quantity: window.innerWidth < 768 ? 12 : 20,
+            staticity: 92,
+            ease: 140,
+            size: 1.4,
+            color: "#f5ec39",
+            vx: 0.01,
+            vy: -0.004,
+          })
+        )
+      );
+
+      window.addEventListener(
+        "pagehide",
+        () => {
+          reactRoot.unmount();
+          delete particlesRoot.dataset.mounted;
+        },
+        { once: true }
+      );
+    }
+  </script>
 </BaseLayout>

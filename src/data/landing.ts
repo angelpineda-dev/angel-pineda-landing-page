@@ -55,7 +55,6 @@ export const landingPage = {
   ] satisfies NavItem[],
   hero: {
     eyebrow: "Software Engineer",
-    contextTag: "End-to-end delivery",
     title: "Build, launch, and scale your web product",
     titleAccent: "without the chaos.",
     description:
@@ -65,11 +64,6 @@ export const landingPage = {
     secondaryCtaHref: "#services",
     supportingLine:
       "Start with a focused conversation about goals, constraints, and the fastest useful version to ship.",
-    proofPoints: [
-      "Clear scope before code",
-      "Strategy, design, and development in one flow",
-      "Launch support built into the process",
-    ],
   },
   services: {
     eyebrow: "Services",
