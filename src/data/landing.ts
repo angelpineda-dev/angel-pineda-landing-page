@@ -125,8 +125,8 @@ export const landingPage = {
     featured: {
       title: "Nutriologa Monserrat",
       description:
-        "A wellness-focused experience for a nutrition specialist helping people improve digestive and metabolic health through guidance tailored to their reality.",
-      tags: ["Wellness", "E-commerce"],
+        "A wellness-focused experience for a nutrition specialist who helps people improve their digestive and metabolic health through tailored guidance.",
+      tags: ["Wellness", "Entrepreneur"],
       href: "https://example.com",
     } satisfies Project,
     archiveTitle: "Archive in progress",
