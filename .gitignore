@@ -19,3 +19,5 @@ npm-debug.log*
 
 # Local verification artifacts
 public/assets/screenshots/
+
+landing-page.md

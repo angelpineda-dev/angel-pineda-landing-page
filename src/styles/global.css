@@ -1,20 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --color-paper: #f7f1ea;
-  --color-paper-strong: #fffdf9;
-  --color-ink: #121722;
-  --color-copy: #475560;
+  --color-paper: #fffce2;
+  --color-paper-strong: #fffef3;
+  --color-paper-soft: #f8f2b7;
+  --color-ink: #223036;
+  --color-copy: #566b73;
   --color-muted: #566c75;
+  --color-muted-deep: #324148;
   --color-signal: #f5ec39;
+  --color-signal-ink: #857d00;
   --color-accent: #f5385b;
-  --color-surface: rgba(255, 255, 255, 0.7);
-  --color-surface-strong: rgba(255, 255, 255, 0.88);
+  --color-surface: rgba(255, 255, 255, 0.72);
+  --color-surface-strong: rgba(255, 255, 255, 0.9);
   --font-display: "Fraunces", serif;
   --font-body: "Instrument Sans", sans-serif;
   --radius-card: 2rem;
-  --shadow-soft: 0 18px 60px rgba(15, 20, 28, 0.08);
-  --shadow-strong: 0 28px 80px rgba(15, 20, 28, 0.14);
+  --shadow-soft: 0 18px 60px rgba(86, 108, 117, 0.12);
+  --shadow-strong: 0 28px 80px rgba(86, 108, 117, 0.2);
 }
 
 html {
@@ -24,9 +27,10 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(245, 236, 57, 0.16), transparent 28%),
-    radial-gradient(circle at top right, rgba(245, 56, 91, 0.14), transparent 24%),
-    linear-gradient(180deg, #fffdf9 0%, #f7f1ea 32%, #f4ede5 100%);
+    radial-gradient(circle at top left, rgba(245, 236, 57, 0.3), transparent 30%),
+    radial-gradient(circle at 82% 12%, rgba(245, 56, 91, 0.16), transparent 22%),
+    radial-gradient(circle at 50% 100%, rgba(86, 108, 117, 0.08), transparent 28%),
+    linear-gradient(180deg, #fffef3 0%, #fff9cf 42%, #f5efb1 100%);
   color: var(--color-ink);
   font-family: var(--font-body);
   text-rendering: optimizeLegibility;
@@ -39,14 +43,14 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(18, 23, 34, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(18, 23, 34, 0.018) 1px, transparent 1px);
+    linear-gradient(rgba(86, 108, 117, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(86, 108, 117, 0.06) 1px, transparent 1px);
   background-size: 160px 160px;
   mask-image: radial-gradient(circle at center, black 45%, transparent 95%);
 }
 
 ::selection {
-  background: rgba(245, 56, 91, 0.18);
+  background: rgba(245, 56, 91, 0.22);
   color: var(--color-ink);
 }
 
@@ -66,7 +70,11 @@ button {
 
 .surface-card {
   border: 1px solid color-mix(in oklab, var(--color-muted) 22%, transparent);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.58));
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(245, 236, 57, 0.14)
+  );
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(18px);
 }
@@ -81,9 +89,9 @@ button {
   inset: 0;
   pointer-events: none;
   background-image:
-    radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.5) 0, transparent 22%),
-    radial-gradient(circle at 85% 12%, rgba(245, 236, 57, 0.16) 0, transparent 18%),
-    radial-gradient(circle at 72% 78%, rgba(245, 56, 91, 0.08) 0, transparent 16%);
+    radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.38) 0, transparent 22%),
+    radial-gradient(circle at 85% 12%, rgba(245, 236, 57, 0.2) 0, transparent 20%),
+    radial-gradient(circle at 72% 78%, rgba(245, 56, 91, 0.1) 0, transparent 16%);
   mix-blend-mode: screen;
 }
 
@@ -99,7 +107,7 @@ button {
   background: linear-gradient(
     110deg,
     transparent 20%,
-    rgba(255, 255, 255, 0.5) 38%,
+    rgba(245, 236, 57, 0.32) 38%,
     transparent 58%
   );
   animation: shimmer 8s linear infinite;

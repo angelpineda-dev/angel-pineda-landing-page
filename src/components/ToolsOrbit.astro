@@ -15,18 +15,18 @@ const inner = items.slice(5);
 function chipTone(tone: Tool["tone"]) {
   switch (tone) {
     case "signal":
-      return "border-[rgba(245,236,57,0.35)] bg-[rgba(245,236,57,0.14)] text-[color:var(--color-ink)]";
+      return "border-[rgba(245,236,57,0.4)] bg-[rgba(245,236,57,0.22)] text-[color:var(--color-muted-deep)]";
     case "accent":
-      return "border-[rgba(245,56,91,0.22)] bg-[rgba(245,56,91,0.1)] text-[color:var(--color-ink)]";
+      return "border-[rgba(245,56,91,0.26)] bg-[rgba(245,56,91,0.12)] text-[color:var(--color-muted-deep)]";
     default:
-      return "border-[rgba(86,108,117,0.24)] bg-[rgba(255,255,255,0.55)] text-[color:var(--color-copy)]";
+      return "border-[rgba(86,108,117,0.24)] bg-[rgba(255,255,255,0.7)] text-[color:var(--color-copy)]";
   }
 }
 ---
 
 <div class="surface-card relative mx-auto flex aspect-square w-full max-w-[34rem] items-center justify-center overflow-hidden rounded-[2.5rem] p-6">
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.85),rgba(255,255,255,0.15)_56%,transparent_70%)]"></div>
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(245,56,91,0.08),transparent_38%),radial-gradient(circle_at_50%_50%,rgba(245,236,57,0.16),transparent_54%)]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.8),rgba(255,255,255,0.12)_56%,transparent_70%)]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(245,236,57,0.22),transparent_46%),radial-gradient(circle_at_62%_38%,rgba(245,56,91,0.08),transparent_28%)]"></div>
 
   <div class="relative flex size-full items-center justify-center">
     {outer.map((tool, index) => {
@@ -65,8 +65,8 @@ function chipTone(tone: Tool["tone"]) {
       );
     })}
 
-    <div class="relative z-20 flex size-36 flex-col items-center justify-center rounded-full border border-[rgba(18,23,34,0.08)] bg-[color:var(--color-paper-strong)] text-center shadow-[0_20px_70px_rgba(18,23,34,0.12)]">
-      <span class="eyebrow text-[0.6rem] font-semibold text-[color:var(--color-accent)]">
+    <div class="relative z-20 flex size-36 flex-col items-center justify-center rounded-full border border-[rgba(86,108,117,0.1)] bg-[color:var(--color-paper-strong)] text-center shadow-[0_20px_70px_rgba(86,108,117,0.14)]">
+      <span class="eyebrow text-[0.6rem] font-semibold text-[color:var(--color-signal-ink)]">
         Core stack
       </span>
       <span class="mt-2 font-display text-3xl text-[color:var(--color-ink)]">Astro</span>

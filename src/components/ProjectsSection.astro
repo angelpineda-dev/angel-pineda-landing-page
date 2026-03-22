@@ -41,7 +41,7 @@ const { projects } = Astro.props;
         <div>
           <div class="flex flex-wrap gap-3">
             {projects.featured.tags.map((tag) => (
-              <span class="eyebrow rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_18%,transparent)] bg-white/68 px-4 py-2 text-[0.65rem] font-semibold text-[color:var(--color-copy)]">
+              <span class="eyebrow rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_16%,white)] bg-[rgba(245,236,57,0.18)] px-4 py-2 text-[0.65rem] font-semibold text-[color:var(--color-muted-deep)]">
                 {tag}
               </span>
             ))}
@@ -79,7 +79,7 @@ const { projects } = Astro.props;
     </div>
 
     <div class="surface-card mt-8 rounded-[2rem] p-6 sm:p-8">
-      <p class="eyebrow text-[0.62rem] font-semibold text-[color:var(--color-accent)]">
+      <p class="eyebrow text-[0.62rem] font-semibold text-[color:var(--color-signal-ink)]">
         {projects.archiveTitle}
       </p>
       <div class="mt-5 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">

@@ -24,7 +24,7 @@ const { tools } = Astro.props;
       />
       <div class="mt-8 flex flex-wrap gap-3">
         {tools.items.map((tool) => (
-          <span class="rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_18%,transparent)] bg-white/70 px-4 py-2 text-sm text-[color:var(--color-copy)]">
+          <span class="rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_18%,white)] bg-[rgba(255,255,255,0.74)] px-4 py-2 text-sm text-[color:var(--color-copy)]">
             {tool.name}
           </span>
         ))}

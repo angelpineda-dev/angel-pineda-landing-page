@@ -61,11 +61,6 @@ export const landingPage = {
     ctaLabel: "Start your project",
     supportingLine:
       "I design systems that solve real problems, scale with your growth, and stay understandable at every step.",
-    stats: [
-      { label: "From brief to launch", value: "1 owner" },
-      { label: "Delivery focus", value: "Product clarity" },
-      { label: "Working style", value: "Remote-first" },
-    ],
   },
   services: {
     eyebrow: "Services",
