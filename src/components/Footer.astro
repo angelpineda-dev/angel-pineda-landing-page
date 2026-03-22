@@ -1,0 +1,49 @@
+---
+import { buttonVariants } from "@/components/ui/button";
+
+type Props = {
+  contact: {
+    email: string;
+    phoneLabel: string;
+    phoneHref: string;
+    location: string;
+    remoteLabel: string;
+    whatsappHref: string;
+  };
+};
+
+const { contact } = Astro.props;
+---
+
+<footer class="border-t border-white/45 px-4 pb-12 pt-12 sm:px-6">
+  <div class="mx-auto grid max-w-7xl gap-10 rounded-[2rem] border border-white/50 bg-[rgba(18,23,34,0.96)] px-6 py-8 text-white/78 shadow-[0_28px_80px_rgba(18,23,34,0.22)] sm:px-8 lg:grid-cols-[1.15fr_0.85fr_auto] lg:items-start">
+    <div>
+      <p class="font-display text-4xl text-white">Angel Pineda</p>
+      <p class="mt-4 max-w-sm text-sm leading-7 text-white/68">
+        Building product-focused web experiences with clear thinking, calm execution, and systems that can scale with the business.
+      </p>
+    </div>
+
+    <div class="grid gap-3 text-sm">
+      <a href={`mailto:${contact.email}`} class="transition-colors hover:text-[color:var(--color-signal)]">
+        {contact.email}
+      </a>
+      <a href={contact.phoneHref} class="transition-colors hover:text-[color:var(--color-signal)]">
+        {contact.phoneLabel}
+      </a>
+      <p>{contact.location}</p>
+      <p class="eyebrow text-[0.62rem] font-semibold text-white/52">
+        {contact.remoteLabel}
+      </p>
+    </div>
+
+    <a
+      href={contact.whatsappHref}
+      target="_blank"
+      rel="noreferrer"
+      class={buttonVariants({ variant: "accent", size: "default" })}
+    >
+      WhatsApp business
+    </a>
+  </div>
+</footer>

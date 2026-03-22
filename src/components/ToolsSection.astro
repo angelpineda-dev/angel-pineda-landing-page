@@ -1,0 +1,38 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import ToolsOrbit from "@/components/ToolsOrbit.astro";
+
+type Props = {
+  tools: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    items: readonly { name: string; tone: "signal" | "accent" | "muted" }[];
+  };
+};
+
+const { tools } = Astro.props;
+---
+
+<section id="tools" class="px-4 py-20 sm:px-6 sm:py-24">
+  <div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.82fr_1fr] lg:items-center">
+    <div>
+      <SectionHeading
+        eyebrow={tools.eyebrow}
+        title={tools.title}
+        description={tools.description}
+      />
+      <div class="mt-8 flex flex-wrap gap-3">
+        {tools.items.map((tool) => (
+          <span class="rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_18%,transparent)] bg-white/70 px-4 py-2 text-sm text-[color:var(--color-copy)]">
+            {tool.name}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <div>
+      <ToolsOrbit items={tools.items} />
+    </div>
+  </div>
+</section>

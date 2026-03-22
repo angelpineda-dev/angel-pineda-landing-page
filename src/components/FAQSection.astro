@@ -1,0 +1,31 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import FaqAccordion from "@/components/FaqAccordion.astro";
+
+type Props = {
+  faq: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    items: readonly { question: string; answer: string }[];
+  };
+};
+
+const { faq } = Astro.props;
+---
+
+<section id="faq" class="px-4 py-20 sm:px-6 sm:py-24">
+  <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.78fr_1fr]">
+    <div>
+      <SectionHeading
+        eyebrow={faq.eyebrow}
+        title={faq.title}
+        description={faq.description}
+      />
+    </div>
+
+    <div class="surface-card rounded-[2rem] p-5 sm:p-7">
+      <FaqAccordion items={faq.items} />
+    </div>
+  </div>
+</section>

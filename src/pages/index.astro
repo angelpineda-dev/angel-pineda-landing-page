@@ -1,0 +1,37 @@
+---
+import AboutSection from "@/components/AboutSection.astro";
+import CtaBanner from "@/components/CtaBanner.astro";
+import FAQSection from "@/components/FAQSection.astro";
+import Footer from "@/components/Footer.astro";
+import Hero from "@/components/Hero.astro";
+import Navbar from "@/components/Navbar.astro";
+import ProjectsSection from "@/components/ProjectsSection.astro";
+import ServicesSection from "@/components/ServicesSection.astro";
+import ToolsSection from "@/components/ToolsSection.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { landingPage } from "@/data/landing";
+
+const { site, contact, navItems, hero, services, tools, projects, about, faq, cta } =
+  landingPage;
+---
+
+<BaseLayout title={site.title} description={site.description}>
+  <Navbar items={navItems} whatsappHref={contact.whatsappHref} />
+
+  <main>
+    <Hero hero={hero} whatsappHref={contact.whatsappHref} />
+    <ServicesSection services={services} />
+    <ToolsSection tools={tools} />
+    <ProjectsSection projects={projects} />
+    <AboutSection about={about} />
+    <FAQSection faq={faq} />
+    <CtaBanner
+      title={cta.title}
+      description={cta.description}
+      label={cta.label}
+      whatsappHref={contact.whatsappHref}
+    />
+  </main>
+
+  <Footer contact={contact} />
+</BaseLayout>
