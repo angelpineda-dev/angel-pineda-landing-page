@@ -26,13 +26,14 @@ const { services } = Astro.props;
       eyebrow={services.eyebrow}
       title={services.title}
       description={services.description}
+      align="center"
     />
 
-    <div class="mt-12 grid gap-5 lg:grid-cols-4">
+    <div class="mt-12 grid gap-4 xl:gap-5 sm:grid-cols-2 xl:grid-cols-4">
       {services.items.map((service) => {
         return (
-          <article class="surface-card group rounded-[2rem] p-6 transition-transform duration-300 hover:-translate-y-1 sm:p-7">
-            <div class="flex items-start justify-between">
+          <article class="surface-card group mx-auto flex h-full max-w-sm flex-col items-center rounded-[2rem] p-6 text-center transition-transform duration-300 hover:-translate-y-1 sm:p-7">
+            <div class="flex items-center justify-center gap-4">
               <span class="font-display text-4xl text-[color:var(--color-accent)]">
                 {service.number}
               </span>
@@ -40,10 +41,10 @@ const { services } = Astro.props;
                 <Icon name={service.icon} size={20} />
               </span>
             </div>
-            <h3 class="mt-10 font-display text-3xl leading-tight text-[color:var(--color-ink)]">
+            <h3 class="mt-8 font-display text-3xl leading-tight text-[color:var(--color-ink)]">
               {service.title}
             </h3>
-            <p class="mt-4 text-sm leading-7 text-[color:var(--color-copy)]">
+            <p class="mt-4 max-w-xs text-sm leading-7 text-[color:var(--color-copy)]">
               {service.description}
             </p>
           </article>

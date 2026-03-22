@@ -3,11 +3,16 @@ type Props = {
   eyebrow: string;
   title: string;
   description: string;
-  align?: "left" | "right";
+  align?: "left" | "center" | "right";
 };
 
 const { eyebrow, title, description, align = "left" } = Astro.props;
-const alignment = align === "right" ? "md:text-right md:items-end" : "";
+const alignment =
+  align === "center"
+    ? "mx-auto items-center text-center"
+    : align === "right"
+      ? "md:ml-auto md:text-right md:items-end"
+      : "";
 ---
 
 <div class:list={["flex max-w-2xl flex-col gap-4", alignment]}>
