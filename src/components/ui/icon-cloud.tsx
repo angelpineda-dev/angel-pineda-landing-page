@@ -504,7 +504,7 @@ export function IconCloud({
         onPointerUp={handlePointerEnd}
         onPointerCancel={handlePointerEnd}
         onPointerLeave={handlePointerEnd}
-        className="size-full touch-none"
+        className="size-full touch-auto md:touch-none"
         aria-label="Interactive 3D Icon Cloud"
         role="img"
       />
