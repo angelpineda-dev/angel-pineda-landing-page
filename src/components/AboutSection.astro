@@ -18,7 +18,7 @@ const { about } = Astro.props;
 
 <section id="about" class="px-4 py-20 sm:px-6 sm:py-24">
   <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-    <div class="relative">
+    <div class="relative hidden lg:block lg:mx-0 lg:max-w-none">
       <PortraitPlaceholder />
       <div class="surface-card absolute -bottom-5 right-5 rounded-[1.6rem] px-5 py-4 sm:-bottom-8 sm:right-8 sm:px-6">
         <p class="font-display text-4xl text-[color:var(--color-ink)]">8+</p>
@@ -34,6 +34,16 @@ const { about } = Astro.props;
         title={about.title}
         description={about.description}
       />
+
+      <div class="relative mt-8 mx-auto w-full max-w-[20rem] sm:max-w-[24rem] lg:hidden">
+        <PortraitPlaceholder />
+        <div class="surface-card absolute -bottom-5 right-5 rounded-[1.6rem] px-5 py-4 sm:-bottom-8 sm:right-8 sm:px-6">
+          <p class="font-display text-4xl text-[color:var(--color-ink)]">8+</p>
+          <p class="eyebrow mt-1 text-[0.62rem] font-semibold text-[color:var(--color-signal-ink)]">
+            Years of craft
+          </p>
+        </div>
+      </div>
 
       <blockquote class="surface-card mt-8 rounded-[2rem] border-l-4 border-l-[color:var(--color-accent)] p-6 sm:p-8">
         <p class="font-display text-2xl leading-tight text-[color:var(--color-ink)] sm:text-4xl">
