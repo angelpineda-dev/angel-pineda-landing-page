@@ -386,9 +386,46 @@ const { items } = navigation;
     box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-signal) 20%, white);
   }
 
+  .dark .desktop-nav-link[data-active="true"] {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, var(--color-primary) 84%, white 16%),
+      0 10px 24px rgba(3, 71, 128, 0.28);
+  }
+
+  .dark .language-chip {
+    border-color: color-mix(in oklab, var(--color-primary) 34%, white 18%);
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--color-surface-strong) 94%, black 6%),
+        color-mix(in oklab, var(--color-primary) 34%, var(--color-surface) 66%)
+      );
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.24),
+      inset 0 0 0 1px color-mix(in oklab, var(--color-primary) 16%, white 10%);
+  }
+
+  .dark .language-chip span:first-child {
+    border-color: color-mix(in oklab, var(--color-accent) 72%, white 28%);
+    background: var(--color-accent);
+    color: var(--color-accent-foreground);
+  }
+
+  .dark .language-chip span:last-child {
+    color: var(--color-primary-foreground);
+  }
+
   .language-chip:hover span:first-child {
     border-color: color-mix(in oklab, var(--color-accent) 34%, white);
     color: color-mix(in oklab, var(--color-accent) 88%, black);
+  }
+
+  .dark .language-chip:hover span:first-child {
+    border-color: color-mix(in oklab, var(--color-accent) 78%, white 22%);
+    background: color-mix(in oklab, var(--color-accent) 88%, white 12%);
+    color: var(--color-accent-foreground);
   }
 
   @media (prefers-reduced-motion: reduce) {
