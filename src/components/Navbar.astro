@@ -1,15 +1,17 @@
 ---
 import Icon from "@/components/Icon.astro";
-import type { NavItem } from "@/data/landing";
+import type { LandingPageContent } from "@/data/landing";
 import { buttonVariants } from "@/components/ui/button";
 import MobileNav from "@/components/MobileNav.astro";
 
 type Props = {
-  items: readonly NavItem[];
+  navigation: LandingPageContent["navigation"];
   whatsappHref: string;
+  localeHref: string;
 };
 
-const { items, whatsappHref } = Astro.props;
+const { navigation, whatsappHref, localeHref } = Astro.props;
+const { items } = navigation;
 ---
 
 <header class="relative z-40">
@@ -28,7 +30,7 @@ const { items, whatsappHref } = Astro.props;
             class="inline-flex size-2.5 rounded-full bg-[color:var(--color-accent)] shadow-[0_0_0_5px_color-mix(in_oklab,var(--color-accent)_14%,white)]"
           ></span>
           <span class="font-display text-[1.1rem] tracking-[-0.03em] text-[color:var(--color-ink)] lg:text-[1.35rem]">
-            Angel Pineda
+            {navigation.brandLabel}
           </span>
         </a>
 
@@ -48,9 +50,15 @@ const { items, whatsappHref } = Astro.props;
         <div class="ml-auto flex items-center gap-2">
           <button
             type="button"
-            aria-label="Toggle theme"
-            title="Toggle theme"
+            aria-label={navigation.themeToggleLabel}
+            title={navigation.themeToggleLabel}
             data-theme-toggle
+            data-theme-label-light={navigation.themeOptions.light}
+            data-theme-label-dark={navigation.themeOptions.dark}
+            data-theme-label-system={navigation.themeOptions.system}
+            data-theme-status-following={navigation.themeStatus.followingDeviceTheme}
+            data-theme-status-using-prefix={navigation.themeStatus.usingOverridePrefix}
+            data-theme-status-using-suffix={navigation.themeStatus.usingOverrideSuffix}
             class="inline-flex size-10 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_24%,white)] bg-[color:color-mix(in_oklab,var(--color-surface)_88%,white)] text-[color:var(--color-ink)] shadow-[0_10px_24px_rgba(2,43,83,0.08)] transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
           >
             <span class="inline-flex dark:hidden">
@@ -59,42 +67,90 @@ const { items, whatsappHref } = Astro.props;
             <span class="hidden dark:inline-flex">
               <Icon name="sun" size={17} />
             </span>
-            <span class="sr-only">Toggle theme</span>
+            <span class="sr-only">{navigation.themeToggleLabel}</span>
           </button>
+
+          <a
+            href={localeHref}
+            data-locale-toggle
+            data-locale-href={localeHref}
+            aria-label={navigation.localeToggleAriaLabel}
+            title={navigation.localeToggleAriaLabel}
+            class="language-chip group inline-flex min-h-10 items-center gap-2 rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_24%,white)] bg-[linear-gradient(135deg,color-mix(in_oklab,var(--color-surface)_92%,white),color-mix(in_oklab,var(--color-accent)_8%,white))] px-2.5 shadow-[0_10px_24px_rgba(2,43,83,0.08)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[color:var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+          >
+            <span
+              aria-hidden="true"
+              class="inline-flex size-7 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-accent)_26%,white)] bg-[color:color-mix(in_oklab,var(--color-accent)_16%,white)] text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)] transition-colors duration-300 group-hover:bg-[color:color-mix(in_oklab,var(--color-accent)_20%,white)]"
+            >
+              {navigation.localeToggleLabel}
+            </span>
+            <span class="hidden pr-1 text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-[color:var(--color-copy)] lg:inline">
+              {navigation.localeSectionLabel}
+            </span>
+          </a>
 
           <a
             href={whatsappHref}
             target="_blank"
             rel="noreferrer"
-            aria-label="Open WhatsApp chat in a new tab"
+            aria-label={navigation.whatsappAriaLabel}
             class:list={[
               buttonVariants({ variant: "default", size: "sm" }),
               "w-10 min-w-0 border border-[color:color-mix(in_oklab,var(--color-signal)_16%,white)] px-0 lg:w-auto lg:min-w-[8.85rem] lg:px-4",
             ]}
           >
             <Icon name="whatsapp" size={18} />
-            <span class="hidden lg:inline">WhatsApp</span>
+            <span class="hidden lg:inline">{navigation.whatsappLabel}</span>
           </a>
         </div>
       </div>
     </div>
 
     <div class="md:hidden">
-      <MobileNav items={items} />
+      <MobileNav navigation={navigation} localeHref={localeHref} />
     </div>
   </div>
 </header>
 
 <script>
+  type ThemePreference = "light" | "dark" | "system";
+
   const themeWindow = window as typeof window & {
     __siteTheme?: {
-      applyPreference?: (preference: "light" | "dark" | "system") => void;
-      getPreference?: () => "light" | "dark" | "system";
+      applyPreference?: (preference: ThemePreference) => void;
+      getPreference?: () => ThemePreference;
     };
   };
 
   const getThemeApi = () => {
     return themeWindow.__siteTheme;
+  };
+
+  const getThemeLabel = (element: HTMLElement, theme: ThemePreference) => {
+    if (theme === "light") {
+      return element.dataset.themeLabelLight ?? theme;
+    }
+
+    if (theme === "dark") {
+      return element.dataset.themeLabelDark ?? theme;
+    }
+
+    return element.dataset.themeLabelSystem ?? theme;
+  };
+
+  const getThemeTitle = (
+    element: HTMLElement,
+    preference: ThemePreference,
+    resolvedTheme: "light" | "dark"
+  ) => {
+    if (preference === "system") {
+      const following = element.dataset.themeStatusFollowing ?? "Following device theme";
+      return `${following} (${getThemeLabel(element, resolvedTheme)})`;
+    }
+
+    const prefix = element.dataset.themeStatusUsingPrefix ?? "Using ";
+    const suffix = element.dataset.themeStatusUsingSuffix ?? "";
+    return `${prefix}${getThemeLabel(element, preference)}${suffix}`.trim();
   };
 
   const desktopNavShell = document.querySelector("[data-desktop-nav-shell]");
@@ -107,10 +163,13 @@ const { items, whatsappHref } = Astro.props;
   const themeOptionButtons = Array.from(document.querySelectorAll("[data-theme-option]")).filter(
     (button): button is HTMLButtonElement => button instanceof HTMLButtonElement
   );
+  const localeToggleLinks = Array.from(document.querySelectorAll("[data-locale-toggle]")).filter(
+    (link): link is HTMLAnchorElement => link instanceof HTMLAnchorElement
+  );
 
   const runThemeTransition = (
     source: HTMLElement,
-    nextTheme: "light" | "dark" | "system",
+    nextTheme: ThemePreference,
     themeApi: NonNullable<typeof themeWindow.__siteTheme>
   ) => {
     const { top, left, width, height } = source.getBoundingClientRect();
@@ -152,18 +211,28 @@ const { items, whatsappHref } = Astro.props;
     const resolvedTheme = document.documentElement.classList.contains("dark") ? "dark" : "light";
 
     for (const button of themeToggleButtons) {
-      if (preference === "system") {
-        button.title = `Following device theme (${resolvedTheme})`;
-      } else {
-        button.title = `Using ${preference} override`;
-      }
+      button.title = getThemeTitle(button, preference, resolvedTheme);
     }
 
     for (const button of themeOptionButtons) {
-      const option = button.dataset.themeOption;
+      const option = button.dataset.themeOption as ThemePreference | undefined;
       const isActive = option === preference;
       button.dataset.active = isActive ? "true" : "false";
       button.setAttribute("aria-pressed", isActive ? "true" : "false");
+    }
+  };
+
+  const syncLocaleToggleLinks = () => {
+    const currentHash = window.location.hash;
+
+    for (const link of localeToggleLinks) {
+      const baseHref = link.dataset.localeHref ?? link.getAttribute("href");
+
+      if (!baseHref) {
+        continue;
+      }
+
+      link.href = currentHash ? `${baseHref}${currentHash}` : baseHref;
     }
   };
 
@@ -261,7 +330,7 @@ const { items, whatsappHref } = Astro.props;
 
         const preference = themeApi.getPreference?.() ?? "system";
         const isDark = document.documentElement.classList.contains("dark");
-        const nextTheme = preference === "system" ? (isDark ? "light" : "dark") : "system";
+        const nextTheme: ThemePreference = preference === "system" ? (isDark ? "light" : "dark") : "system";
 
         runThemeTransition(button, nextTheme, themeApi);
       });
@@ -272,13 +341,13 @@ const { items, whatsappHref } = Astro.props;
         continue;
       }
 
-      const option = button.dataset.themeOption;
+      button.dataset.bound = "true";
+      const option = button.dataset.themeOption as ThemePreference | undefined;
 
-      if (option !== "light" && option !== "dark" && option !== "system") {
+      if (!option) {
         continue;
       }
 
-      button.dataset.bound = "true";
       button.addEventListener("click", () => {
         const themeApi = getThemeApi();
 
@@ -290,32 +359,43 @@ const { items, whatsappHref } = Astro.props;
       });
     }
   }
+
+  if (localeToggleLinks.length > 0) {
+    syncLocaleToggleLinks();
+    window.addEventListener("hashchange", syncLocaleToggleLinks);
+  }
 </script>
 
 <style is:global>
   [data-desktop-nav-shell][data-scrolled="true"] {
-    padding-top: 0.72rem;
-    padding-bottom: 0.72rem;
+    padding-top: 0.74rem;
+    padding-bottom: 0.74rem;
     transform: translateY(-2px);
     border-color: color-mix(in oklab, var(--color-accent) 12%, white);
     background: color-mix(in oklab, var(--color-surface-strong) 92%, white);
-    box-shadow: 0 28px 74px rgba(2, 43, 83, 0.18);
+    box-shadow: 0 26px 68px rgba(2, 43, 83, 0.18);
   }
 
   [data-desktop-nav-shell][data-scrolled="true"] .desktop-nav-group {
-    border-color: color-mix(in oklab, var(--color-accent) 14%, white);
     background: color-mix(in oklab, var(--color-surface) 92%, white);
   }
 
   .desktop-nav-link[data-active="true"] {
     background: color-mix(in oklab, var(--color-signal) 14%, white);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-signal) 18%, white);
     color: var(--color-signal-ink);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-signal) 20%, white);
+  }
+
+  .language-chip:hover span:first-child {
+    border-color: color-mix(in oklab, var(--color-accent) 34%, white);
+    color: color-mix(in oklab, var(--color-accent) 88%, black);
   }
 
   @media (prefers-reduced-motion: reduce) {
     [data-desktop-nav-shell],
     .desktop-nav-link,
+    .language-chip,
+    .language-chip span,
     [data-theme-option] {
       transition-duration: 1ms;
     }

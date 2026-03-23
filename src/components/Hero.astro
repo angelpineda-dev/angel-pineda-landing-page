@@ -9,6 +9,7 @@ type Props = {
     titleAccent: string;
     description: string;
     ctaLabel: string;
+    ctaAriaLabel: string;
     secondaryCtaLabel: string;
     secondaryCtaHref: string;
     supportingLine: string;
@@ -41,7 +42,7 @@ const { hero, whatsappHref } = Astro.props;
           href={whatsappHref}
           target="_blank"
           rel="noreferrer"
-          aria-label="Start the conversation on WhatsApp"
+          aria-label={hero.ctaAriaLabel}
           class={buttonVariants({ variant: "default", size: "lg" })}
         >
           <Icon name="whatsapp" size={20} />

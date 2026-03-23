@@ -10,6 +10,8 @@ type Props = {
     description: string;
     quote: string;
     linkLabel: string;
+    experienceLabel: string;
+    portraitAlt: string;
   };
 };
 
@@ -19,11 +21,11 @@ const { about } = Astro.props;
 <section id="about" class="px-4 py-20 sm:px-6 sm:py-24">
   <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
     <div class="relative hidden lg:block lg:mx-0 lg:max-w-none">
-      <PortraitPlaceholder />
+      <PortraitPlaceholder alt={about.portraitAlt} />
       <div class="surface-card absolute -bottom-5 right-5 rounded-[1.6rem] px-5 py-4 sm:-bottom-8 sm:right-8 sm:px-6">
         <p class="font-display text-4xl text-[color:var(--color-ink)]">8+</p>
         <p class="eyebrow mt-1 text-[0.62rem] font-semibold text-[color:var(--color-signal-ink)]">
-          Years of craft
+          {about.experienceLabel}
         </p>
       </div>
     </div>
@@ -36,11 +38,11 @@ const { about } = Astro.props;
       />
 
       <div class="relative mt-8 mx-auto w-full max-w-[20rem] sm:max-w-[24rem] lg:hidden">
-        <PortraitPlaceholder />
+        <PortraitPlaceholder alt={about.portraitAlt} />
         <div class="surface-card absolute -bottom-5 right-5 rounded-[1.6rem] px-5 py-4 sm:-bottom-8 sm:right-8 sm:px-6">
           <p class="font-display text-4xl text-[color:var(--color-ink)]">8+</p>
           <p class="eyebrow mt-1 text-[0.62rem] font-semibold text-[color:var(--color-signal-ink)]">
-            Years of craft
+            {about.experienceLabel}
           </p>
         </div>
       </div>
