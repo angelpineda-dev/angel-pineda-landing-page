@@ -135,7 +135,7 @@ const serializedCloudItems = JSON.stringify(items.map((item) => ({ name: item.na
     reactRoot.render(
       React.createElement(IconCloud, {
         images,
-        className: "cursor-grab active:cursor-grabbing",
+        className: "pointer-events-none md:pointer-events-auto md:cursor-grab md:active:cursor-grabbing",
         iconScale: 0.24,
         radiusScale: 0.35,
       })

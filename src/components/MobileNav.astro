@@ -1,12 +1,14 @@
 ---
 import Icon from "@/components/Icon.astro";
-import type { NavItem } from "@/data/landing";
+import type { LandingPageContent } from "@/data/landing";
 
 type Props = {
-  items: readonly NavItem[];
+  navigation: LandingPageContent["navigation"];
+  localeHref: string;
 };
 
-const { items } = Astro.props;
+const { navigation, localeHref } = Astro.props;
+const { items } = navigation;
 const dialogId = "mobile-site-nav";
 ---
 
@@ -22,20 +24,20 @@ const dialogId = "mobile-site-nav";
           class="inline-flex size-2.5 rounded-full bg-[color:var(--color-accent)] shadow-[0_0_0_5px_color-mix(in_oklab,var(--color-accent)_14%,white)]"
         ></span>
         <span class="font-display text-[1.15rem] tracking-[-0.03em] text-[color:var(--color-ink)]">
-          Angel Pineda
+          {navigation.brandLabel}
         </span>
       </a>
 
       <button
         type="button"
-        aria-label="Open navigation"
+        aria-label={navigation.openNavigationLabel}
         aria-controls={dialogId}
         aria-expanded="false"
         data-mobile-nav-trigger
         data-open="false"
         class="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_26%,white)] bg-[color:color-mix(in_oklab,var(--color-surface)_90%,white)] text-[color:var(--color-ink)] shadow-[0_10px_24px_rgba(2,43,83,0.08)] transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
       >
-        <span class="sr-only">Open navigation</span>
+        <span class="sr-only">{navigation.openNavigationLabel}</span>
         <span class="relative inline-flex size-5 items-center justify-center">
           <span
             data-trigger-bar="top"
@@ -57,7 +59,7 @@ const dialogId = "mobile-site-nav";
   <dialog
     id={dialogId}
     data-mobile-nav-dialog
-    aria-label="Mobile navigation"
+    aria-label={navigation.dialogLabel}
     class="m-0 h-dvh max-h-none w-screen max-w-none border-none bg-transparent p-0 text-inherit"
   >
     <div class="flex min-h-dvh justify-end p-3 sm:p-4">
@@ -68,16 +70,16 @@ const dialogId = "mobile-site-nav";
         <div class="border-b border-[color:color-mix(in_oklab,var(--color-muted)_18%,transparent)] px-5 pb-4 pt-5">
           <div class="flex items-start justify-between gap-4">
             <p class="font-display text-[1.45rem] tracking-[-0.04em] text-[color:var(--color-ink)]">
-              Angel Pineda
+              {navigation.brandLabel}
             </p>
 
             <button
               type="button"
-              aria-label="Close navigation"
+              aria-label={navigation.closeNavigationLabel}
               data-mobile-nav-close
-              class="inline-flex min-h-11 cursor-pointer items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_26%,white)] px-4 text-sm font-semibold text-[color:var(--color-ink)] transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+              class="inline-flex min-h-11 cursor-pointer items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_26%,white)] px-4 text-sm font-semibold text-[color:var(--color-ink)] transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:bg-[color:var(--color-accent)] hover:text-[color:var(--color-accent-foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
             >
-              Close
+              {navigation.closeNavigationLabel}
             </button>
           </div>
         </div>
@@ -110,36 +112,59 @@ const dialogId = "mobile-site-nav";
             ))}
           </nav>
 
-          <div class="mt-7 border-t border-[color:color-mix(in_oklab,var(--color-muted)_18%,transparent)] pt-5">
-            <p class="eyebrow text-[0.58rem] font-semibold text-[color:var(--color-copy)]">
-              Theme
-            </p>
+          <div class="mt-7 grid gap-4 border-t border-[color:color-mix(in_oklab,var(--color-muted)_18%,transparent)] pt-5">
+            <div>
+              <p class="eyebrow text-[0.58rem] font-semibold text-[color:var(--color-copy)]">
+                {navigation.localeSectionLabel}
+              </p>
 
-            <div
-              data-theme-option-group
-              class="mt-3 grid grid-cols-3 gap-2 rounded-[1.4rem] border border-[color:color-mix(in_oklab,var(--color-muted)_16%,transparent)] bg-[color:color-mix(in_oklab,var(--color-surface)_74%,white)] p-2"
-            >
-              <button
-                type="button"
-                data-theme-option="light"
-                class="theme-option inline-flex min-h-11 cursor-pointer items-center justify-center rounded-[1rem] px-3 text-[0.76rem] font-semibold text-[color:var(--color-copy)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+              <a
+                href={localeHref}
+                data-locale-toggle
+                data-locale-href={localeHref}
+                aria-label={navigation.localeToggleAriaLabel}
+                class="mt-3 inline-flex min-h-12 w-full items-center justify-between rounded-[1.4rem] border border-[color:color-mix(in_oklab,var(--color-muted)_16%,transparent)] bg-[linear-gradient(135deg,color-mix(in_oklab,var(--color-surface)_82%,white),color-mix(in_oklab,var(--color-accent)_10%,white))] px-4 py-3 text-[color:var(--color-ink)] transition-all duration-300 hover:border-[color:var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
               >
-                Light
-              </button>
-              <button
-                type="button"
-                data-theme-option="dark"
-                class="theme-option inline-flex min-h-11 cursor-pointer items-center justify-center rounded-[1rem] px-3 text-[0.76rem] font-semibold text-[color:var(--color-copy)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+                <span class="text-left text-[0.8rem] font-semibold tracking-[0.06em] text-[color:var(--color-ink)]">
+                  {navigation.localeToggleText}
+                </span>
+                <span class="inline-flex min-w-[2.75rem] items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-accent)_24%,white)] bg-[color:color-mix(in_oklab,var(--color-accent)_16%,white)] px-3 py-2 text-[0.68rem] text-[color:var(--color-accent)]">
+                  {navigation.localeToggleLabel}
+                </span>
+              </a>
+            </div>
+
+            <div>
+              <p class="eyebrow text-[0.58rem] font-semibold text-[color:var(--color-copy)]">
+                {navigation.themeLabel}
+              </p>
+
+              <div
+                data-theme-option-group
+                class="mt-3 grid grid-cols-3 gap-2 rounded-[1.4rem] border border-[color:color-mix(in_oklab,var(--color-muted)_16%,transparent)] bg-[color:color-mix(in_oklab,var(--color-surface)_74%,white)] p-2"
               >
-                Dark
-              </button>
-              <button
-                type="button"
-                data-theme-option="system"
-                class="theme-option inline-flex min-h-11 cursor-pointer items-center justify-center rounded-[1rem] px-3 text-[0.76rem] font-semibold text-[color:var(--color-copy)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
-              >
-                System
-              </button>
+                <button
+                  type="button"
+                  data-theme-option="light"
+                  class="theme-option inline-flex min-h-11 cursor-pointer items-center justify-center rounded-[1rem] px-3 text-[0.76rem] font-semibold text-[color:var(--color-copy)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+                >
+                  {navigation.themeOptions.light}
+                </button>
+                <button
+                  type="button"
+                  data-theme-option="dark"
+                  class="theme-option inline-flex min-h-11 cursor-pointer items-center justify-center rounded-[1rem] px-3 text-[0.76rem] font-semibold text-[color:var(--color-copy)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+                >
+                  {navigation.themeOptions.dark}
+                </button>
+                <button
+                  type="button"
+                  data-theme-option="system"
+                  class="theme-option inline-flex min-h-11 cursor-pointer items-center justify-center rounded-[1rem] px-3 text-[0.76rem] font-semibold text-[color:var(--color-copy)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+                >
+                  {navigation.themeOptions.system}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -162,6 +187,9 @@ const dialogId = "mobile-site-nav";
       (button): button is HTMLButtonElement => button instanceof HTMLButtonElement
     );
     const primaryLinks = Array.from(navRoot.querySelectorAll("[data-mobile-nav-link]")).filter(
+      (link): link is HTMLAnchorElement => link instanceof HTMLAnchorElement
+    );
+    const localeLinks = Array.from(navRoot.querySelectorAll("[data-locale-toggle]")).filter(
       (link): link is HTMLAnchorElement => link instanceof HTMLAnchorElement
     );
 
@@ -200,6 +228,20 @@ const dialogId = "mobile-site-nav";
       trigger.dataset.open = expanded ? "true" : "false";
       trigger.setAttribute("aria-expanded", expanded ? "true" : "false");
       navRoot.dataset.open = expanded ? "true" : "false";
+    };
+
+    const syncLocaleLinks = () => {
+      const currentHash = window.location.hash;
+
+      for (const link of localeLinks) {
+        const baseHref = link.dataset.localeHref ?? link.getAttribute("href");
+
+        if (!baseHref) {
+          continue;
+        }
+
+        link.href = currentHash ? `${baseHref}${currentHash}` : baseHref;
+      }
     };
 
     const closeDialog = () => {
@@ -256,6 +298,7 @@ const dialogId = "mobile-site-nav";
       frameId = 0;
       navRoot.dataset.scrolled = window.scrollY > 18 ? "true" : "false";
       syncActiveLink();
+      syncLocaleLinks();
 
       if (!mobileMedia.matches) {
         closeDialog();
@@ -288,6 +331,12 @@ const dialogId = "mobile-site-nav";
       });
     }
 
+    for (const link of localeLinks) {
+      link.addEventListener("click", () => {
+        closeDialog();
+      });
+    }
+
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) {
         closeDialog();
@@ -298,6 +347,7 @@ const dialogId = "mobile-site-nav";
       syncExpanded(false);
     });
 
+    window.addEventListener("hashchange", syncLocaleLinks);
     mobileMedia.addEventListener("change", scheduleShellSync);
     window.addEventListener("scroll", scheduleShellSync, { passive: true });
     window.addEventListener("resize", scheduleShellSync);
@@ -353,16 +403,71 @@ const dialogId = "mobile-site-nav";
     background: color-mix(in oklab, var(--color-accent) 12%, white);
   }
 
+  .dark .mobile-menu-link[data-active="false"]:hover {
+    border-color: color-mix(in oklab, var(--color-primary) 56%, white 18%);
+    background: color-mix(in oklab, var(--color-primary) 52%, var(--color-surface) 48%);
+    box-shadow: 0 14px 30px rgba(3, 71, 128, 0.18);
+  }
+
+  .dark .mobile-menu-link[data-active="false"]:hover > span:first-child > span:last-child {
+    color: var(--color-primary-foreground);
+  }
+
+  .dark .mobile-menu-link[data-active="false"]:hover [data-mobile-link-icon],
+  .dark .mobile-menu-link[data-active="false"]:hover > span:last-child {
+    border-color: color-mix(in oklab, var(--color-primary) 72%, white 18%);
+    background: color-mix(in oklab, var(--color-primary) 64%, black 36%);
+    color: var(--color-primary-foreground);
+  }
+
+  .dark .mobile-menu-link[data-active="true"] {
+    border-color: color-mix(in oklab, var(--color-primary) 62%, white 18%);
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--color-primary) 92%, black 8%),
+        color-mix(in oklab, var(--color-primary) 66%, var(--color-surface) 34%)
+      );
+    box-shadow:
+      0 16px 34px rgba(3, 71, 128, 0.24),
+      inset 0 0 0 1px color-mix(in oklab, var(--color-primary) 82%, white 18%);
+  }
+
+  .dark .mobile-menu-link[data-active="true"] > span:first-child > span:last-child {
+    color: var(--color-primary-foreground);
+  }
+
   .mobile-menu-link[data-active="true"] [data-mobile-link-icon] {
     border-color: color-mix(in oklab, var(--color-accent) 30%, white);
     background: color-mix(in oklab, var(--color-accent) 16%, white);
     color: var(--color-accent);
   }
 
+  .dark .mobile-menu-link[data-active="true"] [data-mobile-link-icon],
+  .dark .mobile-menu-link[data-active="true"] > span:last-child {
+    border-color: color-mix(in oklab, var(--color-primary) 74%, white 18%);
+    background: color-mix(in oklab, var(--color-primary) 66%, black 34%);
+    color: var(--color-primary-foreground);
+  }
+
   [data-theme-option][data-active="true"] {
     background: color-mix(in oklab, var(--color-signal) 14%, white);
     box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-signal) 18%, white);
     color: var(--color-signal-ink);
+  }
+
+  .dark [data-mobile-nav-panel] [data-locale-toggle] span:last-child {
+    border-color: color-mix(in oklab, var(--color-accent) 72%, white 28%);
+    background: var(--color-accent);
+    color: var(--color-accent-foreground);
+  }
+
+  .dark [data-theme-option][data-active="true"] {
+    background: var(--color-primary);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, var(--color-primary) 84%, white 16%),
+      0 10px 22px rgba(3, 71, 128, 0.24);
+    color: var(--color-primary-foreground);
   }
 
   [data-theme-option][data-active="false"] {

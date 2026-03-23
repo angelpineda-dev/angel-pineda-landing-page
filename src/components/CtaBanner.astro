@@ -3,14 +3,18 @@ import Icon from "@/components/Icon.astro";
 import { buttonVariants } from "@/components/ui/button";
 
 type Props = {
-  title: string;
-  description: string;
-  label: string;
-  note: string;
+  cta: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    label: string;
+    note: string;
+    ariaLabel: string;
+  };
   whatsappHref: string;
 };
 
-const { title, description, label, note, whatsappHref } = Astro.props;
+const { cta, whatsappHref } = Astro.props;
 ---
 
 <section class="px-4 py-20 sm:px-6 sm:py-24">
@@ -20,32 +24,32 @@ const { title, description, label, note, whatsappHref } = Astro.props;
       <div class="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <div class="max-w-2xl">
           <p class="eyebrow text-[0.62rem] font-semibold text-[color:var(--color-signal-ink)]">
-            Final CTA
+            {cta.eyebrow}
           </p>
           <h2 class="mt-4 font-display text-4xl leading-[0.95] text-[color:var(--color-ink)] sm:text-6xl">
-            {title}
+            {cta.title}
           </h2>
           <p class="mt-4 max-w-xl text-base leading-7 text-[color:var(--color-copy)] sm:text-lg">
-            {description}
+            {cta.description}
           </p>
         </div>
 
         <div class="flex flex-col items-start gap-3 lg:items-end">
           <p class="text-sm font-medium text-[color:var(--color-copy)] lg:max-w-[15rem] lg:text-right">
-            {note}
+            {cta.note}
           </p>
           <a
             href={whatsappHref}
             target="_blank"
             rel="noreferrer"
-            aria-label="Chat on WhatsApp"
+            aria-label={cta.ariaLabel}
             class:list={[
               buttonVariants({ variant: "accent", size: "lg" }),
               "justify-center",
             ]}
           >
             <Icon name="whatsapp" size={20} />
-            {label}
+            {cta.label}
           </a>
         </div>
       </div>

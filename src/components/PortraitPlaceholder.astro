@@ -1,3 +1,11 @@
+---
+type Props = {
+  alt: string;
+};
+
+const { alt } = Astro.props;
+---
+
 <div class="surface-card relative aspect-[4/5] overflow-hidden rounded-[2rem] p-3 sm:p-4">
   <div
     aria-hidden="true"
@@ -7,7 +15,7 @@
   <div class="relative h-full overflow-hidden rounded-[1.65rem] border border-[color:var(--color-frame)] bg-[color:color-mix(in_oklab,var(--color-paper-soft)_72%,var(--color-signal)_28%)] shadow-[inset_0_1px_0_var(--color-inset-highlight)]">
     <img
       src="/assets/profile/profile.jpeg"
-      alt="Portrait of Angel Pineda"
+      alt={alt}
       loading="lazy"
       decoding="async"
       class="h-full w-full object-cover object-center"

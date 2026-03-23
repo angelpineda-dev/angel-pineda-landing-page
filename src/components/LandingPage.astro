@@ -1,0 +1,136 @@
+---
+import AboutSection from "@/components/AboutSection.astro";
+import CtaBanner from "@/components/CtaBanner.astro";
+import FAQSection from "@/components/FAQSection.astro";
+import Footer from "@/components/Footer.astro";
+import Hero from "@/components/Hero.astro";
+import Navbar from "@/components/Navbar.astro";
+import ProjectsSection from "@/components/ProjectsSection.astro";
+import ServicesSection from "@/components/ServicesSection.astro";
+import ToolsSection from "@/components/ToolsSection.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import type { LandingPageContent } from "@/data/landing";
+
+type Props = {
+  page: LandingPageContent;
+  localeHref: string;
+};
+
+const { page, localeHref } = Astro.props;
+const { site, contact, navigation, hero, services, tools, projects, about, faq, cta, footer } = page;
+---
+
+<BaseLayout title={site.title} description={site.description} lang={site.lang}>
+  <div class="relative isolate">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[color:var(--color-paper)]"
+    >
+      <div
+        data-app-particles-root
+        class="absolute inset-0 opacity-80 [mask-image:radial-gradient(circle_at_center,black_58%,transparent_100%)]"
+      ></div>
+    </div>
+
+    <Navbar navigation={navigation} whatsappHref={contact.whatsappHref} localeHref={localeHref} />
+
+    <main>
+      <Hero hero={hero} whatsappHref={contact.whatsappHref} />
+      <ServicesSection services={services} />
+      <ToolsSection tools={tools} />
+      <ProjectsSection projects={projects} />
+      <AboutSection about={about} />
+      <FAQSection faq={faq} />
+      <CtaBanner
+        cta={cta}
+        whatsappHref={contact.whatsappHref}
+      />
+    </main>
+
+    <Footer contact={contact} footer={footer} />
+  </div>
+
+  <script>
+    import React from "react";
+    import { createRoot } from "react-dom/client";
+    import { Particles } from "@/components/ui/particles";
+
+    const particlesRoot = document.querySelector("[data-app-particles-root]");
+
+    if (particlesRoot instanceof HTMLDivElement && particlesRoot.dataset.mounted !== "true") {
+      particlesRoot.dataset.mounted = "true";
+
+      const reactRoot = createRoot(particlesRoot);
+      const getParticlePalette = () => {
+        const styles = getComputedStyle(document.documentElement);
+
+        return {
+          base: styles.getPropertyValue("--color-particle-base").trim() || "#002B53",
+          accent: styles.getPropertyValue("--color-particle-accent").trim() || "#A10220",
+          signal: styles.getPropertyValue("--color-particle-signal").trim() || "#034780",
+        };
+      };
+
+      const renderParticles = () => {
+        const palette = getParticlePalette();
+
+        reactRoot.render(
+          React.createElement(
+            React.Fragment,
+            null,
+            React.createElement(Particles, {
+              className: "absolute inset-0 size-full",
+              quantity: window.innerWidth < 768 ? 24 : 48,
+              staticity: 42,
+              ease: 86,
+              size: 1,
+              color: palette.base,
+              vx: 0.06,
+              vy: -0.01,
+            }),
+            React.createElement(Particles, {
+              className: "absolute inset-0 size-full opacity-50",
+              quantity: window.innerWidth < 768 ? 8 : 16,
+              staticity: 68,
+              ease: 120,
+              size: 1.1,
+              color: palette.accent,
+              vx: 0.015,
+              vy: -0.008,
+            }),
+            React.createElement(Particles, {
+              className: "absolute inset-0 size-full opacity-35",
+              quantity: window.innerWidth < 768 ? 6 : 10,
+              staticity: 92,
+              ease: 140,
+              size: 1.4,
+              color: palette.signal,
+              vx: 0.01,
+              vy: -0.004,
+            })
+          )
+        );
+      };
+
+      const themeObserver = new MutationObserver(() => {
+        renderParticles();
+      });
+
+      renderParticles();
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["class"],
+      });
+
+      window.addEventListener(
+        "pagehide",
+        () => {
+          themeObserver.disconnect();
+          reactRoot.unmount();
+          delete particlesRoot.dataset.mounted;
+        },
+        { once: true }
+      );
+    }
+  </script>
+</BaseLayout>

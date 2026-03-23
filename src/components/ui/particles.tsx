@@ -62,6 +62,94 @@ function hexToRgb(hex: string): number[] {
   return [red, green, blue]
 }
 
+function rgbStringToRgb(value: string): number[] | null {
+  const match = value.match(/rgba?\(([^)]+)\)/i)
+
+  if (!match) {
+    return null
+  }
+
+  const channels = match[1]
+    .split(",")
+    .slice(0, 3)
+    .map((channel) => Math.round(Number.parseFloat(channel.trim())))
+
+  return channels.every((channel) => Number.isFinite(channel)) ? channels : null
+}
+
+function oklabToRgb(lightness: number, a: number, b: number): number[] {
+  const lPrime = lightness + 0.3963377774 * a + 0.2158037573 * b
+  const mPrime = lightness - 0.1055613458 * a - 0.0638541728 * b
+  const sPrime = lightness - 0.0894841775 * a - 1.291485548 * b
+
+  const l = lPrime ** 3
+  const m = mPrime ** 3
+  const s = sPrime ** 3
+
+  const red =
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s
+  const green =
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s
+  const blue =
+    -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s
+
+  return [red, green, blue].map((channel) =>
+    Math.max(0, Math.min(255, Math.round(channel * 255)))
+  )
+}
+
+function oklabStringToRgb(value: string): number[] | null {
+  const match = value.match(/oklab\(([^)]+)\)/i)
+
+  if (!match) {
+    return null
+  }
+
+  const channels = match[1]
+    .split("/")
+    .shift()
+    ?.trim()
+    .split(/\s+/)
+    .slice(0, 3)
+    .map((channel) => Number.parseFloat(channel))
+
+  if (!channels || channels.length < 3 || channels.some((channel) => !Number.isFinite(channel))) {
+    return null
+  }
+
+  return oklabToRgb(channels[0], channels[1], channels[2])
+}
+
+function resolveColorToRgb(value: string): number[] {
+  if (value.startsWith("#")) {
+    return hexToRgb(value)
+  }
+
+  const directRgb = rgbStringToRgb(value) ?? oklabStringToRgb(value)
+
+  if (directRgb) {
+    return directRgb
+  }
+
+  if (typeof document === "undefined") {
+    return [255, 255, 255]
+  }
+
+  // Resolve advanced CSS color syntax like color-mix() through the browser.
+  const probe = document.createElement("span")
+  probe.style.color = value
+  probe.style.position = "absolute"
+  probe.style.visibility = "hidden"
+  probe.style.pointerEvents = "none"
+  probe.style.opacity = "0"
+  document.body.appendChild(probe)
+
+  const resolved = getComputedStyle(probe).color
+  probe.remove()
+
+  return rgbStringToRgb(resolved) ?? oklabStringToRgb(resolved) ?? [255, 255, 255]
+}
+
 type Circle = {
   x: number
   y: number
@@ -100,6 +188,13 @@ export const Particles: React.FC<ParticlesProps> = ({
   const initCanvasRef = useRef<() => void>(() => {})
   const onMouseMoveRef = useRef<() => void>(() => {})
   const animateRef = useRef<() => void>(() => {})
+  const rgbRef = useRef<number[]>(resolveColorToRgb(color))
+  const lastColorRef = useRef(color)
+
+  if (lastColorRef.current !== color) {
+    lastColorRef.current = color
+    rgbRef.current = resolveColorToRgb(color)
+  }
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -202,7 +297,7 @@ export const Particles: React.FC<ParticlesProps> = ({
     }
   }
 
-  const rgb = hexToRgb(color)
+  const rgb = rgbRef.current
 
   const drawCircle = (circle: Circle, update = false) => {
     if (context.current) {
