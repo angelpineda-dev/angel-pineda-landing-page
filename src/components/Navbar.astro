@@ -1,74 +1,86 @@
 ---
 import Icon from "@/components/Icon.astro";
+import type { NavItem } from "@/data/landing";
 import { buttonVariants } from "@/components/ui/button";
 import MobileNav from "@/components/MobileNav.astro";
 
 type Props = {
-  items: readonly { href: string; label: string }[];
+  items: readonly NavItem[];
   whatsappHref: string;
 };
 
 const { items, whatsappHref } = Astro.props;
 ---
 
-<header class="sticky top-0 z-40 px-4 pt-4 sm:px-6">
-  <div class="mx-auto grid max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-4 rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_20%,white)] bg-[color:var(--color-surface-strong)] px-4 py-3 shadow-[var(--shadow-soft)] backdrop-blur-xl sm:px-6">
-    <a href="#" class="flex flex-col leading-none">
-      <span class="font-display text-lg text-[color:var(--color-ink)] sm:text-xl">
-        Angel Pineda
-      </span>
-      <span class="eyebrow mt-1 text-[0.62rem] font-semibold text-[color:var(--color-signal-ink)]">
-        Software engineer
-      </span>
-    </a>
+<header class="relative z-40">
+  <div aria-hidden="true" class="h-[5.2rem] sm:h-[5.5rem] md:h-[5.7rem] lg:h-[5.95rem]"></div>
 
-    <nav class="hidden items-center justify-center gap-7 lg:flex">
-      {items.map((item) => (
-        <a
-          href={item.href}
-          class="text-sm font-medium text-[color:var(--color-copy)] transition-colors hover:text-[color:var(--color-accent)]"
-        >
-          {item.label}
-        </a>
-      ))}
-    </nav>
-
-    <div class="ml-auto flex items-center gap-2 sm:gap-3">
-      <button
-        type="button"
-        aria-label="Toggle theme"
-        title="Toggle theme"
-        data-theme-toggle
-        class="inline-flex size-11 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_28%,white)] bg-[color:var(--color-surface)] text-[color:var(--color-ink)] shadow-[var(--shadow-soft)] transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+  <div class="fixed inset-x-0 top-0 z-40">
+    <div class="hidden px-4 pt-4 sm:px-6 md:block">
+      <div
+        data-desktop-nav-shell
+        data-scrolled="false"
+        class="mx-auto grid max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-3 rounded-[1.7rem] border border-[color:color-mix(in_oklab,var(--color-muted)_24%,white)] bg-[color:color-mix(in_oklab,var(--color-surface-strong)_84%,white)] px-4 py-[0.9rem] shadow-[0_18px_52px_rgba(2,43,83,0.12)] backdrop-blur-2xl transition-[padding,transform,box-shadow,background-color,border-color] duration-300 lg:gap-5 lg:rounded-[2rem] lg:px-5 lg:py-[0.95rem]"
       >
-        <span class="inline-flex dark:hidden">
-          <Icon name="moon" size={17} />
-        </span>
-        <span class="hidden dark:inline-flex">
-          <Icon name="sun" size={17} />
-        </span>
-        <span class="sr-only">Toggle theme</span>
-      </button>
-
-      <div class="hidden lg:block">
-        <a
-          href={whatsappHref}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Open WhatsApp chat in a new tab"
-          class:list={[
-            buttonVariants({ variant: "default", size: "default" }),
-            "min-w-[9.75rem] justify-center",
-          ]}
-        >
-          <Icon name="whatsapp" size={20} />
-          WhatsApp
+        <a href="#" class="flex items-center gap-3 leading-none">
+          <span
+            aria-hidden="true"
+            class="inline-flex size-2.5 rounded-full bg-[color:var(--color-accent)] shadow-[0_0_0_5px_color-mix(in_oklab,var(--color-accent)_14%,white)]"
+          ></span>
+          <span class="font-display text-[1.1rem] tracking-[-0.03em] text-[color:var(--color-ink)] lg:text-[1.35rem]">
+            Angel Pineda
+          </span>
         </a>
-      </div>
 
-      <div class="lg:hidden">
-        <MobileNav items={items} whatsappHref={whatsappHref} />
+        <nav class="desktop-nav-group hidden items-center justify-center gap-1 rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_16%,white)] bg-[color:color-mix(in_oklab,var(--color-surface)_86%,white)] p-1.5 md:flex">
+          {items.map((item) => (
+            <a
+              href={item.href}
+              data-desktop-nav-link
+              data-href={item.href}
+              class="desktop-nav-link inline-flex min-w-[4.35rem] items-center justify-center rounded-full px-3 py-1.5 text-[0.8rem] font-semibold text-[color:var(--color-copy)] transition-all duration-200 hover:bg-[color:color-mix(in_oklab,var(--color-signal)_12%,white)] hover:text-[color:var(--color-signal-ink)] lg:min-w-[5.85rem] lg:px-4 lg:py-2 lg:text-sm"
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <div class="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="Toggle theme"
+            title="Toggle theme"
+            data-theme-toggle
+            class="inline-flex size-10 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_24%,white)] bg-[color:color-mix(in_oklab,var(--color-surface)_88%,white)] text-[color:var(--color-ink)] shadow-[0_10px_24px_rgba(2,43,83,0.08)] transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+          >
+            <span class="inline-flex dark:hidden">
+              <Icon name="moon" size={17} />
+            </span>
+            <span class="hidden dark:inline-flex">
+              <Icon name="sun" size={17} />
+            </span>
+            <span class="sr-only">Toggle theme</span>
+          </button>
+
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open WhatsApp chat in a new tab"
+            class:list={[
+              buttonVariants({ variant: "default", size: "sm" }),
+              "w-10 min-w-0 border border-[color:color-mix(in_oklab,var(--color-signal)_16%,white)] px-0 lg:w-auto lg:min-w-[8.85rem] lg:px-4",
+            ]}
+          >
+            <Icon name="whatsapp" size={18} />
+            <span class="hidden lg:inline">WhatsApp</span>
+          </a>
+        </div>
       </div>
+    </div>
+
+    <div class="md:hidden">
+      <MobileNav items={items} />
     </div>
   </div>
 </header>
@@ -85,73 +97,227 @@ const { items, whatsappHref } = Astro.props;
     return themeWindow.__siteTheme;
   };
 
-  const themeToggleButtons = document.querySelectorAll("[data-theme-toggle]");
+  const desktopNavShell = document.querySelector("[data-desktop-nav-shell]");
+  const desktopNavLinks = Array.from(document.querySelectorAll("[data-desktop-nav-link]")).filter(
+    (link): link is HTMLAnchorElement => link instanceof HTMLAnchorElement
+  );
+  const themeToggleButtons = Array.from(document.querySelectorAll("[data-theme-toggle]")).filter(
+    (button): button is HTMLButtonElement => button instanceof HTMLButtonElement
+  );
+  const themeOptionButtons = Array.from(document.querySelectorAll("[data-theme-option]")).filter(
+    (button): button is HTMLButtonElement => button instanceof HTMLButtonElement
+  );
 
-  for (const button of themeToggleButtons) {
-    if (!(button instanceof HTMLButtonElement) || button.dataset.bound === "true") {
-      continue;
+  const runThemeTransition = (
+    source: HTMLElement,
+    nextTheme: "light" | "dark" | "system",
+    themeApi: NonNullable<typeof themeWindow.__siteTheme>
+  ) => {
+    const { top, left, width, height } = source.getBoundingClientRect();
+    const x = left + width / 2;
+    const y = top + height / 2;
+    const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+    const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+    const maxRadius = Math.hypot(Math.max(x, viewportWidth - x), Math.max(y, viewportHeight - y));
+
+    if (typeof document.startViewTransition !== "function") {
+      themeApi.applyPreference?.(nextTheme);
+      return;
     }
 
-    button.dataset.bound = "true";
-    const syncButtonCopy = () => {
-      const themeApi = getThemeApi();
-      const preference = themeApi?.getPreference?.() ?? "system";
-      const resolvedTheme = document.documentElement.classList.contains("dark") ? "dark" : "light";
+    const transition = document.startViewTransition(() => {
+      themeApi.applyPreference?.(nextTheme);
+    });
 
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${maxRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 400,
+          easing: "ease-in-out",
+          pseudoElement: "::view-transition-new(root)",
+        }
+      );
+    });
+  };
+
+  const syncThemeControls = () => {
+    const themeApi = getThemeApi();
+    const preference = themeApi?.getPreference?.() ?? "system";
+    const resolvedTheme = document.documentElement.classList.contains("dark") ? "dark" : "light";
+
+    for (const button of themeToggleButtons) {
       if (preference === "system") {
         button.title = `Following device theme (${resolvedTheme})`;
       } else {
         button.title = `Using ${preference} override`;
       }
+    }
+
+    for (const button of themeOptionButtons) {
+      const option = button.dataset.themeOption;
+      const isActive = option === preference;
+      button.dataset.active = isActive ? "true" : "false";
+      button.setAttribute("aria-pressed", isActive ? "true" : "false");
+    }
+  };
+
+  if (desktopNavShell instanceof HTMLDivElement && desktopNavLinks.length > 0) {
+    const desktopMedia = window.matchMedia("(min-width: 768px)");
+    const sectionEntries = desktopNavLinks
+      .map((link) => {
+        const href = link.dataset.href ?? link.getAttribute("href");
+
+        if (!href?.startsWith("#")) {
+          return null;
+        }
+
+        const section = document.querySelector(href);
+
+        if (!(section instanceof HTMLElement)) {
+          return null;
+        }
+
+        return { href, link, section };
+      })
+      .filter((entry): entry is { href: string; link: HTMLAnchorElement; section: HTMLElement } => !!entry);
+
+    let frameId = 0;
+
+    const syncDesktopNav = () => {
+      frameId = 0;
+      desktopNavShell.dataset.scrolled = window.scrollY > 24 ? "true" : "false";
+
+      if (!desktopMedia.matches || sectionEntries.length === 0) {
+        for (const { link } of sectionEntries) {
+          link.dataset.active = "false";
+          link.removeAttribute("aria-current");
+        }
+        return;
+      }
+
+      const checkpoint = window.innerHeight * 0.24;
+      let activeHref: string | null = null;
+
+      for (const entry of sectionEntries) {
+        const rect = entry.section.getBoundingClientRect();
+
+        if (rect.top <= checkpoint && rect.bottom > checkpoint * 0.45) {
+          activeHref = entry.href;
+        }
+      }
+
+      for (const entry of sectionEntries) {
+        const isActive = activeHref === entry.href;
+        entry.link.dataset.active = isActive ? "true" : "false";
+
+        if (isActive) {
+          entry.link.setAttribute("aria-current", "location");
+        } else {
+          entry.link.removeAttribute("aria-current");
+        }
+      }
     };
 
-    const themeObserver = new MutationObserver(syncButtonCopy);
+    const scheduleDesktopNavSync = () => {
+      if (frameId !== 0) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(syncDesktopNav);
+    };
+
+    window.addEventListener("scroll", scheduleDesktopNavSync, { passive: true });
+    window.addEventListener("resize", scheduleDesktopNavSync);
+    scheduleDesktopNavSync();
+  }
+
+  if (themeToggleButtons.length > 0 || themeOptionButtons.length > 0) {
+    const themeObserver = new MutationObserver(syncThemeControls);
     themeObserver.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["class", "data-theme-preference"],
     });
 
-    syncButtonCopy();
+    syncThemeControls();
 
-    button.addEventListener("click", () => {
-      const themeApi = getThemeApi();
-      const preference = themeApi?.getPreference?.() ?? "system";
-      const isDark = document.documentElement.classList.contains("dark");
-      const nextTheme = preference === "system" ? (isDark ? "light" : "dark") : "system";
-      const { top, left, width, height } = button.getBoundingClientRect();
-      const x = left + width / 2;
-      const y = top + height / 2;
-      const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
-      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
-      const maxRadius = Math.hypot(
-        Math.max(x, viewportWidth - x),
-        Math.max(y, viewportHeight - y)
-      );
-
-      if (typeof document.startViewTransition !== "function") {
-        themeApi?.applyPreference?.(nextTheme);
-        return;
+    for (const button of themeToggleButtons) {
+      if (button.dataset.bound === "true") {
+        continue;
       }
 
-      const transition = document.startViewTransition(() => {
-        themeApi?.applyPreference?.(nextTheme);
-      });
+      button.dataset.bound = "true";
+      button.addEventListener("click", () => {
+        const themeApi = getThemeApi();
 
-      transition.ready.then(() => {
-        document.documentElement.animate(
-          {
-            clipPath: [
-              `circle(0px at ${x}px ${y}px)`,
-              `circle(${maxRadius}px at ${x}px ${y}px)`,
-            ],
-          },
-          {
-            duration: 400,
-            easing: "ease-in-out",
-            pseudoElement: "::view-transition-new(root)",
-          }
-        );
+        if (!themeApi) {
+          return;
+        }
+
+        const preference = themeApi.getPreference?.() ?? "system";
+        const isDark = document.documentElement.classList.contains("dark");
+        const nextTheme = preference === "system" ? (isDark ? "light" : "dark") : "system";
+
+        runThemeTransition(button, nextTheme, themeApi);
       });
-    });
+    }
+
+    for (const button of themeOptionButtons) {
+      if (button.dataset.bound === "true") {
+        continue;
+      }
+
+      const option = button.dataset.themeOption;
+
+      if (option !== "light" && option !== "dark" && option !== "system") {
+        continue;
+      }
+
+      button.dataset.bound = "true";
+      button.addEventListener("click", () => {
+        const themeApi = getThemeApi();
+
+        if (!themeApi) {
+          return;
+        }
+
+        runThemeTransition(button, option, themeApi);
+      });
+    }
   }
 </script>
+
+<style is:global>
+  [data-desktop-nav-shell][data-scrolled="true"] {
+    padding-top: 0.72rem;
+    padding-bottom: 0.72rem;
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--color-accent) 12%, white);
+    background: color-mix(in oklab, var(--color-surface-strong) 92%, white);
+    box-shadow: 0 28px 74px rgba(2, 43, 83, 0.18);
+  }
+
+  [data-desktop-nav-shell][data-scrolled="true"] .desktop-nav-group {
+    border-color: color-mix(in oklab, var(--color-accent) 14%, white);
+    background: color-mix(in oklab, var(--color-surface) 92%, white);
+  }
+
+  .desktop-nav-link[data-active="true"] {
+    background: color-mix(in oklab, var(--color-signal) 14%, white);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-signal) 18%, white);
+    color: var(--color-signal-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-desktop-nav-shell],
+    .desktop-nav-link,
+    [data-theme-option] {
+      transition-duration: 1ms;
+    }
+  }
+</style>

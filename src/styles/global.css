@@ -75,6 +75,13 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6.3rem;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 6.8rem;
+  }
 }
 
 body {

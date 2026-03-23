@@ -1,7 +1,11 @@
 export type NavItem = {
   href: string;
   label: string;
+  shortLabel: string;
+  icon: NavIcon;
 };
+
+export type NavIcon = "compass" | "grid" | "briefcase" | "user" | "help";
 
 export type Service = {
   number: string;
@@ -54,11 +58,11 @@ export const landingPage = {
     whatsappHref,
   },
   navItems: [
-    { href: "#services", label: "Services" },
-    { href: "#tools", label: "Tools" },
-    { href: "#projects", label: "Projects" },
-    { href: "#about", label: "About" },
-    { href: "#faq", label: "FAQ" },
+    { href: "#services", label: "Services", shortLabel: "Services", icon: "compass" },
+    { href: "#tools", label: "Tools", shortLabel: "Tools", icon: "grid" },
+    { href: "#projects", label: "Projects", shortLabel: "Work", icon: "briefcase" },
+    { href: "#about", label: "About", shortLabel: "About", icon: "user" },
+    { href: "#faq", label: "FAQ", shortLabel: "FAQ", icon: "help" },
   ] satisfies NavItem[],
   hero: {
     eyebrow: "Software Engineer",

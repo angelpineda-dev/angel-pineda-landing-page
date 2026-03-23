@@ -1,27 +1,58 @@
 ---
 import Icon from "@/components/Icon.astro";
-import { buttonVariants } from "@/components/ui/button";
+import type { NavItem } from "@/data/landing";
 
 type Props = {
-  items: readonly { href: string; label: string }[];
-  whatsappHref: string;
+  items: readonly NavItem[];
 };
 
-const { items, whatsappHref } = Astro.props;
+const { items } = Astro.props;
 const dialogId = "mobile-site-nav";
 ---
 
-<div class="lg:hidden" data-mobile-nav-root>
-  <button
-    type="button"
-    aria-label="Open navigation"
-    aria-controls={dialogId}
-    aria-expanded="false"
-    data-mobile-nav-open
-    class="inline-flex size-11 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_30%,white)] bg-[color:var(--color-surface)] text-[color:var(--color-ink)] backdrop-blur-sm transition-colors hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
-  >
-    <Icon name="menu" size={20} />
-  </button>
+<div class="md:hidden" data-mobile-nav-root data-open="false" data-scrolled="false">
+  <div class="z-40 px-4 pt-4 sm:px-6">
+    <div
+      data-mobile-nav-shell
+      class="mx-auto flex max-w-[30rem] items-center justify-between gap-4 rounded-[1.65rem] border border-[color:color-mix(in_oklab,var(--color-muted)_24%,white)] bg-[color:color-mix(in_oklab,var(--color-surface-strong)_84%,white)] px-4 py-3 shadow-[0_18px_52px_rgba(2,43,83,0.12)] backdrop-blur-2xl transition-[padding,transform,box-shadow,background-color,border-color] duration-300"
+    >
+      <a href="#" class="flex items-center gap-3 leading-none">
+        <span
+          aria-hidden="true"
+          class="inline-flex size-2.5 rounded-full bg-[color:var(--color-accent)] shadow-[0_0_0_5px_color-mix(in_oklab,var(--color-accent)_14%,white)]"
+        ></span>
+        <span class="font-display text-[1.15rem] tracking-[-0.03em] text-[color:var(--color-ink)]">
+          Angel Pineda
+        </span>
+      </a>
+
+      <button
+        type="button"
+        aria-label="Open navigation"
+        aria-controls={dialogId}
+        aria-expanded="false"
+        data-mobile-nav-trigger
+        data-open="false"
+        class="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_26%,white)] bg-[color:color-mix(in_oklab,var(--color-surface)_90%,white)] text-[color:var(--color-ink)] shadow-[0_10px_24px_rgba(2,43,83,0.08)] transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+      >
+        <span class="sr-only">Open navigation</span>
+        <span class="relative inline-flex size-5 items-center justify-center">
+          <span
+            data-trigger-bar="top"
+            class="absolute h-[1.7px] w-5 -translate-y-[5px] rounded-full bg-current transition-[transform,opacity] duration-300"
+          ></span>
+          <span
+            data-trigger-bar="middle"
+            class="absolute h-[1.7px] w-5 rounded-full bg-current transition-[transform,opacity] duration-300"
+          ></span>
+          <span
+            data-trigger-bar="bottom"
+            class="absolute h-[1.7px] w-5 translate-y-[5px] rounded-full bg-current transition-[transform,opacity] duration-300"
+          ></span>
+        </span>
+      </button>
+    </div>
+  </div>
 
   <dialog
     id={dialogId}
@@ -29,52 +60,89 @@ const dialogId = "mobile-site-nav";
     aria-label="Mobile navigation"
     class="m-0 h-dvh max-h-none w-screen max-w-none border-none bg-transparent p-0 text-inherit"
   >
-    <div class="flex min-h-dvh items-start justify-end p-4">
-      <div class="mobile-nav-panel w-full max-w-sm rounded-[2rem] border border-[color:color-mix(in_oklab,var(--color-muted)_22%,white)] bg-[color:var(--color-surface-strong)] px-5 pb-6 pt-8 shadow-[var(--shadow-strong)] backdrop-blur-2xl">
-        <div class="mb-8 flex items-start justify-between gap-4">
-          <div>
-            <p class="font-display text-lg text-[color:var(--color-ink)]">Angel Pineda</p>
-            <p class="mt-1 text-sm text-[color:var(--color-copy)]">
-              Software engineer for focused product builds.
+    <div class="flex min-h-dvh justify-end p-3 sm:p-4">
+      <div
+        data-mobile-nav-panel
+        class="mobile-nav-panel flex h-full max-h-[calc(100dvh-1.5rem)] w-full max-w-[22rem] flex-col overflow-hidden rounded-[2rem] border border-[color:color-mix(in_oklab,var(--color-muted)_22%,white)] bg-[color:color-mix(in_oklab,var(--color-surface-strong)_90%,white)] shadow-[0_24px_70px_rgba(2,43,83,0.22)] backdrop-blur-2xl"
+      >
+        <div class="border-b border-[color:color-mix(in_oklab,var(--color-muted)_18%,transparent)] px-5 pb-4 pt-5">
+          <div class="flex items-start justify-between gap-4">
+            <p class="font-display text-[1.45rem] tracking-[-0.04em] text-[color:var(--color-ink)]">
+              Angel Pineda
             </p>
-          </div>
 
-          <button
-            type="button"
-            aria-label="Close navigation"
-            data-mobile-nav-close
-            class="inline-flex size-10 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_32%,white)] text-[color:var(--color-ink)] transition-colors hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
-          >
-            <span aria-hidden="true">×</span>
-          </button>
+            <button
+              type="button"
+              aria-label="Close navigation"
+              data-mobile-nav-close
+              class="inline-flex min-h-11 cursor-pointer items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_26%,white)] px-4 text-sm font-semibold text-[color:var(--color-ink)] transition-colors duration-300 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+            >
+              Close
+            </button>
+          </div>
         </div>
 
-        <nav class="flex flex-col gap-2">
-          {items.map((item) => (
-            <a
-              href={item.href}
-              data-mobile-nav-link
-              class="rounded-[1.25rem] px-4 py-3 text-lg font-medium text-[color:var(--color-ink)] transition-colors hover:bg-[color:color-mix(in_oklab,var(--color-surface-strong)_78%,var(--color-signal)_22%)] hover:text-[color:var(--color-accent)]"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+        <div class="flex-1 overflow-y-auto px-5 pb-5 pt-5">
+          <nav class="grid gap-2.5">
+            {items.map((item) => (
+              <a
+                href={item.href}
+                data-mobile-nav-link
+                data-href={item.href}
+                class="mobile-menu-link group flex min-h-14 cursor-pointer items-center justify-between gap-3 rounded-[1.35rem] border border-[color:color-mix(in_oklab,var(--color-muted)_16%,transparent)] bg-[color:color-mix(in_oklab,var(--color-surface)_78%,white)] px-4 py-3 text-left transition-all duration-300 hover:border-[color:var(--color-accent)] hover:bg-[color:color-mix(in_oklab,var(--color-accent)_9%,white)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+              >
+                <span class="flex items-center gap-3">
+                  <span
+                    data-mobile-link-icon
+                    class="inline-flex size-10 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_22%,white)] bg-[color:color-mix(in_oklab,var(--color-surface-strong)_86%,white)] text-[color:var(--color-ink)] transition-all duration-300"
+                  >
+                    <Icon name={item.icon} size={18} />
+                  </span>
+                  <span class="text-[0.96rem] font-semibold text-[color:var(--color-ink)]">
+                    {item.label}
+                  </span>
+                </span>
 
-        <a
-          href={whatsappHref}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Open WhatsApp chat in a new tab"
-          data-mobile-nav-link
-          class:list={[
-            buttonVariants({ variant: "default", size: "lg" }),
-            "mt-8 w-full justify-center",
-          ]}
-        >
-          <Icon name="whatsapp" size={20} />
-          WhatsApp
-        </a>
+                <span class="inline-flex size-9 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_16%,transparent)] text-[color:var(--color-copy)] transition-colors duration-300 group-hover:border-[color:var(--color-accent)] group-hover:text-[color:var(--color-accent)]">
+                  <Icon name="arrow-right" size={16} />
+                </span>
+              </a>
+            ))}
+          </nav>
+
+          <div class="mt-7 border-t border-[color:color-mix(in_oklab,var(--color-muted)_18%,transparent)] pt-5">
+            <p class="eyebrow text-[0.58rem] font-semibold text-[color:var(--color-copy)]">
+              Theme
+            </p>
+
+            <div
+              data-theme-option-group
+              class="mt-3 grid grid-cols-3 gap-2 rounded-[1.4rem] border border-[color:color-mix(in_oklab,var(--color-muted)_16%,transparent)] bg-[color:color-mix(in_oklab,var(--color-surface)_74%,white)] p-2"
+            >
+              <button
+                type="button"
+                data-theme-option="light"
+                class="theme-option inline-flex min-h-11 cursor-pointer items-center justify-center rounded-[1rem] px-3 text-[0.76rem] font-semibold text-[color:var(--color-copy)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+              >
+                Light
+              </button>
+              <button
+                type="button"
+                data-theme-option="dark"
+                class="theme-option inline-flex min-h-11 cursor-pointer items-center justify-center rounded-[1rem] px-3 text-[0.76rem] font-semibold text-[color:var(--color-copy)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+              >
+                Dark
+              </button>
+              <button
+                type="button"
+                data-theme-option="system"
+                class="theme-option inline-flex min-h-11 cursor-pointer items-center justify-center rounded-[1rem] px-3 text-[0.76rem] font-semibold text-[color:var(--color-copy)] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+              >
+                System
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </dialog>
@@ -84,68 +152,233 @@ const dialogId = "mobile-site-nav";
   const navRoots = document.querySelectorAll("[data-mobile-nav-root]");
 
   for (const navRoot of navRoots) {
-    const dialog = navRoot.querySelector("[data-mobile-nav-dialog]");
-    const openButton = navRoot.querySelector("[data-mobile-nav-open]");
-
-    if (!(dialog instanceof HTMLDialogElement) || !(openButton instanceof HTMLButtonElement)) {
+    if (!(navRoot instanceof HTMLDivElement) || navRoot.dataset.bound === "true") {
       continue;
     }
 
-    const closeButtons = dialog.querySelectorAll("[data-mobile-nav-close]");
-    const closeLinks = dialog.querySelectorAll("[data-mobile-nav-link]");
+    const trigger = navRoot.querySelector("[data-mobile-nav-trigger]");
+    const dialog = navRoot.querySelector("[data-mobile-nav-dialog]");
+    const closeButtons = Array.from(navRoot.querySelectorAll("[data-mobile-nav-close]")).filter(
+      (button): button is HTMLButtonElement => button instanceof HTMLButtonElement
+    );
+    const primaryLinks = Array.from(navRoot.querySelectorAll("[data-mobile-nav-link]")).filter(
+      (link): link is HTMLAnchorElement => link instanceof HTMLAnchorElement
+    );
+
+    if (
+      !(trigger instanceof HTMLButtonElement) ||
+      !(dialog instanceof HTMLDialogElement) ||
+      primaryLinks.length === 0
+    ) {
+      continue;
+    }
+
+    navRoot.dataset.bound = "true";
+
+    const mobileMedia = window.matchMedia("(max-width: 767px)");
+    let frameId = 0;
+
+    const sectionEntries = primaryLinks
+      .map((link) => {
+        const href = link.dataset.href ?? link.getAttribute("href");
+
+        if (!href?.startsWith("#")) {
+          return null;
+        }
+
+        const section = document.querySelector(href);
+
+        if (!(section instanceof HTMLElement)) {
+          return null;
+        }
+
+        return { href, link, section };
+      })
+      .filter((entry): entry is { href: string; link: HTMLAnchorElement; section: HTMLElement } => !!entry);
 
     const syncExpanded = (expanded: boolean) => {
-      openButton.setAttribute("aria-expanded", expanded ? "true" : "false");
+      trigger.dataset.open = expanded ? "true" : "false";
+      trigger.setAttribute("aria-expanded", expanded ? "true" : "false");
+      navRoot.dataset.open = expanded ? "true" : "false";
     };
 
-    openButton.addEventListener("click", () => {
+    const closeDialog = () => {
+      if (!dialog.open) {
+        syncExpanded(false);
+        return;
+      }
+
+      dialog.close();
+    };
+
+    const openDialog = () => {
+      if (!mobileMedia.matches || dialog.open) {
+        return;
+      }
+
       dialog.showModal();
       syncExpanded(true);
+    };
+
+    const syncActiveLink = () => {
+      if (!mobileMedia.matches || sectionEntries.length === 0) {
+        for (const { link } of sectionEntries) {
+          link.dataset.active = "false";
+          link.removeAttribute("aria-current");
+        }
+        return;
+      }
+
+      const checkpoint = window.innerHeight * 0.22;
+      let activeHref: string | null = null;
+
+      for (const entry of sectionEntries) {
+        const rect = entry.section.getBoundingClientRect();
+
+        if (rect.top <= checkpoint && rect.bottom > checkpoint * 0.5) {
+          activeHref = entry.href;
+        }
+      }
+
+      for (const entry of sectionEntries) {
+        const isActive = entry.href === activeHref;
+        entry.link.dataset.active = isActive ? "true" : "false";
+
+        if (isActive) {
+          entry.link.setAttribute("aria-current", "location");
+        } else {
+          entry.link.removeAttribute("aria-current");
+        }
+      }
+    };
+
+    const syncShell = () => {
+      frameId = 0;
+      navRoot.dataset.scrolled = window.scrollY > 18 ? "true" : "false";
+      syncActiveLink();
+
+      if (!mobileMedia.matches) {
+        closeDialog();
+      }
+    };
+
+    const scheduleShellSync = () => {
+      if (frameId !== 0) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(syncShell);
+    };
+
+    trigger.addEventListener("click", () => {
+      if (dialog.open) {
+        closeDialog();
+      } else {
+        openDialog();
+      }
     });
 
     for (const button of closeButtons) {
-      button.addEventListener("click", () => {
-        dialog.close();
-      });
+      button.addEventListener("click", closeDialog);
     }
 
-    for (const link of closeLinks) {
+    for (const link of primaryLinks) {
       link.addEventListener("click", () => {
-        dialog.close();
+        closeDialog();
       });
     }
 
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) {
-        dialog.close();
+        closeDialog();
       }
     });
 
     dialog.addEventListener("close", () => {
       syncExpanded(false);
     });
+
+    mobileMedia.addEventListener("change", scheduleShellSync);
+    window.addEventListener("scroll", scheduleShellSync, { passive: true });
+    window.addEventListener("resize", scheduleShellSync);
+    scheduleShellSync();
   }
 </script>
 
 <style is:global>
+  [data-mobile-nav-root][data-scrolled="true"] [data-mobile-nav-shell] {
+    padding-top: 0.72rem;
+    padding-bottom: 0.72rem;
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--color-accent) 12%, white);
+    background: color-mix(in oklab, var(--color-surface-strong) 92%, white);
+    box-shadow: 0 26px 68px rgba(2, 43, 83, 0.18);
+  }
+
+  [data-mobile-nav-trigger][data-open="true"] [data-trigger-bar="top"] {
+    transform: translateY(0) rotate(45deg);
+  }
+
+  [data-mobile-nav-trigger][data-open="true"] [data-trigger-bar="middle"] {
+    opacity: 0;
+  }
+
+  [data-mobile-nav-trigger][data-open="true"] [data-trigger-bar="bottom"] {
+    transform: translateY(0) rotate(-45deg);
+  }
+
   dialog[data-mobile-nav-dialog]::backdrop {
-    background: color-mix(in oklab, var(--color-paper) 72%, transparent);
-    backdrop-filter: blur(12px);
+    background: color-mix(in oklab, var(--color-paper) 62%, transparent);
+    backdrop-filter: blur(14px);
   }
 
   dialog[data-mobile-nav-dialog][open] .mobile-nav-panel {
-    animation: mobile-nav-in 180ms ease-out;
+    animation: mobile-sheet-in 220ms ease-out;
   }
 
-  @keyframes mobile-nav-in {
+  @keyframes mobile-sheet-in {
     from {
       opacity: 0;
-      transform: translateY(-12px) scale(0.98);
+      transform: translateX(28px) scale(0.98);
     }
 
     to {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  .mobile-menu-link[data-active="true"] {
+    border-color: color-mix(in oklab, var(--color-accent) 24%, white);
+    background: color-mix(in oklab, var(--color-accent) 12%, white);
+  }
+
+  .mobile-menu-link[data-active="true"] [data-mobile-link-icon] {
+    border-color: color-mix(in oklab, var(--color-accent) 30%, white);
+    background: color-mix(in oklab, var(--color-accent) 16%, white);
+    color: var(--color-accent);
+  }
+
+  [data-theme-option][data-active="true"] {
+    background: color-mix(in oklab, var(--color-signal) 14%, white);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-signal) 18%, white);
+    color: var(--color-signal-ink);
+  }
+
+  [data-theme-option][data-active="false"] {
+    background: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-mobile-nav-shell],
+    [data-mobile-nav-trigger] [data-trigger-bar],
+    .mobile-menu-link,
+    [data-theme-option] {
+      transition-duration: 1ms;
+    }
+
+    dialog[data-mobile-nav-dialog][open] .mobile-nav-panel {
+      animation-duration: 1ms;
     }
   }
 </style>
