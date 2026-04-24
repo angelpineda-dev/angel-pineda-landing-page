@@ -356,6 +356,15 @@ const { items } = navigation;
   if (localeToggleLinks.length > 0) {
     syncLocaleToggleLinks();
     window.addEventListener("hashchange", syncLocaleToggleLinks);
+
+    for (const link of localeToggleLinks) {
+      link.addEventListener("click", () => {
+        try {
+          const href = link.dataset.localeHref ?? link.getAttribute("href") ?? "";
+          sessionStorage.setItem("locale", href.startsWith("/en") ? "en" : "es");
+        } catch {}
+      });
+    }
   }
 </script>
 
