@@ -18,9 +18,25 @@ type Props = {
 
 const { page, localeHref } = Astro.props;
 const { site, contact, navigation, hero, services, tools, projects, about, faq, cta, footer } = page;
+
+const SITE_BASE = "https://angelpineda.dev";
+const isEn = site.lang === "en";
+const canonicalURL = isEn ? `${SITE_BASE}/en/` : `${SITE_BASE}/`;
+const alternates = [
+  { hreflang: "es", href: `${SITE_BASE}/` },
+  { hreflang: "en", href: `${SITE_BASE}/en/` },
+  { hreflang: "x-default", href: `${SITE_BASE}/` },
+];
 ---
 
-<BaseLayout title={site.title} description={site.description} lang={site.lang}>
+<BaseLayout
+  title={site.title}
+  description={site.description}
+  lang={site.lang}
+  canonicalURL={canonicalURL}
+  alternates={alternates}
+  ogImage={`${SITE_BASE}/assets/profile/og.png`}
+>
   <div class="relative isolate">
     <div
       aria-hidden="true"
