@@ -21,4 +21,6 @@ npm-debug.log*
 # Local verification artifacts
 public/assets/screenshots/
 
+# Development files
 landing-page.md
+.playwright-mcp
