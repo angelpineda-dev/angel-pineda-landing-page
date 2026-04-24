@@ -1,8 +1,3 @@
 ---
-import LandingPage from "@/components/LandingPage.astro";
-import { getLandingPage } from "@/data/landing";
-
-const page = getLandingPage("es");
+return Astro.redirect("/", 301);
 ---
-
-<LandingPage page={page} localeHref="/" />

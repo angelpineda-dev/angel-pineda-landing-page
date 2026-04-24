@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+  <title id="title">Adaptive leverage logo concept</title>
+  <desc id="desc">
+    An abstract A-shaped structure with a horizontal bridge and rising branch, representing problem
+    solving, process optimization, and automation applied where it creates leverage.
+  </desc>
+  <defs>
+    <style>
+      .ink {
+        fill: none;
+        stroke: #00193a;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 20;
+      }
+
+      .signal {
+        fill: none;
+        stroke: #023f73;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 18;
+      }
+    </style>
+  </defs>
+  <path class="ink" d="M58 188 112 60 166 188" />
+  <path class="signal" d="M86 130H146" />
+  <path class="signal" d="M146 130C169 130 184 113 184 90V74" />
+  <circle cx="112" cy="60" r="12" fill="#00193a" />
+  <circle cx="146" cy="130" r="12" fill="#bf0a26" />
+  <circle cx="184" cy="74" r="10" fill="#023f73" />
+</svg>

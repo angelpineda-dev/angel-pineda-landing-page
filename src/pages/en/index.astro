@@ -1,0 +1,8 @@
+---
+import LandingPage from "@/components/LandingPage.astro";
+import { getLandingPage } from "@/data/landing";
+
+const page = getLandingPage("en");
+---
+
+<LandingPage page={page} localeHref="/" />

@@ -1,0 +1,132 @@
+---
+type Props = {
+  label: string;
+  href?: string;
+  surface?: "light" | "dark";
+  size?: "sm" | "md" | "lg";
+  subtitle?: string;
+  class?: string;
+};
+
+const {
+  label,
+  href,
+  surface = "light",
+  size = "md",
+  subtitle,
+  class: className,
+} = Astro.props;
+
+const Tag = href ? "a" : "div";
+
+const sizeClasses = {
+  sm: {
+    container: "gap-2.5",
+    frame: "size-10 rounded-[1rem]",
+    svg: "size-[1.65rem]",
+    label: "text-[1.02rem]",
+    subtitle: "text-[0.58rem]",
+  },
+  md: {
+    container: "gap-3",
+    frame: "size-11 rounded-[1.05rem]",
+    svg: "size-[1.9rem]",
+    label: "text-[1.1rem] lg:text-[1.3rem]",
+    subtitle: "text-[0.6rem]",
+  },
+  lg: {
+    container: "gap-4",
+    frame: "size-14 rounded-[1.2rem]",
+    svg: "size-[2.3rem]",
+    label: "text-[1.9rem] sm:text-[2.15rem]",
+    subtitle: "text-[0.64rem]",
+  },
+} as const;
+
+const palette =
+  surface === "dark"
+    ? {
+        shell:
+          "border border-white/14 bg-[linear-gradient(145deg,rgba(255,255,255,0.1),rgba(3,71,128,0.22))] shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]",
+        primary: "var(--color-paper-strong)",
+        signal: "color-mix(in oklab, white 68%, #034780 32%)",
+        accent: "color-mix(in oklab, var(--color-accent) 82%, white 18%)",
+        label: "text-white",
+        subtitle: "text-white/56",
+      }
+    : {
+        shell:
+          "border border-[color:var(--color-frame)] bg-[linear-gradient(145deg,color-mix(in_oklab,var(--color-surface-strong)_94%,white),color-mix(in_oklab,var(--color-signal)_6%,white))] shadow-[0_10px_28px_rgba(2,43,83,0.1)]",
+        primary: "var(--color-ink)",
+        signal: "var(--color-signal)",
+        accent: "var(--color-accent)",
+        label: "text-[color:var(--color-ink)]",
+        subtitle: "text-[color:var(--color-copy)]",
+      };
+
+const config = sizeClasses[size];
+---
+
+<Tag
+  href={href}
+  class:list={[
+    "inline-flex items-center leading-none",
+    config.container,
+    className,
+  ]}
+>
+  <span class:list={["inline-flex items-center justify-center", config.frame, palette.shell]}>
+    <svg
+      viewBox="0 0 240 240"
+      role="img"
+      aria-hidden="true"
+      class={config.svg}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M58 188 112 60 166 188"
+        fill="none"
+        stroke={palette.primary}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="20"
+      />
+      <path
+        d="M86 130H146"
+        fill="none"
+        stroke={palette.signal}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="18"
+      />
+      <path
+        d="M146 130C169 130 184 113 184 90V74"
+        fill="none"
+        stroke={palette.signal}
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="18"
+      />
+      <circle cx="112" cy="60" r="12" fill={palette.primary} />
+      <circle cx="146" cy="130" r="12" fill={palette.accent} />
+      <circle cx="184" cy="74" r="10" fill={palette.signal} />
+    </svg>
+  </span>
+
+  <span class="flex min-w-0 flex-col">
+    <span class:list={["font-display tracking-[-0.04em]", config.label, palette.label]}>
+      {label}
+    </span>
+    {subtitle ? (
+      <span
+        class:list={[
+          "mt-1 font-semibold uppercase tracking-[0.18em]",
+          config.subtitle,
+          palette.subtitle,
+        ]}
+      >
+        {subtitle}
+      </span>
+    ) : null}
+  </span>
+</Tag>

@@ -2,7 +2,28 @@
 import LandingPage from "@/components/LandingPage.astro";
 import { getLandingPage } from "@/data/landing";
 
-const page = getLandingPage("en");
+const page = getLandingPage("es");
 ---
 
-<LandingPage page={page} localeHref="/es/" />
+<script is:inline>
+  (() => {
+    try {
+      const saved = sessionStorage.getItem("locale");
+      if (saved === "en") {
+        location.replace("/en/" + location.hash);
+        return;
+      }
+      if (!saved) {
+        const browserLang = (navigator.language || "").toLowerCase();
+        if (browserLang.startsWith("en")) {
+          sessionStorage.setItem("locale", "en");
+          location.replace("/en/" + location.hash);
+          return;
+        }
+        sessionStorage.setItem("locale", "es");
+      }
+    } catch {}
+  })();
+</script>
+
+<LandingPage page={page} localeHref="/en/" />

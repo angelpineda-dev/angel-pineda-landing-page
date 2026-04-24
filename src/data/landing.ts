@@ -28,11 +28,15 @@ export type Project = {
   description: string;
   tags: string[];
   href: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
   highlights?: {
     currentLabel: string;
     currentDescription: string;
-    futureLabel: string;
-    futureDescription: string;
+    futureLabel?: string;
+    futureDescription?: string;
     ctaLabel: string;
   };
 };
@@ -167,8 +171,8 @@ export const landingPages = {
       brandLabel: "Angel Pineda",
       items: [
         { href: "#services", label: "Services", shortLabel: "Services", icon: "compass" },
-        { href: "#tools", label: "Tools", shortLabel: "Tools", icon: "grid" },
         { href: "#projects", label: "Projects", shortLabel: "Work", icon: "briefcase" },
+        { href: "#tools", label: "Tools", shortLabel: "Tools", icon: "grid" },
         { href: "#about", label: "About", shortLabel: "About", icon: "user" },
         { href: "#faq", label: "FAQ", shortLabel: "FAQ", icon: "help" },
       ] satisfies NavItem[],
@@ -269,14 +273,15 @@ export const landingPages = {
         description:
           "A wellness-focused experience for a nutrition specialist who helps people improve their digestive and metabolic health through tailored guidance.",
         tags: ["Wellness", "Entrepreneur"],
-        href: "https://nutriologa-monserrat.vercel.app/",
+        href: "https://monserratherrera.com/",
+        image: {
+          src: "https://monserratherrera.com/images/philosophy.webp",
+          alt: "Monserrat Herrera — philosophy section",
+        },
         highlights: {
-          currentLabel: "Now",
+          currentLabel: "Live",
           currentDescription:
-            "The live build already shows the brand voice, trust-building structure, consultation flow, and service framing in a usable state.",
-          futureLabel: "Next",
-          futureDescription:
-            "This direction points toward a stronger case-study-ready experience with more polish, richer proof, and clearer conversion detail as the project matures.",
+            "Patients can now book their first consultation directly through an integrated scheduling calendar — no back-and-forth, no friction. One click to start improving their digestive and metabolic health.",
           ctaLabel: "Open project site",
         },
       } satisfies Project,
@@ -357,8 +362,8 @@ export const landingPages = {
       brandLabel: "Angel Pineda",
       items: [
         { href: "#services", label: "Servicios", shortLabel: "Servicios", icon: "compass" },
-        { href: "#tools", label: "Tecnología", shortLabel: "Tecnología", icon: "grid" },
         { href: "#projects", label: "Proyectos", shortLabel: "Proyectos", icon: "briefcase" },
+        { href: "#tools", label: "Tecnología", shortLabel: "Tecnología", icon: "grid" },
         { href: "#about", label: "Perfil", shortLabel: "Perfil", icon: "user" },
         { href: "#faq", label: "Preguntas frecuentes", shortLabel: "Preguntas", icon: "help" },
       ] satisfies NavItem[],
@@ -459,14 +464,15 @@ export const landingPages = {
         description:
           "Una experiencia digital enfocada en bienestar para una especialista en nutrición que acompaña a personas a mejorar su salud digestiva y metabólica con atención personalizada.",
         tags: ["Bienestar", "Emprendimiento"],
-        href: "https://nutriologa-monserrat.vercel.app/",
+        href: "https://monserratherrera.com/",
+        image: {
+          src: "https://monserratherrera.com/images/philosophy.webp",
+          alt: "Monserrat Herrera — sección de filosofía",
+        },
         highlights: {
-          currentLabel: "Ahora",
+          currentLabel: "En vivo",
           currentDescription:
-            "La versión publicada ya comunica voz de marca, estructura de confianza, flujo de consulta y una explicación de servicios que ya resulta clara y funcional.",
-          futureLabel: "Siguiente paso",
-          futureDescription:
-            "La dirección abre camino a un caso de estudio más sólido, con mejor pulido visual, más evidencia y una conversión todavía más clara conforme el proyecto madura.",
+            "Los pacientes ahora pueden agendar su primera consulta directamente desde un calendario integrado — sin ida y vuelta, sin fricción. Un clic para empezar a mejorar su salud digestiva y metabólica.",
           ctaLabel: "Abrir sitio del proyecto",
         },
       } satisfies Project,

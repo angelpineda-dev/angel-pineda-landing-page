@@ -13,11 +13,15 @@ type Props = {
       description: string;
       tags: readonly string[];
       href: string;
+      image?: {
+        src: string;
+        alt: string;
+      };
       highlights?: {
         currentLabel: string;
         currentDescription: string;
-        futureLabel: string;
-        futureDescription: string;
+        futureLabel?: string;
+        futureDescription?: string;
         ctaLabel: string;
       };
     };
@@ -39,68 +43,108 @@ const { projects } = Astro.props;
       align="center"
     />
 
-    <article class="surface-card mt-12 overflow-hidden rounded-[2.35rem] px-6 py-7 sm:px-8 sm:py-8 lg:px-10 lg:py-10">
-      <div class="mx-auto max-w-4xl">
-        <div class="flex flex-wrap gap-2.5">
-          {projects.featured.tags.map((tag) => (
-            <span class="rounded-full border border-[color:color-mix(in_oklab,var(--color-frame)_78%,transparent)] bg-[color:color-mix(in_oklab,var(--color-paper-soft)_88%,white)] px-3.5 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-copy)]">
-              {tag}
-            </span>
-          ))}
+    <article class="project-card surface-card group mt-12 overflow-hidden rounded-[2.35rem]">
+      <div class="h-[2px] bg-[linear-gradient(90deg,var(--color-accent)_0%,var(--color-signal)_100%)]"></div>
+
+      <div class="grid lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_420px]">
+        <div class="relative px-6 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
+<div class="flex flex-wrap gap-2">
+            {projects.featured.tags.map((tag) => (
+              <span class="rounded-full border border-[color:color-mix(in_oklab,var(--color-frame)_78%,transparent)] bg-[color:color-mix(in_oklab,var(--color-paper-soft)_88%,white)] px-3.5 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-copy)]">
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {projects.featured.image && (
+            <div class="mt-6 aspect-[3/2] w-full overflow-hidden rounded-2xl border border-[color:color-mix(in_oklab,var(--color-frame)_60%,transparent)] lg:hidden">
+              <img
+                src={projects.featured.image.src}
+                alt={projects.featured.image.alt}
+                class="h-full w-full object-cover object-top"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          )}
+
+          <div class="mt-6 max-w-xl">
+            <h3 class="font-display text-[2.35rem] leading-[0.96] text-[color:var(--color-ink)] sm:text-[3rem]">
+              {projects.featured.title}
+            </h3>
+            <p class="mt-4 text-base leading-8 text-[color:var(--color-copy)] sm:text-[1.05rem]">
+              {projects.featured.description}
+            </p>
+          </div>
+
+          {projects.featured.highlights && (
+            <dl class={`mt-8 grid gap-5 border-t border-[color:color-mix(in_oklab,var(--color-frame)_72%,transparent)] pt-6 text-sm leading-7 text-[color:var(--color-copy)] ${projects.featured.highlights.futureLabel ? "sm:grid-cols-2" : ""}`}>
+              <div class="space-y-2.5">
+                <dt class="flex items-center gap-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-signal-ink)]">
+                  <span class="relative flex size-2 shrink-0">
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60"></span>
+                    <span class="relative inline-flex size-2 rounded-full bg-emerald-500"></span>
+                  </span>
+                  {projects.featured.highlights.currentLabel}
+                </dt>
+                <dd>{projects.featured.highlights.currentDescription}</dd>
+              </div>
+
+              {projects.featured.highlights.futureLabel && (
+                <div class="space-y-2.5">
+                  <dt class="flex items-center gap-2.5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
+                    <span class="size-2 shrink-0 rounded-full border-[1.5px] border-[color:var(--color-accent)]"></span>
+                    {projects.featured.highlights.futureLabel}
+                  </dt>
+                  <dd>{projects.featured.highlights.futureDescription}</dd>
+                </div>
+              )}
+            </dl>
+          )}
+
+          <div class="mt-8 flex flex-col gap-4 border-t border-[color:color-mix(in_oklab,var(--color-frame)_72%,transparent)] pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <p class="max-w-sm text-sm leading-7 text-[color:var(--color-copy)]">
+              {projects.featuredNote}
+            </p>
+
+            <a
+              href={projects.featured.href}
+              target="_blank"
+              rel="noreferrer"
+              class={buttonVariants({ variant: "default", size: "default" })}
+            >
+              {projects.featured.highlights?.ctaLabel ?? "Open project site"}
+              <Icon name="arrow-up-right" size={18} />
+            </a>
+          </div>
         </div>
 
-        <div class="mt-6 max-w-3xl">
-          <h3 class="font-display text-[2.55rem] leading-[0.96] text-[color:var(--color-ink)] sm:text-[3.5rem]">
-            {projects.featured.title}
-          </h3>
-          <p class="mt-5 max-w-2xl text-base leading-8 text-[color:var(--color-copy)] sm:text-[1.05rem]">
-            {projects.featured.description}
-          </p>
-        </div>
-
-        {projects.featured.highlights && (
-          <dl class="mt-8 grid gap-5 border-t border-[color:color-mix(in_oklab,var(--color-frame)_72%,transparent)] pt-6 text-sm leading-7 text-[color:var(--color-copy)] sm:grid-cols-2">
-            <div class="space-y-2">
-              <dt class="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-signal-ink)]">
-                {projects.featured.highlights.currentLabel}
-              </dt>
-              <dd>{projects.featured.highlights.currentDescription}</dd>
-            </div>
-
-            <div class="space-y-2">
-              <dt class="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
-                {projects.featured.highlights.futureLabel}
-              </dt>
-              <dd>{projects.featured.highlights.futureDescription}</dd>
-            </div>
-          </dl>
+        {projects.featured.image && (
+          <div class="project-image-panel hidden overflow-hidden border-l border-[color:color-mix(in_oklab,var(--color-frame)_80%,transparent)] lg:block">
+            <img
+              src={projects.featured.image.src}
+              alt={projects.featured.image.alt}
+              class="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         )}
-
-        <div class="mt-8 flex flex-col gap-4 border-t border-[color:color-mix(in_oklab,var(--color-frame)_72%,transparent)] pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p class="max-w-2xl text-sm leading-7 text-[color:var(--color-copy)]">
-            {projects.featuredNote}
-          </p>
-
-          <a
-            href={projects.featured.href}
-            target="_blank"
-            rel="noreferrer"
-            class={buttonVariants({ variant: "default", size: "default" })}
-          >
-            {projects.featured.highlights?.ctaLabel ?? "Open project site"}
-            <Icon name="arrow-up-right" size={18} />
-          </a>
-        </div>
       </div>
     </article>
 
-    <div class="mx-auto mt-8 max-w-4xl border-t border-[color:color-mix(in_oklab,var(--color-frame)_72%,transparent)] pt-6 text-center">
-      <p class="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-signal-ink)]">
-        {projects.archiveTitle}
-      </p>
-      <p class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-[color:var(--color-copy)] sm:text-base">
-        {projects.archiveDescription}
-      </p>
+    <div class="mx-auto mt-6 max-w-4xl">
+      <div class="flex flex-col items-center gap-3 rounded-[2rem] border border-dashed border-[color:color-mix(in_oklab,var(--color-muted)_32%,transparent)] px-8 py-7 text-center transition-colors duration-300 hover:border-[color:color-mix(in_oklab,var(--color-signal)_28%,transparent)]">
+        <span class="inline-flex size-8 items-center justify-center rounded-full border border-[color:color-mix(in_oklab,var(--color-frame)_80%,transparent)] bg-[color:color-mix(in_oklab,var(--color-paper-soft)_80%,white)] text-[color:var(--color-signal-ink)]">
+          <Icon name="arrow-up-right" size={14} />
+        </span>
+        <p class="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-signal-ink)]">
+          {projects.archiveTitle}
+        </p>
+        <p class="mx-auto max-w-lg text-sm leading-7 text-[color:var(--color-copy)]">
+          {projects.archiveDescription}
+        </p>
+      </div>
     </div>
   </div>
 </section>
