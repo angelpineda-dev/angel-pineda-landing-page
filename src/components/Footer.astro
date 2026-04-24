@@ -1,4 +1,5 @@
 ---
+import BrandLogo from "@/components/BrandLogo.astro";
 import Icon from "@/components/Icon.astro";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -27,7 +28,12 @@ const { contact, footer } = Astro.props;
 >
   <div class="mx-auto grid max-w-7xl gap-10 rounded-[2rem] border border-[rgba(205,12,43,0.22)] bg-[linear-gradient(180deg,#002b53,#131313)] px-6 py-8 text-white/82 shadow-[var(--shadow-strong)] sm:px-8 lg:grid-cols-[1.15fr_0.85fr_auto] lg:items-start">
     <div>
-      <p class="font-display text-4xl text-white">Angel Pineda</p>
+      <BrandLogo
+        label="Angel Pineda"
+        subtitle="Software Engineer"
+        surface="dark"
+        size="lg"
+      />
       <p class="mt-4 max-w-sm text-sm leading-7 text-white/68">
         {footer.blurb}
       </p>
