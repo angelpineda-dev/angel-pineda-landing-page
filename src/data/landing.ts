@@ -170,8 +170,8 @@ export const landingPages = {
     navigation: {
       brandLabel: "Angel Pineda",
       items: [
-        { href: "#services", label: "Services", shortLabel: "Services", icon: "compass" },
         { href: "#projects", label: "Projects", shortLabel: "Work", icon: "briefcase" },
+        { href: "#services", label: "Services", shortLabel: "Services", icon: "compass" },
         { href: "#tools", label: "Tools", shortLabel: "Tools", icon: "grid" },
         { href: "#about", label: "About", shortLabel: "About", icon: "user" },
         { href: "#faq", label: "FAQ", shortLabel: "FAQ", icon: "help" },
@@ -381,8 +381,8 @@ export const landingPages = {
     navigation: {
       brandLabel: "Angel Pineda",
       items: [
-        { href: "#services", label: "Servicios", shortLabel: "Servicios", icon: "compass" },
         { href: "#projects", label: "Proyectos", shortLabel: "Proyectos", icon: "briefcase" },
+        { href: "#services", label: "Servicios", shortLabel: "Servicios", icon: "compass" },
         { href: "#tools", label: "Tecnología", shortLabel: "Tecnología", icon: "grid" },
         { href: "#about", label: "Perfil", shortLabel: "Perfil", icon: "user" },
         { href: "#faq", label: "Preguntas frecuentes", shortLabel: "Preguntas", icon: "help" },
