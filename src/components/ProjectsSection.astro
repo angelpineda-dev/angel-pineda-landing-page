@@ -125,7 +125,8 @@ const { projects } = Astro.props;
               src={projects.featured.image.src}
               alt={projects.featured.image.alt}
               class="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-              loading="lazy"
+              loading="eager"
+              fetchpriority="high"
               decoding="async"
             />
           </div>

@@ -1,0 +1,90 @@
+# Angel Pineda
+
+> Angel Pineda is a freelance software engineer based in Guadalajara, Jalisco, Mexico,
+> with 5+ years of experience building end-to-end web products for entrepreneurs and
+> businesses across Mexico and Latin America. He handles discovery, strategy, design,
+> development, and deployment under one process — so clients move from idea to
+> production without switching vendors or losing momentum.
+
+## Services
+
+Angel Pineda offers four phases of engagement for web product development:
+
+**Discovery** — Scoping sessions to understand business goals, target users, and technical
+requirements before committing to scope. Clients leave this phase with a clear scope
+document, a realistic timeline, and a confirmed plan before any code is written.
+
+**Design and Strategy** — Architecture planning, interface direction, UX design in Figma,
+and a delivery roadmap that can grow with the product. Clients receive a clickable
+prototype and delivery roadmap before development begins.
+
+**Development** — Building fast, modern, and maintainable web applications using React,
+Astro, Node.js, Express.js, PHP, and Laravel. Emphasis on clarity, long-term
+maintainability, and staging environments for client review.
+
+**Deployment** — Production launch, performance optimization, domain and hosting setup,
+and a documented release process for future updates.
+
+## Featured Project
+
+**Nutrióloga Monserrat** (monserratherrera.com) — A wellness-focused web experience for
+a nutrition specialist in Mexico who helps patients improve their digestive and metabolic
+health. The site integrates a scheduling calendar that allows patients to book their first
+consultation directly online, eliminating manual coordination and reducing appointment
+friction to a single click.
+
+## Technology Stack
+
+React, Astro, Node.js, Express.js, PHP, Laravel, Figma, AI integration (LLM APIs,
+automated workflows, content generation pipelines)
+
+## Contact
+
+- Email: angelpdev@gmail.com
+- WhatsApp: +52 33 1796 0306
+- Location: Guadalajara, Jalisco, Mexico
+- Remote: Available across Mexico and Latin America
+- Time zone: CST (UTC-6)
+
+## Languages
+
+- Spanish (primary): https://angelpineda.dev/
+- English: https://angelpineda.dev/en/
+
+## Frequently Asked Questions
+
+**How much does a project cost?**
+Pricing is scoped to the specific product. Landing pages and focused web presences
+typically start around $750–$1,500 USD ($15,000–$30,000 MXN). Full web applications
+with custom functionality, integrations, and multi-user flows run higher depending on
+complexity. Every engagement begins with a discovery conversation to define scope before
+any number is confirmed.
+
+**How long does development take?**
+A focused landing page or web presence can ship in three to four weeks. A full product
+with multiple user flows, third-party integrations, and custom backend logic typically
+takes eight to sixteen weeks. What adds time: additional user roles, payment gateways,
+CRM integrations, multi-language support, and extended review cycles.
+
+**Can you work with an existing system or team?**
+Yes. Angel can collaborate directly in an existing codebase, follow a team's workflow,
+and integrate with tools like GitHub, Slack, Notion, or Linear. Improvements, redesigns,
+and new functionality on existing products are a common and comfortable starting point.
+
+**What types of businesses does Angel work with?**
+Entrepreneurs and independent professionals launching their first web presence. Small and
+medium-sized businesses that need a new or improved site. Startups and product teams
+seeking a reliable development partner. Past work includes wellness and healthcare
+professionals, logistics and operations tooling, and fintech-adjacent platforms.
+
+**Where is Angel based and does he work remotely?**
+Based in Guadalajara, Jalisco, Mexico. All client work is done remotely across Mexico and
+Latin America. Works in Spanish and English.
+
+## About
+
+Angel Pineda takes a systems-thinking approach to web product development — adapting
+technology to the problem rather than forcing the problem to fit a predetermined tool.
+He started building web products for local businesses and independent professionals in
+Guadalajara and grew into more complex product challenges across logistics, healthcare,
+and operations tooling.

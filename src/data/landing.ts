@@ -170,8 +170,8 @@ export const landingPages = {
     navigation: {
       brandLabel: "Angel Pineda",
       items: [
-        { href: "#services", label: "Services", shortLabel: "Services", icon: "compass" },
         { href: "#projects", label: "Projects", shortLabel: "Work", icon: "briefcase" },
+        { href: "#services", label: "Services", shortLabel: "Services", icon: "compass" },
         { href: "#tools", label: "Tools", shortLabel: "Tools", icon: "grid" },
         { href: "#about", label: "About", shortLabel: "About", icon: "user" },
         { href: "#faq", label: "FAQ", shortLabel: "FAQ", icon: "help" },
@@ -199,7 +199,7 @@ export const landingPages = {
       },
     },
     hero: {
-      eyebrow: "Software Engineer",
+      eyebrow: "Software Engineer · Guadalajara, Mexico",
       title: "Build, launch, and scale your web product",
       titleAccent: "without the chaos.",
       description:
@@ -221,28 +221,28 @@ export const landingPages = {
           number: "01",
           title: "Discovery",
           description:
-            "Understand your business goals, users, and technical requirements before committing to scope.",
+            "Understand your business goals, users, and technical requirements before committing to scope. You leave with a clear plan, a realistic timeline, and a confirmed next step — before any code is written.",
           icon: "search",
         },
         {
           number: "02",
           title: "Design and strategy",
           description:
-            "Define the architecture, interface direction, user experience, and the delivery path that can grow with the product.",
+            "Define the architecture, interface direction, user experience, and the delivery path that can grow with the product. You receive a clickable Figma prototype and a delivery roadmap before development begins.",
           icon: "strategy",
         },
         {
           number: "03",
           title: "Development",
           description:
-            "Build fast, modern, and maintainable applications with a strong bias toward clarity and long-term usability.",
+            "Build fast, modern, and maintainable applications with a strong bias toward clarity and long-term usability. You get clean code, a staging environment for review, and a product your team can actually maintain.",
           icon: "code",
         },
         {
           number: "04",
           title: "Deployment",
           description:
-            "Launch, optimize, and keep production healthy with a clear handoff and a dependable release approach.",
+            "Launch, optimize, and keep production healthy with a clear handoff and a dependable release approach. You receive a live, production-ready product and a documented process for future updates.",
           icon: "rocket",
         },
       ] satisfies Service[],
@@ -260,7 +260,7 @@ export const landingPages = {
         { name: "PHP", tone: "muted" },
         { name: "Laravel", tone: "signal" },
         { name: "Figma", tone: "accent" },
-        { name: "Artificial Intelligence", tone: "signal" },
+        { name: "AI Integration", tone: "signal" },
       ] satisfies Tool[],
     },
     projects: {
@@ -289,13 +289,13 @@ export const landingPages = {
         "Open the project in its own tab to review the current experience without an embedded frame.",
       archiveTitle: "More on the way",
       archiveDescription:
-        "More case studies are being documented, including current work across fintech, logistics, and operational tooling.",
+        "Case studies in fintech, logistics, and operational tooling are being documented. Each one will cover the problem, the approach, and the measurable result.",
     },
     about: {
       eyebrow: "About me",
       title: "Systems thinking, translated into clear experiences.",
       description:
-        "I enjoy solving problems, optimizing processes, and automating when it creates real leverage. I build solutions that make life easier by matching the technology to the challenge instead of forcing the challenge to fit the tool.",
+        "I started building web products for local businesses and independent professionals in Guadalajara, and grew into more complex product challenges across logistics, healthcare, and operations tooling. Five-plus years in, the constant is the same: clients arrive with a problem, I translate it into a product that solves it cleanly, and we ship something that works in the real world. I enjoy the moments where good engineering and clear thinking make something hard look simple.",
       quote:
         "I don’t just write code. I design systems that solve real problems, scale with your growth, and deliver measurable results.",
       linkLabel: "Know more about my process",
@@ -311,17 +311,37 @@ export const landingPages = {
         {
           question: "How much does a project cost?",
           answer:
-            "Pricing depends on the product scope, but the first version can be shaped to fit your budget while still solving a real problem.",
+            "Pricing is scoped to the specific product. Full web applications with custom functionality, integrations, and multi-user flows run higher depending on complexity. Every engagement begins with a discovery conversation to define scope before any number is confirmed, which eliminates budget surprises. The goal is always to build the most useful version that fits the current budget.",
         },
         {
           question: "How long does development take?",
           answer:
-            "Small projects usually need at least four weeks. Timelines increase with feature depth, review cycles, and integration complexity.",
+            "A focused landing page or web presence can ship in four weeks. A full product with multiple user flows, third-party integrations, and custom backend logic typically takes eight to sixteen weeks. What adds time: additional user roles, payment gateways, CRM integrations, multi-language support, and extended review cycles. Every project starts with a scoped timeline before development begins.",
         },
         {
           question: "Can you work with my existing system or team?",
           answer:
-            "Yes. I can collaborate with your current team, work inside an existing stack, or improve a product that is already in production.",
+            "Yes. I can collaborate directly in your existing codebase, follow your team's workflow, and integrate with tools like GitHub, Slack, Notion, or Linear. If you have an existing site or application that needs improvement, redesign, or new functionality, that is a common and comfortable starting point. Starting from scratch is not required.",
+        },
+        {
+          question: "What technologies do you use?",
+          answer:
+            "The main stack includes React and Astro for frontend development, Node.js and Express for backend APIs, and Laravel and PHP for full-stack applications. For design and prototyping, I use Figma. I also integrate AI-powered features — such as automated workflows, LLM API integrations, and intelligent assistants — when they create real leverage for the product. The technology is always matched to the problem, not the other way around.",
+        },
+        {
+          question: "What types of businesses do you work with?",
+          answer:
+            "Entrepreneurs and independent professionals launching their first web presence. Small and medium-sized businesses that need a new or improved site. Startups and product teams seeking a reliable development partner. Past work includes wellness and healthcare professionals, SMEs, logistics and operations tooling, and fintech-adjacent platforms. If your project involves building something useful that serves real users, it is a good fit.",
+        },
+        {
+          question: "Where are you based and do you work remotely?",
+          answer:
+            "Based in Guadalajara, Jalisco, Mexico. All client work is done remotely across Mexico and Latin America. Communication happens via WhatsApp, video call, or whatever tools your team already uses. Time zone: CST (UTC-6). Working in both Spanish and English.",
+        },
+        {
+          question: "What is included in the deployment phase?",
+          answer:
+            "Deployment covers the production launch, performance baseline verification, and a clear handoff that describes how to update and maintain the product going forward. For most projects this includes hosting setup, domain configuration, pre-launch checks, and establishing a reliable process for pushing future changes without downtime. You leave with a working product and the confidence to manage it.",
         },
       ] satisfies FaqItem[],
     },
@@ -361,8 +381,8 @@ export const landingPages = {
     navigation: {
       brandLabel: "Angel Pineda",
       items: [
-        { href: "#services", label: "Servicios", shortLabel: "Servicios", icon: "compass" },
         { href: "#projects", label: "Proyectos", shortLabel: "Proyectos", icon: "briefcase" },
+        { href: "#services", label: "Servicios", shortLabel: "Servicios", icon: "compass" },
         { href: "#tools", label: "Tecnología", shortLabel: "Tecnología", icon: "grid" },
         { href: "#about", label: "Perfil", shortLabel: "Perfil", icon: "user" },
         { href: "#faq", label: "Preguntas frecuentes", shortLabel: "Preguntas", icon: "help" },
@@ -390,11 +410,11 @@ export const landingPages = {
       },
     },
     hero: {
-      eyebrow: "Ingeniero de software",
+      eyebrow: "Ingeniero de software · Guadalajara, México",
       title: "Diseña, lanza y escala tu producto web",
       titleAccent: "sin fricción innecesaria.",
       description:
-        "Desde la idea hasta producción, me encargo del diagnóstico, la estrategia, el diseño, el desarrollo y el despliegue para que tu producto avance con foco y tú puedas concentrarte en el negocio.",
+        "Desde la idea hasta producción, me encargo del diagnóstico, la estrategia, el diseño, el desarrollo y el despliegue para que tu producto avance mientras te mantienes enfocado y tú puedas concentrarte en el negocio.",
       ctaLabel: "Empezar por WhatsApp",
       ctaAriaLabel: "Iniciar la conversación por WhatsApp",
       secondaryCtaLabel: "Ver servicios",
@@ -412,28 +432,28 @@ export const landingPages = {
           number: "01",
           title: "Diagnóstico",
           description:
-            "Aterrizamos objetivos de negocio, usuarios y requerimientos técnicos antes de comprometer alcance.",
+            "Aterrizamos objetivos de negocio, usuarios y requerimientos técnicos antes de comprometer alcance. Sales con un plan claro, un cronograma realista y un siguiente paso confirmado — antes de escribir una línea de código.",
           icon: "search",
         },
         {
           number: "02",
           title: "Diseño y estrategia",
           description:
-            "Definimos arquitectura, dirección visual, experiencia de uso y una ruta de entrega que pueda crecer con el producto.",
+            "Definimos arquitectura, dirección visual, experiencia de uso y una ruta de entrega que pueda crecer con el producto. Recibes un prototipo interactivo en Figma y un mapa de entrega antes de que inicie el desarrollo.",
           icon: "strategy",
         },
         {
           number: "03",
           title: "Desarrollo",
           description:
-            "Construyo aplicaciones modernas, rápidas y mantenibles, con una fuerte preferencia por la claridad y la utilidad a largo plazo.",
+            "Construyo aplicaciones modernas, rápidas y mantenibles, con una fuerte preferencia por la claridad y la utilidad a largo plazo. Obtienes código limpio, un entorno de preparado para revisiones y un producto que tu equipo puede mantener.",
           icon: "code",
         },
         {
           number: "04",
           title: "Despliegue",
           description:
-            "Lanzamos, optimizamos y mantenemos producción saludable con una entrega clara y un proceso confiable para publicar cambios.",
+            "Lanzamos, optimizamos y mantenemos producción saludable con una entrega clara y un proceso confiable para publicar cambios. Recibes un producto en vivo, listo para producción, con un proceso documentado para actualizaciones futuras.",
           icon: "rocket",
         },
       ] satisfies Service[],
@@ -451,7 +471,7 @@ export const landingPages = {
         { name: "PHP", tone: "muted" },
         { name: "Laravel", tone: "signal" },
         { name: "Figma", tone: "accent" },
-        { name: "Inteligencia Artificial", tone: "signal" },
+        { name: "Integración con IA", tone: "signal" },
       ] satisfies Tool[],
     },
     projects: {
@@ -480,13 +500,13 @@ export const landingPages = {
         "Abre el proyecto en una pestaña aparte para revisar la experiencia actual fuera de esta misma página.",
       archiveTitle: "Más casos en camino",
       archiveDescription:
-        "Se están documentando más casos, incluyendo trabajo actual en fintech, logística y herramientas operativas.",
+        "Se están documentando casos en fintech, logística y herramientas operativas. Cada uno cubrirá el problema, el enfoque y el resultado medible.",
     },
     about: {
       eyebrow: "Sobre mí",
       title: "Pensamiento sistémico, traducido a experiencias claras.",
       description:
-        "Disfruto resolver problemas, optimizar procesos y automatizar cuando eso genera ventaja real. Construyo soluciones que hacen la vida más simple al adaptar la tecnología al reto, en vez de forzar el reto a encajar en la herramienta.",
+        "Empecé construyendo productos web para negocios locales y profesionales independientes en Guadalajara, y fui creciendo hacia retos más complejos en logística, salud y herramientas operativas. Con más de cinco años de trabajo, la constante es siempre la misma: los clientes llegan con un problema, yo lo traduzco en un producto que lo resuelve con claridad, y lanzamos algo que funciona en el mundo real. Disfruto los momentos donde un buen criterio de ingeniería hace que algo difícil parezca simple.",
       quote:
         "No solo escribo código. Diseño sistemas que resuelven problemas reales, escalan con tu crecimiento y generan resultados medibles.",
       linkLabel: "Conoce cómo trabajo",
@@ -502,17 +522,37 @@ export const landingPages = {
         {
           question: "¿Cuánto cuesta un proyecto?",
           answer:
-            "El precio depende del alcance, pero la primera versión puede definirse para ajustarse a tu presupuesto sin dejar de resolver un problema real.",
+            "El precio se define según el alcance específico del producto. Una plataforma web con funcionalidades personalizadas, integraciones y flujos multi-usuario tiene un costo mayor dependiendo de la complejidad. Todo empieza con una conversación de diagnóstico para definir el alcance antes de confirmar cualquier número. El objetivo siempre es construir la versión más útil que se ajuste al presupuesto actual.",
         },
         {
           question: "¿Cuánto tiempo tarda el desarrollo?",
           answer:
-            "Los proyectos pequeños suelen requerir al menos cuatro semanas. El tiempo aumenta según la profundidad de funcionalidades, ciclos de revisión e integraciones.",
+            "Una landing page o presencia web enfocada puede estar lista en cuatro semanas. Una plataforma completa con múltiples flujos de usuario, integraciones con terceros y lógica de backend personalizada suele tomar entre ocho y dieciséis semanas. Lo que suma tiempo: roles de usuario adicionales, pasarelas de pago, integraciones con CRM, soporte multilenguaje y ciclos de revisión extendidos. Cada proyecto comienza con un cronograma claro antes de que inicie el desarrollo.",
         },
         {
           question: "¿Puedes trabajar con mi sistema o con mi equipo actual?",
           answer:
-            "Sí. Puedo colaborar con tu equipo, trabajar sobre una base tecnológica existente o mejorar un producto que ya está en producción.",
+            "Sí. Puedo colaborar directamente en con código existente, seguir el flujo de trabajo de tu equipo e integrarme con herramientas como GitHub, Slack, Notion o Linear. Si tienes un sitio o aplicación que necesita mejoras, rediseño o nuevas funcionalidades, ese es un punto de partida común y cómodo. No es necesario empezar desde cero.",
+        },
+        {
+          question: "¿Qué tecnologías utilizas?",
+          answer:
+            "El stack principal incluye React y Astro para desarrollo frontend, Node.js y Express para APIs, y Laravel y PHP para aplicaciones full-stack cuando el proyecto lo requiere. Para diseño y prototipado uso Figma. También integro funcionalidades con inteligencia artificial — como flujos automatizados, integraciones con APIs de LLMs y asistentes inteligentes — cuando generan ventaja real para el producto. La tecnología siempre se adapta al problema, no al revés.",
+        },
+        {
+          question: "¿Con qué tipos de negocios trabajas?",
+          answer:
+            "Emprendedores y profesionales independientes que quieren lanzar su primera presencia digital. Pequeñas y medianas empresas que necesitan un sitio nuevo o mejorado. Startups y equipos de producto que buscan un socio de desarrollo confiable. El trabajo previo incluye profesionales de salud y bienestar, pymes, herramientas de logística y operaciones, y plataformas en sectores fintech. Si tu proyecto implica construir algo útil que sirve a usuarios reales, es un buen punto de partida.",
+        },
+        {
+          question: "¿Dónde estás ubicado y trabajas de forma remota?",
+          answer:
+            "Con base en Guadalajara, Jalisco, México. Todo el trabajo con clientes se hace de forma remota para México y Latinoamérica. La comunicación ocurre por WhatsApp, videollamada o las herramientas que ya usa tu equipo. Zona horaria: CST (UTC-6). Trabajo en español e inglés.",
+        },
+        {
+          question: "¿Qué incluye la fase de despliegue?",
+          answer:
+            "El despliegue cubre el lanzamiento a producción, la verificación del rendimiento base y una entrega clara que describe cómo actualizar y mantener el producto. Para la mayoría de proyectos esto incluye configuración de hosting, configuración del dominio, revisiones previas al lanzamiento y un proceso confiable para publicar cambios futuros sin tiempo de inactividad. Sales con un producto funcionando y la confianza para gestionarlo.",
         },
       ] satisfies FaqItem[],
     },
@@ -520,7 +560,7 @@ export const landingPages = {
       eyebrow: "Contacto directo",
       title: "¿Listo para empezar?",
       description:
-        "Si tienes una idea, un producto existente o un cuello de botella frenando crecimiento, hablemos y convirtámoslo en un plan con más tracción.",
+        "Si tienes una idea, un producto existente o algo que este deteniendo tu crecimiento, hablemos y convirtámoslo en un plan con más tracción.",
       label: "Hablar por WhatsApp",
       note: "Mensaje directo, sin formularios.",
       ariaLabel: "Hablar por WhatsApp",
