@@ -9,9 +9,10 @@ type Props = {
   navigation: LandingPageContent["navigation"];
   whatsappHref: string;
   localeHref: string;
+  homeHref: string;
 };
 
-const { navigation, whatsappHref, localeHref } = Astro.props;
+const { navigation, whatsappHref, localeHref, homeHref } = Astro.props;
 const { items } = navigation;
 ---
 
@@ -25,7 +26,7 @@ const { items } = navigation;
         data-scrolled="false"
         class="mx-auto grid max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-3 rounded-[1.7rem] border border-[color:color-mix(in_oklab,var(--color-muted)_24%,white)] bg-[color:color-mix(in_oklab,var(--color-surface-strong)_84%,white)] px-4 py-[0.9rem] shadow-[0_18px_52px_rgba(2,43,83,0.12)] backdrop-blur-2xl transition-[padding,transform,box-shadow,background-color,border-color] duration-300 lg:gap-5 lg:rounded-[2rem] lg:px-5 lg:py-[0.95rem]"
       >
-        <BrandLogo label={navigation.brandLabel} href="#" size="md" />
+        <BrandLogo label={navigation.brandLabel} href={homeHref} size="md" />
 
         <nav class="desktop-nav-group hidden items-center justify-center gap-1 rounded-full border border-[color:color-mix(in_oklab,var(--color-muted)_16%,white)] bg-[color:color-mix(in_oklab,var(--color-surface)_86%,white)] p-1.5 md:flex">
           {items.map((item) => (
@@ -100,7 +101,7 @@ const { items } = navigation;
     </div>
 
     <div class="md:hidden">
-      <MobileNav navigation={navigation} localeHref={localeHref} />
+      <MobileNav navigation={navigation} localeHref={localeHref} homeHref={homeHref} />
     </div>
   </div>
 </header>
